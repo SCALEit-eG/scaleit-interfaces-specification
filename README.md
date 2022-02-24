@@ -8,6 +8,10 @@ All interfaces for the SCALE it platform and apps are documented in this reposit
 - LICENSE.txt: license agreement
 - ./*.md: description of concepts
 - &lt;subfolder&gt;/*: specification and interfaces of category
+- package.json: Node.js dependency management
+- tsconfig.json: TypeScript language configuration
+- lib/: library source code
+- src/: example programs / demonstrations
 
 ## Concepts
 

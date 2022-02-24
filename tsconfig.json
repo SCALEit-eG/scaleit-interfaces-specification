@@ -1,0 +1,28 @@
+{​​​​​​​
+  "compilerOptions": {​​​​​​​
+    "target": "ES6",
+    "lib": [ "ES2020", "DOM", "WebWorker" ],
+    "module": "commonjs",
+    "rootDir": ".",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "skipLibCheck": true
+  }​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​,
+  "include": [
+    "src/**/*",
+    "lib/**/*"
+  ],
+  "exclude": [
+    "./node_modules",
+    "test/**/*"
+  ]
+}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​

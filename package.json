@@ -1,0 +1,24 @@
+{
+  "name": "scaleit-interfaces-specification",
+  "version": "1.0.0",
+  "description": "All interfaces for the SCALE it platform and apps are documented in this repository. Members of SCALE it eG and associated partners work together to ensure compatibility in the software suite.",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SCALEit-eG/scaleit-interfaces-specification.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SCALEit-eG/scaleit-interfaces-specification/issues"
+  },
+  "homepage": "https://github.com/SCALEit-eG/scaleit-interfaces-specification#readme",
+  "devDependencies": {
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
+  }
+}
