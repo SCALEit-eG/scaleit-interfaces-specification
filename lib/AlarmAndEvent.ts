@@ -1,14 +1,5 @@
-import { Asset } from "./Asset";
+import { MessageBase, MessageStructure } from "./BaseStructure";
 
-export interface AlarmAndEvent<T> {
-    SemanticVersion: string;
-    AlarmAndEvent: AlarmAndEventStructure<T>;
-}
-
-export interface AlarmAndEventStructure<T>{
-  DataClassSubType: string;
-  Asset: Asset;
-  Content: T;
-  TimeStamp: string;
-  Hash: string;
+export interface AlarmAndEvent<T> extends MessageBase{
+  AlarmAndEvent: MessageStructure<T>;
 }
