@@ -1,0 +1,19 @@
+{
+    "SemanticVersion": "0.2.0",
+    "AlarmAndEvent": {
+        "DataClassSubType": "Registration",
+        "Asset": {
+            "Gauid": "CZ:CZ-3DA:NT-Server:RegistrationApp",
+            "AssetType": "StationApp"
+        },
+        "Content": {
+            "GlobalEntityUID": "GS1:4054977:6261409141070:E098D2C9",
+            "HierarchyLevel": "FieldDevice",
+            "Gauid": "CZ:CZ-3DA:MR01:2",
+            "Status": "accepted",
+            "Count": 1
+        },
+        "TimeStamp": "1970-01-01T00:00:00.00000+00:00",
+        "Hash": "not yet defined"
+    }
+}

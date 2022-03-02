@@ -1,0 +1,21 @@
+# Notes
+
+- Naming conventions from [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119)
+- OpenAPI/Swagger files for REST specification
+    - GitHub features
+    - Additional markdown template
+- Protected main branch
+    - Branch protection available with pro or public
+    - Repository should be made public
+- Naming conventions for TypeScript
+    - Pascal case and camel case
+- TypeScript
+    - unknown instead of any
+- Discussion about unified naming conventions
+- Semantic versioning
+    - Release cycles (1-2 years major version)
+    - Caution with major versions
+    - SCALE it semantic versioning is wrong (doesn't adhere to semantic versioning)
+- Documentation releases
+    - PDF / HTML website
+    - Github page, public link for docu

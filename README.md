@@ -98,6 +98,10 @@ In order to contribute you must adhere to the following principles.
     - On agreement these modifications are merged into the main branch
     - Naming convention for feature branches: "company name or team name/spec"
 
+# Conventions
+
+- Naming convention from [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119)
+
 # License
 
 Copyright SCALE it eG

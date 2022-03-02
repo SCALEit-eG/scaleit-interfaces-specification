@@ -1,0 +1,17 @@
+{
+    "SemanticVersion": "0.2.0",
+    "MeasuringValue": {
+        "DataClassSubType": "SensorSystemValue",
+        "Asset": {
+            "AssetType": "SensorSystem",
+            "Gauid": "XDK:v2:412823"
+        },
+        "Content": {
+            "Content01": 9.565528280375322,
+            "Content02": 5.725857631402996,
+            "Content03": 8.059994417195949
+        },
+        "TimeStamp": null,
+        "Hash": "not yet defined"
+    }
+}

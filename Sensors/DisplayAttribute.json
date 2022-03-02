@@ -1,0 +1,31 @@
+{
+    "SemanticVersion": "0.2.0",
+    "Information": {
+        "DataClassSubType": "DisplayAttributes",
+        "Asset": {
+            "AssetType": "SensorSystem",
+            "Gauid": "XDK:v2:412823",
+            "LifeCycleStatus": "Application"
+        },
+        "Content": {
+            "Content01": {
+                "Label": "AccelerometerX",
+                "Description": "AccelerometerX",
+                "Unit": "mg",
+                "Format": "000000",
+                "DisplayLimitMin": "0",
+                "DisplayLimitMax": "0",
+                "WarnLimitLo": "-7",
+                "WarnLimitHi": "7",
+                "ErrorLimitLo": "-9",
+                "ErrorLimitHi": "9",
+                "Threshold": "0",
+                "ThresholdMin": "0",
+                "ThersholdMax": "0",
+                "InputStep": "0"
+            }
+        },
+        "TimeStamp": "1970-01-01T00:00:00.00000+00:00",
+        "Hash": "0123456789abcdef0123456789abcdef"
+    }
+}

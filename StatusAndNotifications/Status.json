@@ -1,0 +1,17 @@
+{
+    "SemanticVersion": "0.2.0",
+    "AlarmAndEvent": {
+        "DataClassSubType": "Status",
+        "Asset": {
+            "Gauid": "CZ:CZ-3DA:NT-Server:RegistrationApp",
+            "AssetType": "StationApp"
+        },
+        "Content": {
+            "Status": "isOK",
+            "Name": "Multisensor-App V1 LoRa",
+            "Text": "Geuid available, MQTT Broker mqtt://10.198.153.85:1883 connected"
+        },
+        "TimeStamp": "1970-01-01T00:00:00.00000+00:00",
+        "Hash": "not yet defined"
+    }
+}

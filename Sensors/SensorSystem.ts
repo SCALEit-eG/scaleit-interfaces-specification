@@ -1,3 +1,6 @@
+import { DataManagement } from "../lib/DataManagement";
+import { MeasuringValue } from "../lib/MeasuringValue";
+
 export interface SensorSystemMapping{
     idSensorValue: string;
     SensorType: string;
@@ -5,3 +8,7 @@ export interface SensorSystemMapping{
     Exponent: string;
     Unit: string;
 }
+
+export interface SensorSystemMappingMessage extends DataManagement<SensorSystemMapping>{}
+
+export interface SensorSystemValueMessage extends MeasuringValue<unknown>{}

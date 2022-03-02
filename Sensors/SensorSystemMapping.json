@@ -1,0 +1,35 @@
+{
+    "SemanticVersion": "0.2.0",
+    "DataManagement": {
+        "DataClassSubType": "SensorSystemMapping",
+        "Asset": {
+            "Geuid": "XDK:v2:412823",
+            "AssetType": "SensorSystem"
+        },
+        "Content": [
+            {
+                "idSensorValue": "Content01",
+                "SensorType": "AccelerometerX",
+                "Label": "AccelerometerX",
+                "Exponent": "-3",
+                "Unit": "m/s^2"
+            },
+            {
+                "idSensorValue": "Content02",
+                "SensorType": "AccelerometerY",
+                "Label": "AccelerometerY",
+                "Exponent": "-3",
+                "Unit": "m/s^2"
+            },
+            {
+                "idSensorValue": "Content03",
+                "SensorType": "AccelerometerZ",
+                "Label": "AccelerometerZ",
+                "Exponent": "-3",
+                "Unit": "m/s^2"
+            }
+        ],
+        "TimeStamp": "1970-01-01T00:00:00.00000+00:00",
+        "Hash": "0123456789abcdef48.825280123456789abcdef"
+    }
+}
