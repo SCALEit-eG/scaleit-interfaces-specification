@@ -1,8 +1,15 @@
 import { AlarmAndEvent } from "../lib/AlarmAndEvent";
 
+export enum StatusLabel{
+    "isOK",
+    "isWarn",
+    "isError",
+    "isUndefined"
+}
+
 export interface Status{
     /** caution: breaking change */
-    Status: string | "isOK" | "isWarn" | "isError" | "isUndefined";
+    Status: string | StatusLabel;
     Name: string;
     Text: string;
 }
