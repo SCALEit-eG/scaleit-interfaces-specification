@@ -6,4 +6,6 @@ Each app needs to be uniquely identified. The combination of name and version is
 
 ## REST Endpoints
 
-**POST /api/{version}/register**
+### POST /api/{version}/register
+
+### POST /api/{version}/deregister

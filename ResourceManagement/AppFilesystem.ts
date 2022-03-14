@@ -15,3 +15,20 @@ export interface AppFilesystemDirectoryEntry extends AppFilesystemEntry{
     Extendable: boolean;
     Accept: string;
 }
+
+export interface AppFilesystemEntryMetadata{
+    Name: string;
+    Path: string
+    Created: Date;
+    LastModified: Date;
+}
+
+export interface FileMetadata extends AppFilesystemEntryMetadata{
+    /** size in bytes */
+    Size: number;
+}
+
+export interface DirectoryMetadata extends AppFilesystemEntryMetadata{
+    /** number of direct child entries */
+    EntryCount: number;
+}

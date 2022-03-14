@@ -1,9 +1,12 @@
 # Network
 
-## MQTT Connectivity
+## Connectivity
 
-**GET /api/{version}/connectivity**\
-read the current mqtt connection
+Connectivity types:
+- MQTT
 
-**PUT /api/{version}/connectivity**\
-change the mqtt connection
+### GET /api/{version}/connectivity
+read the current connectivity details
+
+### PUT /api/{version}/connectivity
+change the connectivity details
