@@ -19,6 +19,7 @@ Server-sent events endpoint; allows asynchronous communication from the server t
 
 Supported channels:
 - status
+    - data: StatusMessage
 - state
 - ping (technical)
 - AlarmAndEvent
@@ -26,6 +27,8 @@ Supported channels:
 - MeasuringValue
 - DataManagement
 - ControlValue
+
+All sent data should be serialised in JSON.
 
 ## Process Management
 
