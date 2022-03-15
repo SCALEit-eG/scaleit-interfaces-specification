@@ -33,8 +33,8 @@ Request body:
 - DefinedDataStructureX
 
 Response codes:
+- 200 OK: existing item changed
 - 201 Created: new item created
-- 202 Accepted: existing item changed
 - 400 Bad Request: violation of data definition
 - 409 Conflict: item already existing
 
