@@ -5,10 +5,19 @@
 Overall status of the application or asset.
 
 ### GET /api/status
-backwards compatibility without version
+Endpoint for backwards compatibility without version that serves the app status. See **/api/{version}/status**
 
 ### GET /api/{version}/status
-get the current status message
+Gives the current status message of the application.
+
+Response codes:
+- 200 OK: always
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- StatusMessage
 
 ## States
 

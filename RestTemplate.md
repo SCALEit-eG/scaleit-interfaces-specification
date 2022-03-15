@@ -15,7 +15,7 @@ Markdown template for specifying REST endpoints.
 This is a general description of the REST endpoint. Use POST to add a new item and PUT to change an existing one.
 
 Route parameters:
-- {version}: API version
+- version: API version
 
 Query parameters:
 - param1: number, required
