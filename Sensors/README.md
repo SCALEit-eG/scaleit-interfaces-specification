@@ -1,5 +1,10 @@
 # Sensors
 
+## Considerations
+
+- Sensor elements instead of sensor systems
+- Storage for time series
+
 ## Sensor system
 
 A sensor system needs a sensor system mapping defining the sensor elements and sensor system values defining the measuring values. The latter uses the IDs defined by the former. Additional structures like display attributes make also use of the defined sensor IDs.

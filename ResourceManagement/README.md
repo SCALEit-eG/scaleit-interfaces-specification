@@ -6,6 +6,8 @@ An app can implement a filesystem. The typical abstractions of files and folders
 
 The ID should be the URL encoded path to the entry. For the root entry the leading slash "/" may be omitted.
 
+- File IDs mit wildcard URL anstatt URL Kodierung
+
 ### GET /api/{version}/files?{}
 retrieves the filesystem of the app with filter possibilities
 
@@ -13,7 +15,6 @@ Query parameters:
 - filetypes: optional, string array, optional, list of files e.g. pdf, png, docx
 - q: optional, string, search query
 - category: optional, string, defined categories for a specific purpose e.g. graphics, certificates, licenses
-- categories: optional, no/any value, to return the available categories instead of the file system
 
 Request headers:
 - Content-Type: application/json
@@ -38,8 +39,14 @@ returns a list of files according to the filter parameters
 
 GET /api/1.0.0/files?category=licenses
 returns a list with all license files
+```
 
-GET /api/1.0.0/files?categories
+### GET /api/{version}/filecategories
+returns a list of available categories
+
+Examples:
+```
+GET /api/1.0.0/filecategories
 returns a list of available categories
 ```
 
