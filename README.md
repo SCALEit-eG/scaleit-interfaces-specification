@@ -85,6 +85,8 @@ Interfaces are assigned to categories. These categories are listed subsequently.
 - Technology
     - Consideration of specific technologies (Docker, Kubernetes, etc.)
     - Assurance of compatibility
+- Paperless Production
+    - Electronic labels
 
 # Contributing
 
