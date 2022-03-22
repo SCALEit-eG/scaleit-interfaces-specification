@@ -6,7 +6,15 @@ An app can implement a filesystem. The typical abstractions of files and folders
 
 The ID should be the URL encoded path to the entry. For the root entry the leading slash "/" may be omitted.
 
-- File IDs mit wildcard URL anstatt URL Kodierung
+- File IDs with wildcard URL instead of URL Encoding?
+    - Not reasonable, because harder to implement and ID may be something different than a path
+    - files/{id} follows REST API standards
+    - URL encoding as suitable standard implementation, but can also be different because at the files/{id}
+    endpoint, there is no restriction on how the "IDs" are resolved as it is an implementation detail
+    - Where are IDs that do not correspond to a path feasible?
+        - App serves only a few static files and doesn't need a generic file system
+        - Actual folder structure may change or should not be known
+        - Files may be automatically generated e.g. configuration stored in database is served as JSON file, HTML template is generated or docker image is exported via docker save
 
 ### GET /api/{version}/files?{}
 retrieves the filesystem of the app with filter possibilities
