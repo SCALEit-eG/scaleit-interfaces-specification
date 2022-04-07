@@ -62,3 +62,20 @@ It should contain a build context so that **docker-compose build** can be run on
 For an instance of the Transfer App the uniqueness of an App Instance is guaranteed by the combination of **Name** and **Version**.
 
 ID := {Name}:{Version}
+
+## Transfer App v2.2.2-inst-dev
+Important interfaces of this version documented to interact with the older API that was in use. For information about further interfaces the app itself must be investigated or the Swagger documentation opened.
+
+### POST /api/transfer/import
+
+### GET /api/transfer/apps
+
+### PUT /api/compose/start
+
+### PUT /api/compose/stop
+
+### Websockets /events/import
+
+### Websockets /events/start
+
+### Websockets /events/system/loadimage
