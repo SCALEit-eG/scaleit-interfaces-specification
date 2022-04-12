@@ -67,15 +67,58 @@ ID := {Name}:{Version}
 Important interfaces of this version documented to interact with the older API that was in use. For information about further interfaces the app itself must be investigated or the Swagger documentation opened.
 
 ### POST /api/transfer/import
+Uploads / imports an app instance as ZIP archive without incremental feedback. Prefer the websocket endpoint **/events/import** instead.
+
+Request headers:
+- Content-Type: multipart/form-data
+
+Request body:
+- form entry with name "app" and content type "application/zip" as binary data
+
+Response codes:
+- 200 OK: app successfully imported
+- 400 Bad Request: import failed
 
 ### GET /api/transfer/apps
+Retrieves the list of all currently available apps.
 
-### PUT /api/compose/start
+Response codes:
+- 200 OK: at least one app is available
+- 204 No Content: currently no apps available
 
-### PUT /api/compose/stop
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- AppInstance[]
+
+### PUT /api/compose/start?{query}
+Starts an app that is available. May take a while that is why the corresponding websocket endpoint should be prefered **/events/start**.
+
+Query parameters:
+- name: string, required
+    - name of the app
+- version: string, required
+    - version of the app
+
+### PUT /api/compose/stop?{query}
+Stops an available app.
+
+Query parameters:
+- name: string, required
+    - name of the app
+- version: string, required
+    - version of the app
 
 ### Websockets /events/import
 
-### Websockets /events/start
+### Websockets /events/start?{query}
+Starts an available app and provides incremental feedback.
+
+Query parameters:
+- name: string, required
+    - name of the app
+- version: string, required
+    - version of the app
 
 ### Websockets /events/system/loadimage
