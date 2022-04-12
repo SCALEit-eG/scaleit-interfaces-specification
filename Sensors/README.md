@@ -190,3 +190,12 @@ Other metadata like DisplayAttributes should also reference these sensor IDs if 
     }
 }
 ```
+
+## Notes
+
+Use Cases
+- Connection of a specific sensor system
+- Which sensors are available?
+    - Subscribe to the topics of interest
+    - Link to asset management
+    - MQTT Broker security
