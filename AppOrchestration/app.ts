@@ -54,3 +54,70 @@ export class DockerImage
     Platform?: string;
     Size?: number;
 }
+
+/**
+ * Result of an executed process
+ */
+export interface ProcessResult {
+    ExitCode: number;
+    Command: string;
+    SuccessEstimate?: boolean;
+    DurationMs: number;
+    RawOutput: string;
+    Lines: Array<ProcessLine>;
+}
+
+/**
+ * Output line of a process
+ */
+export interface ProcessLine{
+    Line: string;
+    RawLine: string;
+    IsStdout: boolean;
+    IsStderr: boolean;
+}
+
+/**
+ * Specific result of a docker-compose up process
+ */
+export interface DockerComposeUpResult extends ProcessResult{
+    RunningContainers: string[];
+    PulledImages: string[];
+}
+
+
+/**
+ * Simple structure to exchange a value
+ * with a label via JSON
+ */
+ export interface NameValue<T> {
+    Name: string;
+    Value: T;
+}
+
+/**
+ * Holds all information about a single step
+ * of progress.
+ */
+ export interface TransferProgress {
+    /**
+     * Indicates the type of progress made.
+     * 
+     * Important step types:
+     * - ANNOUNCEMENT
+     * - DATA_TRANSFER
+     * - PROCESS_PROGRESS
+     * - INTERNAL
+     * - UNKNOWN
+     * - STATUS
+     * - CANCEL
+     */
+    StepType: string;
+    Success: boolean;
+    Required: boolean;
+    Subject?: string;
+    ProcessResult?: ProcessResult;
+    ProcessLine?: ProcessLine;
+    Message: string;
+    Details?: string;
+}
