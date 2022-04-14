@@ -34,7 +34,6 @@ Response codes:
 
 Response body:
 - AppFilesystem array
-- list of strings if "categories" query parameter is present
 - error text on status code 400
 
 Examples:
@@ -50,12 +49,21 @@ returns a list with all license files
 ```
 
 ### GET /api/{version}/filecategories
-returns a list of available categories
+Returns a list of available file categories.
+
+Response codes:
+- 200 OK: categories are available
+- 204 No Content: no file categories available
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- string[]
 
 Examples:
 ```
 GET /api/1.0.0/filecategories
-returns a list of available categories
 ```
 
 ### GET /api/{version}/files/{id}?{}

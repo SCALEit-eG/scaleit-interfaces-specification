@@ -1,45 +1,386 @@
 # App Orchestration
+Interfaces for services that can deploy and orchestrate apps.
 
 ## Transfer Technology
-Planned endpoints, not yet defined
+These endpoints are specific to the transfer app that is build around Docker-Compose.
 
 ### POST /api/{version}/transfer/import
-import an app instance or template as ZIP archive
+Import an app instance or template as ZIP archive. The Websocket endpoint **/api/{version}/events/transfer/import** should be preferred as it provides incremental feedback for this import process that may take a while.
 
-### GET /api/{version}/transfer/export/{id}
-export a specific app instance or template as ZIP archive
+Request headers:
+- Content-Type: multipart/form-data
+
+Request body:
+- form entry with name "app" and content type "application/zip" as binary data
+
+Response codes:
+- 200 OK: app successfully imported
+- 400 Bad Request: import failed
+
+Example:
+```
+POST /api/0.2.0/transfer/import
+Content-Type: multipart/form-data; boundary=--------------------------854348040641744448699751
+Content-Length: 25828282
+ 
+----------------------------854348040641744448699751
+Content-Disposition: form-data; name="app"; filename="BashMessagePrinter.zip"
+<BashMessagePrinter.zip>
+----------------------------854348040641744448699751--
+```
+
+### GET /api/{version}/transfer/export/{id}?{query}
+Export a specific app instance or template as ZIP archive.
+
+Route parameters:
+- id: app id
+
+Query parameters:
+- with_images: boolean, optional, default: false
+    - Whether docker images should be included
+
+Response codes:
+- 200 OK: app found
+- 404 Not found: app not found
+
+Response headers:
+- Content-Type: application/zip
+
+Response body:
+- ZIP archive
+
+Example:
+```
+GET /api/0.2.0/transfer/export/ScaleIT%20node-red%3A2.2.2?with_images=true
+```
 
 ### GET /api/{version}/transfer/apps
+Retrieve the list of currently available app instances on the server.
+
+Response codes:
+- 200 OK: apps are available
+- 204 No Content: there is currently no imported app
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- AppInstance[]
+
+Example:
+```
+GET /api/0.2.0/transfer/apps
+```
+
 ### GET /api/{version}/transfer/apps/{id}
-### DELETE /api/{version}/transfer/apps/{id}
-retrieve apps and information and delete an app
+Get the information details of a single app instance.
+
+Route parameters:
+- id: app instance id
+
+Response codes:
+- 200 OK: app instance found
+- 404 Not Found: app instance not found
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- AppInstance
+
+Example:
+```
+GET /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg
+```
+
+### DELETE /api/{version}/transfer/apps/{id}?{query}
+Delete an app instance and if forced and necessary stop it before.
+
+Route parameters:
+- id: app instance id
+
+Query parameters:
+- force: boolean, optional, default: false
+    - If app runs then it is stopped so the removal succeeds
+- remove_images: boolean, optional, default: true
+    - Remove referenced docker images if not referenced by other apps
+
+Response codes:
+- 200 OK: app instance successfully removed
+- 404 Not Found: app instance not found
+- 409 Conflict: app instance still runs and force=false
+
+Example:
+```
+DELETE /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg?force=true&remove_images=false
+```
 
 ### PUT /api/{version}/transfer/apps/{id}/start
-Start an app
+Start an app instance. As this process may take some time, it is recommended to use the Websocket **/api/{version}/events/transfer/apps/{id}/start** endpoint instead.
 
-### PUT /api/{version}/transfer/apps/{id}/stop
-Stop an app
+Route parameters:
+- id: app instance id
 
-### GET /api/{version}/transfer/apps/{id}/logs
-orchestrate apps
+Response codes:
+- 200 OK: App instance found
+- 400 Bad Request: Name or version not given
+- 404 Not Found: ap instance not found
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- DockerComposeUpResult
+
+Example:
+```
+PUT /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/start
+```
+
+### PUT /api/{version}/transfer/apps/{id}/stop?{query}
+Stop an app instance and if requested remove volumes.
+
+Route parameters:
+- id: app instance id
+
+Query parameters:
+- remove_volumes: boolean, optional, default: false
+    - Remove used docker volumes
+
+Response codes:
+- 200 OK: app instance found
+- 404 Not Found: app instance not found
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- ProcessResult
+
+Example:
+```
+PUT /api/0.2.0/transfer/apps/ScaleIT%20node-red%3A2.2.2/stop?remove_volumes=true
+```
+
+### GET /api/{version}/transfer/apps/{id}/logs?{query}
+Retrieve the logs of a running app.
+
+Route parameters:
+- id: app instance id
+
+Query parameters:
+- lines: number, optional, default: -1
+    - returns at most the given number of recent lines
+    - if lines=-1 then all available log lines are returned
+
+Response codes:
+- 200 OK: app instance found
+- 400 Bad Request: if lines==0 or lines&lt;-1
+- 404 Not Found: app instance not found
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- ProcessResult
+
+Example:
+```
+GET /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/logs?lines=30
+```
+
+### PUT /api/{version}/transfer/refresh
+Refreshes the status information of all apps, whereby the status updates are sent asynchronously via SSE and the operation is only done if there is no refresh scheduled already.
+
+Response codes:
+- 200 OK: refresh will be performed
+- 400 Bad Request: transfer app is already busy refreshing
+
+Example:
+```
+PUT /api/0.2.0/transfer/refresh
+```
+
+### PUT /api/{version}/transfer/refresh/{id}
+Refreshes an existing app, if it is not already scheduled.
+
+Route parameters:
+- id: app instance id
+
+Response codes:
+- 200 OK: app instance is scheduled to be refreshed
+- 400 Bad Request: app instance is already being refreshed
+- 404 Not Found: app instance not found
+
+Example:
+```
+PUT /api/0.2.0/transfer/refresh/simple%20webserver%3A1.0.0-dbg
+```
+
+### Websockets /api/{version}/events/transfer/import
+Imports an app as ZIP archive and provides incremental feedback.
+
+Message protocol:
+1. (Optional) Receive cancel token as NameValue&lt;string&gt;
+    - Name: "CancelID"
+    - Value: "{some_id}"
+2. Send ZIP file length as NameValue&lt;number&gt;
+    - Name: "Length"
+    - Value: size of ZIP to send in bytes
+3. Send ZIP archive as binary message
+4. Receive step wise progress information
+    - Each message has type TransferProgress
+    - At the beginning there are many StepType: "DATA_TRANSFER" messages
+    - After that the import pipeline specific steps are reported
+    - If StepType: "STORE_INSTANCE" has "Success: true" then the import was successfull
+
+### Websockets /api/{version}/events/transfer/apps/{id}/start
+Starts an available app and provides incremental feedback.
+
+Route parameters:
+- id: app instance id
+
+Message protocol:
+1. (Optional) Receive cancel token as NameValue&lt;string&gt;
+    - Name: "CancelID"
+    - Value: "{some_id}"
+2. Receive step wise progress information
+    - Each message has type TransferProgress
+
+
+### SSE /api/events
+Uses this general interface and extends it with the following event channels:
+- App
+    - data: AppInstance
+    - status of an app instance changed
+- Import
+    - data: AppInstance
+    - an app was successfully imported
+- Remove
+    - data: AppInstance
+    - an app was removed
+
+### PUT /api/cancel/{id}
+Cancel the task identified by the given ID. Applies to all operations that return a cancel id.
+
+## Transfer Technology - Files API
+Some specifics about the implementation of the files api is described below. For more information see the Resource-Management category.
+
+### GET /api/{version}/files?{}
+
+Query parameters:
+- category
+    - "instances": serves file system for instances
+    - "templates": serves file system for templates
+
+Example:
+```
+GET /api/0.2.0/files?category=instances
+
+[
+    {
+        "Name": "example app:1.0",
+        "Id": "example%20app%3A1.0",
+        "Deletable": false,
+        "Extendable": false,
+        "Accept": null
+    },
+    {
+        "Name": "web server:1.0-php",
+        "Id": "web%20server%3A1.0-php",
+        "Deletable": false,
+        "Extendable": false,
+        "Accept": null
+    }
+]
+```
+
+### GET /api/{version}/files/{id}?{}
+
+If ID refers to an instance or template id then the file system of the ZIP file will be served.
+
+Example app instance ZIP:
+- docker-compose.yml
+- config.yml
+- icon.svg
+- README.md
+- LICENSE.txt
+- Manual.pdf
+- Resources/
+    - tutorial.mp4
+
+The app has the id: "example%20app%3A1.0"
+```
+GET /api/0.2.0/files/example%20app%3A1.0
+
+[
+    {
+        "Name": "docker-compose.yml",
+        "Id": "example%20app%3A1.0%2F%2Fdocker-compose.yml",
+        "Deletable": false,
+        "Editable": false,
+        "MIMEType": "text/plain"
+    },
+    ...
+    {
+        "Name": "Manual.pdf",
+        "Id": "example%20app%3A1.0%2F%2Fmanual.pdf",
+        "Deletable": false,
+        "Editable": false,
+        "MIMEType": "application/pdf"
+    },
+    {
+        "Name": "Resources",
+        "Id": "example%20app%3A1.0%2F%2FResources",
+        "Deletable": false,
+        "Extendable": false,
+        "Accept": null,
+        "Entries": [
+            {
+                "Name": "tutorial.mp4",
+                "Id": "example%20app%3A1.0%2F%2FResources%2Ftutorial.mp4",
+                "Deletable": false,
+                "Editable": false,
+                "MIMEType": "video/mp4"
+            }
+        ]
+    }
+]
+
+GET /api/0.2.0/files/example%20app%3A1.0%2F%2FResources%2Ftutorial.mp4
+
+Content-Type: video/mp4
+<tutorial.mp4>
+```
+
+## Transfer Technology - Templates
+These endpoints are specific to the templates version of the transfer app.
 
 ### GET /api/{version}/transfer/templates
+TODO
+
 ### GET /api/{version}/transfer/templates/{id}
+TODO
+
 ### DELETE /api/{version}/transfer/templates/{id}
-manage app templates
+TODO
 
 ### POST /api/{version}/transfer/templates/{id}/instantiate
-start the app instantiation process
+Start the app instantiation process.
+
+TODO
 
 ### SSE /api/{version}/transfer/templates/{id}/build
-execute the build process and finish it on success; gives incremental feedback
+Execute the build process and finish it on success. Provides incremental feedback.
 
 SSE channels:
 - status
 - progress
 - failure
 
-### App Instance
+TODO
+
+## App Instance
 
 An app instance is represented as a ZIP archive with the following structure:
 - config.yml
@@ -51,7 +392,7 @@ An app instance is represented as a ZIP archive with the following structure:
 
 Through the docker-compose.yml it is possible to orchestrate the app. Docker images need to be available when the app starts and may be retrievable on the server the Docker runs and thus they are optional. It must not contain a **build context**.
 
-### App Template Image
+## App Template Image
 
 The structure from *App Instance* is inherited with the following additions:
 - docker-compose-build.yml
@@ -65,6 +406,96 @@ For an instance of the Transfer App the uniqueness of an App Instance is guarant
 ID := {Name}:{Version}
 
 For storage purposes the "{Name}:{Version}" string should be URL-encoded.
+
+To also provide uniqueness for App Templates, the version identifier should be differ accordingly. This is up to the creators of the apps, e.g.:
+```
+simple webserver:1.0.0
+simple webserver:1.0.0-tpl
+```
+
+## App Config
+
+Consists of Name, Version and Description. Frontend and Middlelayer entries may be added to access the frontend or server components of the app.
+
+Example for app components:
+```
+in config.yml:
+Frontend:
+ - Port: 54180
+   Path: null
+   Protocol: http
+ - Port: 54280
+   Path: "/cgi/ui"
+Middlelayer:
+ - Port: 54179
+   Path: null
+   Protocol: https
+
+Access:
+http://<server_url>:54180
+http://<server_url>:54280/cgi/ui
+https://<server_url>:54179
+```
+
+## Transfer Technology - Administration
+The subsequent endpoints define the system module of the transfer app that serves administrative purposes around Docker and Docker-Compose.
+
+### GET /api/{version}/system/images
+TODO
+
+### GET /api/{version}/system/images/{id}
+TODO
+
+### GET /api/{version}/system/images/{id}/export
+TODO
+
+### DELETE /api/{version}/system/images/{id}
+TODO
+
+### POST /api/{version}/system/images
+TODO
+
+### DELETE /api/{version}/system/prune/images
+TODO
+
+### GET /api/{version}/system/containers
+TODO
+
+### GET /api/{version}/system/containers/{id}
+TODO
+
+### PUT /api/{version}/system/containers/{id}/start
+TODO
+
+### PUT /api/{version}/system/containers/{id}/stop
+TODO
+
+### PUT /api/{version}/system/containers/{id}/restart
+TODO
+
+### DELETE /api/{version}/system/containers/{id}/remove
+TODO
+
+### DELETE /api/{version}/system/prune/containers
+TODO
+
+### GET /api/{version}/system/volumes
+TODO
+
+### GET /api/{version}/system/volumes/{name}
+TODO
+
+### DELETE /api/{version}/system/volumes/{name}?{query}
+TODO
+
+Query parameters:
+- force: boolean
+
+### DELETE /api/{version}/system/prune/volumes
+TODO
+
+### Websockets /api/{version}/events/system/loadimage
+Allows to incrementally upload individual Docker images that are then uploaded to the configured Docker daemon. Works just like **Websockets /api/{version}/events/transfer/import** but with much fewer reported steps at the end. The docker image should be in the TAR format that **docker save** put out.
 
 ## Transfer App v2.2.2-inst-dev
 Important interfaces of this version documented to interact with the older API that was in use. For information about further interfaces the app itself must be investigated or the Swagger documentation opened.
