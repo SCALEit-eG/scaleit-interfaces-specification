@@ -1,0 +1,90 @@
+[
+    {
+        "Name": "config.yml",
+        "Id": "manifest",
+        "Deletable": false,
+        "Editable": false,
+        "MIMEType": "text/plain"
+    },
+    {
+        "Name": "LICENSE.txt",
+        "Id": "license",
+        "Deletable": false,
+        "Editable": false,
+        "MIMEType": "text/plain"
+    },
+    {
+        "Name": "config",
+        "Id": "config",
+        "Deletable": false,
+        "Extendable": true,
+        "Accept": "application/json",
+        "Entries": [
+            {
+                "Name": "backend.json",
+                "Id": "config%2Fbackend.json",
+                "Deletable": false,
+                "Editable": true,
+                "MIMEType": "application/json"
+            },
+            {
+                "Name": "middlelayer.json",
+                "Id": "config%2Fmiddlelayer.json",
+                "Deletable": false,
+                "Editable": true,
+                "MIMEType": "application/json"
+            },
+            {
+                "Name": "%custom% config?.json",
+                "Id": "config%2F%25custom%25%20config%3F.json",
+                "Deletable": true,
+                "Editable": true,
+                "MIMEType": "application/json"
+            }
+        ]
+    },
+    {
+        "Name": "res",
+        "Id": "res",
+        "Deletable": true,
+        "Extendable": true,
+        "Accept": "*/*",
+        "Entries": [
+            {
+                "Name": "manual.pdf",
+                "Id": "res%2Fmanual.pdf",
+                "Deletable": false,
+                "Editable": false,
+                "MIMEType": "application/pdf"
+            },
+            {
+                "Name": "icon.svg",
+                "Id": "res%2Ficon.svg",
+                "Deletable": false,
+                "Editable": true,
+                "MIMEType": "image/svg+xml"
+            },
+            {
+                "Name": "tutorial.webm",
+                "Id": "res%2Ftutorial.webm",
+                "Deletable": false,
+                "Editable": false,
+                "MIMEType": "video/webm"
+            },
+            {
+                "Name": "template.php",
+                "Id": "res%2Ftemplate.php",
+                "Deletable": true,
+                "Editable": true,
+                "MIMEType": "application/x-httpd-php"
+            }
+        ]
+    },
+    {
+        "Name": "AppBundle.zip",
+        "Id": "Z2VuZXJhdGVkIGFwcCBidW5kbGU=",
+        "Deletable": false,
+        "Editable": false,
+        "MIMEType": "application/zip"
+    }
+]
