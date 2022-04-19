@@ -1,6 +1,18 @@
 # App Orchestration
 Interfaces for services that can deploy and orchestrate apps.
 
+## Table of Contents
+
+1. [Transfer Technology](#transfer-technology)
+2. [Transfer Technology - Files API](#transfer-technology---files-api)
+3. [Transfer Technology - Templates](#transfer-technology---templates)
+4. [App Instance](#app-instance)
+5. [App Template](#app-template)
+6. [App ID](#app-id)
+7. [App Config](#app-config)
+8. [Transfer Technology - Administration](#transfer-technology---administration)
+9. [Transfer App v2.2.2-inst-dev](#transfer-app-v222-inst-dev)
+
 ## Transfer Technology
 These endpoints are specific to the transfer app that is build around Docker-Compose.
 
@@ -392,7 +404,7 @@ An app instance is represented as a ZIP archive with the following structure:
 
 Through the docker-compose.yml it is possible to orchestrate the app. Docker images need to be available when the app starts and may be retrievable on the server the Docker runs and thus they are optional. It must not contain a **build context**.
 
-## App Template Image
+## App Template
 
 The structure from *App Instance* is inherited with the following additions:
 - docker-compose-build.yml
