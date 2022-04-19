@@ -92,6 +92,7 @@ Route parameters:
 
 Response codes:
 - 200 OK: app instance found
+- 400 Bad Request: app id not given
 - 404 Not Found: app instance not found
 
 Response headers:
@@ -103,6 +104,59 @@ Response body:
 Example:
 ```
 GET /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg
+```
+
+### GET /api/{version}/transfer/apps/{id}/icon
+Download the app's icon if available.
+
+Route parameters:
+- id: app instance id
+
+Response codes:
+- 200 OK: app and icon found
+- 204 No Content: no icon available
+- 400 Bad Request: app id not given
+- 404 Not Found: app not found
+
+Response headers:
+- Content-Type: application/svg+xml
+    - image/png
+    - image/jpeg
+
+Response body:
+- icon file
+
+Example:
+```
+GET /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/icon
+```
+
+### GET /api/{version}/transfer/apps/{id}/readme
+Download the app's readme if available.
+
+Route parameters:
+- id: app instance id
+
+Response codes:
+- 200 OK: app and readme found
+- 204 No Content: no readme available
+- 400 Bad Request: app id not given
+- 404 Not Found: app not found
+
+Request headers:
+- Accept: application/json
+    - text/plain
+
+Response headers:
+- Content-Type: application/json
+    - text/plain
+
+Response body:
+- readme file
+
+Example:
+```
+GET /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/readme
 ```
 
 ### DELETE /api/{version}/transfer/apps/{id}?{query}
@@ -119,6 +173,7 @@ Query parameters:
 
 Response codes:
 - 200 OK: app instance successfully removed
+- 400 Bad Request: app id not given
 - 404 Not Found: app instance not found
 - 409 Conflict: app instance still runs and force=false
 
@@ -135,7 +190,7 @@ Route parameters:
 
 Response codes:
 - 200 OK: App instance found
-- 400 Bad Request: Name or version not given
+- 400 Bad Request: app id not given
 - 404 Not Found: ap instance not found
 
 Response headers:
@@ -161,6 +216,7 @@ Query parameters:
 
 Response codes:
 - 200 OK: app instance found
+- 400 Bad Request: app id not given
 - 404 Not Found: app instance not found
 
 Response headers:
@@ -187,7 +243,7 @@ Query parameters:
 
 Response codes:
 - 200 OK: app instance found
-- 400 Bad Request: if lines==0 or lines&lt;-1
+- 400 Bad Request: if lines==0 or lines&lt;-1 or app id not given
 - 404 Not Found: app instance not found
 
 Response headers:
@@ -201,7 +257,7 @@ Example:
 GET /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/logs?lines=30
 ```
 
-### PUT /api/{version}/transfer/refresh
+### PUT /api/{version}/transfer/refresh/apps
 Refreshes the status information of all apps, whereby the status updates are sent asynchronously via SSE and the operation is only done if there is no refresh scheduled already.
 
 Response codes:
@@ -210,10 +266,27 @@ Response codes:
 
 Example:
 ```
-PUT /api/0.2.0/transfer/refresh
+PUT /api/0.2.0/transfer/refresh/apps
 ```
 
-### PUT /api/{version}/transfer/refresh/{id}
+### GET /api/{version}/transfer/refresh/apps
+Returns if the app is currently busy refreshing the status of all apps or not.
+
+Response codes:
+- 200 OK: always
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- boolean
+
+Example:
+```
+GET /api/0.2.0/transfer/refresh/apps
+```
+
+### PUT /api/{version}/transfer/apps/{id}/refresh
 Refreshes an existing app, if it is not already scheduled.
 
 Route parameters:
@@ -221,12 +294,12 @@ Route parameters:
 
 Response codes:
 - 200 OK: app instance is scheduled to be refreshed
-- 400 Bad Request: app instance is already being refreshed
+- 400 Bad Request: app instance is already being refreshed or app id not given
 - 404 Not Found: app instance not found
 
 Example:
 ```
-PUT /api/0.2.0/transfer/refresh/simple%20webserver%3A1.0.0-dbg
+PUT /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/refresh
 ```
 
 ### Websockets /api/{version}/events/transfer/import
