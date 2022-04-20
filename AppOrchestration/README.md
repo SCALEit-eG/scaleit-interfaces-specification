@@ -348,6 +348,42 @@ Uses this general interface and extends it with the following event channels:
 ### PUT /api/cancel/{id}
 Cancel the task identified by the given ID. Applies to all operations that return a cancel id.
 
+### GET /api/{version}/devicename
+Returns the current device name if set.
+
+Response codes:
+- 200 OK: device name was set
+- 204 No Content: no device name has been set
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- string
+
+Example:
+```
+GET /api/0.2.0/devicename
+
+"IoT Gateway Server 10:5-dev"
+```
+
+### PUT /api/{version}/devicename?{query}
+Sets the device name of the server.
+
+Query parameters:
+- name: string, required
+    - device name
+
+Response codes:
+- 200 OK: device name successfully set
+- 400 Bad Request: no device name given
+
+Example:
+```
+PUT /api/0.2.0/devicename?name=IoT%20Gateway%20Server%2010%3A5-dev
+```
+
 ## Transfer Technology - Files API
 Some specifics about the implementation of the files api is described below. For more information see the Resource-Management category.
 
