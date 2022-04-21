@@ -170,6 +170,8 @@ Query parameters:
     - If app runs then it is stopped so the removal succeeds
 - remove_images: boolean, optional, default: true
     - Remove referenced docker images if not referenced by other apps
+- remove_volumes: boolean, optional, default: false
+    - Remove used docker volumes
 
 Response codes:
 - 200 OK: app instance successfully removed
@@ -302,6 +304,24 @@ Example:
 PUT /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/refresh
 ```
 
+### GET /api/{version}/transfer/recognize/apps
+Investigates the Docker containers of the server and recognizes apps according to naming conventions.
+
+Response codes:
+- 200 OK: at least one app was recognized
+- 204 No Content: no app has been recognized
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- DockerApp
+
+Example:
+```
+GET /api/0.2.0/transfer/recognize
+```
+
 ### Websockets /api/{version}/events/transfer/import
 Imports an app as ZIP archive and provides incremental feedback.
 
@@ -344,6 +364,8 @@ Uses this general interface and extends it with the following event channels:
 - Remove
     - data: AppInstance
     - an app was removed
+
+Note: Older versions may use **/events**.
 
 ### PUT /api/cancel/{id}
 Cancel the task identified by the given ID. Applies to all operations that return a cancel id.

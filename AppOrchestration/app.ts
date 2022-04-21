@@ -121,3 +121,17 @@ export interface DockerComposeUpResult extends ProcessResult{
     Message: string;
     Details?: string;
 }
+
+export interface AppContainer{
+    Image: string;
+    /** exposed ports */
+    Ports: number[];
+    Status: string;
+    ContainerId: string;
+    Names: string[];
+}
+
+export interface DockerApp{
+    Frontend: AppContainer;
+    Middlelayer: AppContainer;
+}
