@@ -37,6 +37,7 @@ Response codes:
 - 200 OK: default case
 - 204 No Content: if no file system entries are available
 - 400 Bad Request: query parameters were used falsely
+- 404 Not Found: if category given but not available
 
 Response body:
 - AppFilesystem array
@@ -82,11 +83,13 @@ Query parameters:
 - compress: string, optional, values: zip, tar
     - Compresses the retrieved file or the folder structure
     - If folder referenced and compress not set, then the file system for the folder is returned
+- category: optional, string
 
 Response codes:
 - 200 OK: entry for ID was found
 - 204 No Content: entry is directory and it is empty
-- 404 Not Found: entry not found
+- 400 Bad Request: if ID not given
+- 404 Not Found: entry or category not found
 
 Response headers:
 - Content-Type:
