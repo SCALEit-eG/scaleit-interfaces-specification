@@ -12,4 +12,7 @@ Frontend:
 Middlelayer:
  - Port: 54179
    Path: null
-  Protocol: https
+   Protocol: https
+Categories:
+ - "Production"
+ - "Sensors"
