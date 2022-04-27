@@ -1,7 +1,7 @@
 {​​​​​​​
   "compilerOptions": {​​​​​​​
     "target": "ES6",
-    "lib": [ "ES2020", "DOM", "WebWorker" ],
+    "lib": [ "ES2020", /* "DOM", "WebWorker" */ ],
     "module": "commonjs",
     "rootDir": ".",
     "moduleResolution": "node",
