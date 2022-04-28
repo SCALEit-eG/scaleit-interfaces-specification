@@ -3,13 +3,14 @@ Description: >
   This is a potential
   description of the app.
 Version: '1.0.0'
-Frontend:
+Imported: '2000-04-01T06:00:00.000Z'
+Frontends:
  - Port: 54180
    Path: null
    Protocol: http
  - Port: 54280
    Path: "/cgi/ui"
-Middlelayer:
+Middlelayers:
  - Port: 54179
    Path: null
    Protocol: https

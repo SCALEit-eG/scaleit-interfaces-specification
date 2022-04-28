@@ -2,7 +2,7 @@
  * Represents an app instance
  * at runtime
  */
-export class AppInstance{
+export interface AppInstance{
     App: AppConfig;
     Status?: string;
     Images: Array<DockerImage>;
@@ -12,11 +12,24 @@ export class AppInstance{
 /**
  * Basic metadata of an app instance
  */
-export class AppConfig{
+export interface AppConfig{
     Name: string;
     Description?: string;
     Version: string;
     Imported?: Date;
+    Frontends?: ConnectionPoint[];
+    Middlelayers?: ConnectionPoint[];
+    Categories?: string[];
+}
+
+/**
+ * Used to specify a web connection point
+ * on a server
+ */
+export interface ConnectionPoint{
+    Port: number;
+    Path?: string;
+    Protocol: string;
 }
 
 /**
@@ -31,7 +44,7 @@ export class AppConfig{
 /**
  * Information about a docker container
  */
-export class DockerContainer{
+export interface DockerContainer{
     Name: string;
     Id: string;
     ImageId?: string;
@@ -46,7 +59,7 @@ export class DockerContainer{
 /**
  * Information about a docker image
  */
-export class DockerImage
+export interface DockerImage
 {
     Name: string;
     Id?: string;
