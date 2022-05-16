@@ -533,7 +533,7 @@ An app instance is represented as a ZIP archive with the following structure:
 - docker/?
     - {image}.{tar|tgz|tar.gz}
 - manual.pdf?
-- LICENSE.txt
+- LICENSE.txt?
 - screenshots/?
     - {name}.{png|jpg}?
 
