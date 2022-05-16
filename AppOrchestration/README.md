@@ -532,6 +532,10 @@ An app instance is represented as a ZIP archive with the following structure:
 - README.md?
 - docker/?
     - {image}.{tar|tgz|tar.gz}
+- manual.pdf?
+- LICENSE.txt
+- screenshots/?
+    - {name}.{png|jpg}?
 
 Through the docker-compose.yml it is possible to orchestrate the app. Docker images need to be available when the app starts and may be retrievable on the server the Docker runs and thus they are optional. It must not contain a **build context**.
 
