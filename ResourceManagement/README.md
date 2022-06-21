@@ -26,7 +26,7 @@ The ID should be the URL encoded path to the entry. For the root entry the leadi
 retrieves the filesystem of the app with filter possibilities
 
 Query parameters:
-- filetypes: optional, string array, optional, list of files e.g. pdf, png, docx
+- filetypes: optional, string array, list of files e.g. pdf, png, docx
 - q: optional, string, search query
 - category: optional, string, defined categories for a specific purpose e.g. graphics, certificates, licenses
 
@@ -115,6 +115,9 @@ Get the metadata for the filesystem entry including the root directory represent
 Route parameters:
 - id: ID of the entry, if root then it must be explicitly "/" (%2F)
 
+Query parameters:
+- category: optional, string
+
 Response codes:
 - 200 OK: metadata datastructure for file or directory
 - 404 Not Found: entry for ID not found
@@ -140,6 +143,7 @@ Route parameters:
 Query parameters:
 - name: optional, string, name of file if not multipart/form-data content type
 - mkdir: optional, string, create directory with given name
+- category: optional, string
 
 Request headers:
 - Content-Type: MIME type of file
@@ -190,6 +194,7 @@ Route parameters:
 Query parameters:
 - rename: optional, string, new name for file or folder
 - move: optional, string, ID of folder entry for move location
+- category: optional, string
 
 Request headers:
 - Content-Type: MIME type of file
@@ -230,6 +235,9 @@ Delete a file system entry.
 
 Route parameters:
 - id: file entry ID
+
+Query parameters:
+- category: optional, string
 
 Response codes:
 - 202 Accepted: file or folder successfully deleted
