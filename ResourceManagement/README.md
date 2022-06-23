@@ -197,11 +197,13 @@ Query parameters:
 - category: optional, string
 
 Request headers:
-- Content-Type: MIME type of file
+- Content-Type: MIME type of file or multipart/form-data
     - not needed if "rename" or "move" query parameters used
+    - if multipart/form-data then it needs to have "file" entry
 
 Request body:
 - content of the file if replace operation
+- or multipart/form-data body
 
 Response codes:
 - 200 OK: successfully replaced, renamed or moved
@@ -240,7 +242,8 @@ Query parameters:
 - category: optional, string
 
 Response codes:
-- 202 Accepted: file or folder successfully deleted
+- 200 Ok: file or folder successfully deleted
+- 400 Bad Request: entry is not deletable
 - 404 Not Found: entry not found
 
 Example:
