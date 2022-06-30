@@ -23,7 +23,7 @@ The ID should be the URL encoded path to the entry. For the root entry the leadi
         - Files may be automatically generated e.g. configuration stored in database is served as JSON file, HTML template is generated or docker image is exported via docker save
 
 ### GET /api/{version}/files?{}
-retrieves the filesystem of the app with filter possibilities
+Retrieves the filesystem of the app with filter possibilities.
 
 Query parameters:
 - filetypes: optional, string array, list of files e.g. pdf, png, docx
