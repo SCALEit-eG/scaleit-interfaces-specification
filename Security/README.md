@@ -48,6 +48,8 @@ License files shall be guarded against manipulation and forgery using digital si
 
 - When an app is deployed it is assigned a unique key that is associated with its app id
 - The key must be posted from the Transfer App to the middlelayer of the app and can be requested to be sent again
+- When a start of an app is requested the Transfer App has to verify its license
+- If a license expires and there is no further valid license then the Transfer App automatically stops the app
 
 ### GET /transfer/apps/{aid}/licenses
 Retrieve license information of the active license or all licenses of an app.
