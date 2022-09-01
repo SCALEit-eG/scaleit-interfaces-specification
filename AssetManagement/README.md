@@ -20,17 +20,17 @@ confirmation of the registration
 
 ## REST
 
-### GET /api/{version}/assets?{filterquery}
+### GET /assets?{filterquery}
 get all available assets or a filtered subset
 
-### GET /api/{version}/assets/{id}
+### GET /assets/{id}
 get information about a specific asset
 
-### PUT /api/{version}/assets/{id}
+### PUT /assets/{id}
 change information about an asset like geoposition
 
-### POST /api/{version}/assets/{id?}
+### POST /assets/{id?}
 add an asset to the root of the asset tree or to an existing asset
 
-### DELETE /api/{version}/assets/{id}
+### DELETE /assets/{id}
 delete an asset

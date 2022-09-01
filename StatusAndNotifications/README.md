@@ -4,10 +4,7 @@
 
 Overall status of the application or asset.
 
-### GET /api/status
-Endpoint for backwards compatibility without version that serves the app status. See **/api/{version}/status**
-
-### GET /api/{version}/status
+### GET /status
 Gives the current status message of the application.
 
 Response codes:
@@ -23,8 +20,8 @@ Response body:
 
 Possible states of an application or asset.
 
-### GET /api/{version}/states
+### GET /states
 list of available states
 
-### GET /api/{version}/states/{id}
+### GET /states/{id}
 information about a specific state

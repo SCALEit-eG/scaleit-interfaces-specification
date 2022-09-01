@@ -2,11 +2,59 @@
 
 Interfaces defined here apply in general and typically serve several categories or can't be categorized at all.
 
+## Base URL
+The base url should come implicitly before all documented HTTP endpoints although there may be exceptions that need to be stated explicitly.
+
+```
+Base URL := http[s]://{host}[:{port}]:[{prefix}]/api[/{version}]
+```
+
+- If explicitly referred to the placeholder should be: **{base}**
+
+Examples:
+```
+https://scale-it.org:54130/api/2/status
+https://example-company.platform-x.de/external/api/status
+```
+
+In the above examples the base URLs are the following:
+1. https://scale-it.org:54130/api/2
+2. https://example-company.platform-x.de/external/api
+
+## Prefix
+Prefixes are used to enable increased interoperability between different systems that provide SCALE it API endpoints in addition to their own endpoints. It is an optional feature that is configurable, but it must be taken into account by implementations.
+
+Examples:
+```
+/api/status
+/scaleit/api/status
+/api/external/scaleit/api/status
+```
+
+In the above examples the prefixes are the following:
+1. No prefix
+2. Prefix := /scaleit
+3. Prefix := /api/external/scaleit
+
 ## Version
 
 Interfaces and datastructures adhere to semantic versioning. Please refer to [semver.org](https://semver.org/).
 
-### GET /api/versions
+- From SemVer it follows that only the major and minor version should be specified when using the version string, as the patch version is implicitly the highest available
+- If the version is omitted then the highest available version is inferred
+- If only the minor version is omitted then the highest available minor version for the stated major version is inferred
+
+- Assumptions for the examples:
+    - Highest available version: 2.9.17
+    - Highest minor version for major version 1: 1.5.3
+    - Highest patch version for 1.3: 1.3.9
+```
+/api/status -> /api/2.9/status (patch: 2.9.17)
+/api/1/status -> /api/1.5/status (patch: 1.5.3)
+/api/1.3/status -> /api/1.3/status (patch: 1.3.9)
+```
+
+### GET /versions
 List of available version identifiers that the app supports.
 
 Response codes:
@@ -29,7 +77,7 @@ GET /api/versions
 ]
 ```
 
-### GET /api/versions/{version}
+### GET /versions/{version}
 List of available endpoints for the given version.
 
 Route parameters:
@@ -55,7 +103,7 @@ GET /api/versions/0.5.0-dev
 
 ## Events
 
-### SSE /api/events
+### SSE /events
 Server-sent events endpoint; allows asynchronous communication from the server to the client
 
 Supported channels:
@@ -86,7 +134,7 @@ Response headers:
 
 A process hereby refers to an identifiable procedure or task that takes place in an app.
 
-### PUT /api/cancel/{id}
+### PUT /cancel/{id}
 Cancel the task identified by the given ID.
 
 Route parameters:

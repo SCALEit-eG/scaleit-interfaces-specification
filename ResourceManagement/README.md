@@ -22,7 +22,7 @@ The ID should be the URL encoded path to the entry. For the root entry the leadi
         - Actual folder structure may change or should not be known
         - Files may be automatically generated e.g. configuration stored in database is served as JSON file, HTML template is generated or docker image is exported via docker save
 
-### GET /api/{version}/files?{}
+### GET /files?{}
 Retrieves the filesystem of the app with filter possibilities.
 
 Query parameters:
@@ -55,7 +55,7 @@ GET /api/1.0.0/files?category=licenses
 returns a list with all license files
 ```
 
-### GET /api/{version}/filecategories
+### GET /filecategories
 Returns a list of available file categories.
 
 Response codes:
@@ -73,7 +73,7 @@ Examples:
 GET /api/1.0.0/filecategories
 ```
 
-### GET /api/{version}/files/{id}?{}
+### GET /files/{id}?{}
 Download a specific file or folder structure
 
 Route parameters:
@@ -109,7 +109,7 @@ GET /api/1.0.0/files/path%2Fto%2Ffolder?compress=zip
 returns a ZIP archive for "/path/to/folder" directory
 ```
 
-### GET /api/{version}/files/{id}/info
+### GET /files/{id}/info
 Get the metadata for the filesystem entry including the root directory represented by "/" which resolves to "%2F".
 
 Route parameters:
@@ -133,7 +133,7 @@ GET /api/1.0.0/files/%2F/info
 gives metadata about the root directory
 ```
 
-### POST /api/{version}/files/{id}?{}
+### POST /files/{id}?{}
 Upload a file to a specific folder or create a folder
 
 Route parameters:
@@ -185,7 +185,7 @@ POST /api/1.0.0/files/graphics?mkdir=icons
 Creates the folder icons/ in the folder graphics/
 ```
 
-### PUT /api/{version}/files/{id}?{}
+### PUT /files/{id}?{}
 Replace a file, rename a file or directory or move an entry.
 
 Route parameters:
@@ -232,7 +232,7 @@ Content-Type: text/plain
 replaces (changes) backend.json with new content
 ```
 
-### DELETE /api/{version}/files/{id}
+### DELETE /files/{id}
 Delete a file system entry.
 
 Route parameters:

@@ -16,8 +16,8 @@ Interfaces for services that can deploy and orchestrate apps.
 ## Transfer Technology
 These endpoints are specific to the transfer app that is build around Docker-Compose.
 
-### POST /api/{version}/transfer/import
-Import an app instance or template as ZIP archive. The Websocket endpoint **/api/{version}/events/transfer/import** should be preferred as it provides incremental feedback for this import process that may take a while.
+### POST /transfer/import
+Import an app instance or template as ZIP archive. The Websocket endpoint **/events/transfer/import** should be preferred as it provides incremental feedback for this import process that may take a while.
 
 Request headers:
 - Content-Type: multipart/form-data
@@ -41,7 +41,7 @@ Content-Disposition: form-data; name="app"; filename="BashMessagePrinter.zip"
 ----------------------------854348040641744448699751--
 ```
 
-### GET /api/{version}/transfer/export/{id}?{query}
+### GET /transfer/export/{id}?{query}
 Export a specific app instance or template as ZIP archive.
 
 Route parameters:
@@ -66,7 +66,7 @@ Example:
 GET /api/0.2.0/transfer/export/ScaleIT%20node-red%3A2.2.2?with_images=true
 ```
 
-### GET /api/{version}/transfer/apps
+### GET /transfer/apps
 Retrieve the list of currently available app instances on the server.
 
 Response codes:
@@ -84,7 +84,7 @@ Example:
 GET /api/0.2.0/transfer/apps
 ```
 
-### GET /api/{version}/transfer/apps/{id}
+### GET /transfer/apps/{id}
 Get the information details of a single app instance.
 
 Route parameters:
@@ -106,7 +106,7 @@ Example:
 GET /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg
 ```
 
-### GET /api/{version}/transfer/apps/{id}/icon
+### GET /transfer/apps/{id}/icon
 Download the app's icon if available.
 
 Route parameters:
@@ -131,7 +131,7 @@ Example:
 GET /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/icon
 ```
 
-### GET /api/{version}/transfer/apps/{id}/readme
+### GET /transfer/apps/{id}/readme
 Download the app's readme if available.
 
 Route parameters:
@@ -159,7 +159,7 @@ Example:
 GET /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/readme
 ```
 
-### DELETE /api/{version}/transfer/apps/{id}?{query}
+### DELETE /transfer/apps/{id}?{query}
 Delete an app instance and if forced and necessary stop it before.
 
 Route parameters:
@@ -184,8 +184,8 @@ Example:
 DELETE /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg?force=true&remove_images=false
 ```
 
-### PUT /api/{version}/transfer/apps/{id}/start
-Start an app instance. As this process may take some time, it is recommended to use the Websocket **/api/{version}/events/transfer/apps/{id}/start** endpoint instead.
+### PUT /transfer/apps/{id}/start
+Start an app instance. As this process may take some time, it is recommended to use the Websocket **/events/transfer/apps/{id}/start** endpoint instead.
 
 Route parameters:
 - id: app instance id
@@ -206,7 +206,7 @@ Example:
 PUT /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/start
 ```
 
-### PUT /api/{version}/transfer/apps/{id}/stop?{query}
+### PUT /transfer/apps/{id}/stop?{query}
 Stop an app instance and if requested remove volumes.
 
 Route parameters:
@@ -232,7 +232,7 @@ Example:
 PUT /api/0.2.0/transfer/apps/ScaleIT%20node-red%3A2.2.2/stop?remove_volumes=true
 ```
 
-### GET /api/{version}/transfer/apps/{id}/logs?{query}
+### GET /transfer/apps/{id}/logs?{query}
 Retrieve the logs of a running app.
 
 Route parameters:
@@ -259,7 +259,7 @@ Example:
 GET /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/logs?lines=30
 ```
 
-### PUT /api/{version}/transfer/refresh/apps
+### PUT /transfer/refresh/apps
 Refreshes the status information of all apps, whereby the status updates are sent asynchronously via SSE and the operation is only done if there is no refresh scheduled already.
 
 Response codes:
@@ -271,7 +271,7 @@ Example:
 PUT /api/0.2.0/transfer/refresh/apps
 ```
 
-### GET /api/{version}/transfer/refresh/apps
+### GET /transfer/refresh/apps
 Returns if the app is currently busy refreshing the status of all apps or not.
 
 Response codes:
@@ -288,7 +288,7 @@ Example:
 GET /api/0.2.0/transfer/refresh/apps
 ```
 
-### PUT /api/{version}/transfer/apps/{id}/refresh
+### PUT /transfer/apps/{id}/refresh
 Refreshes an existing app, if it is not already scheduled.
 
 Route parameters:
@@ -304,7 +304,7 @@ Example:
 PUT /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/refresh
 ```
 
-### GET /api/{version}/transfer/recognize/apps
+### GET /transfer/recognize/apps
 Investigates the Docker containers of the server and recognizes apps according to naming conventions.
 
 Response codes:
@@ -322,7 +322,7 @@ Example:
 GET /api/0.2.0/transfer/recognize
 ```
 
-### Websockets /api/{version}/events/transfer/import
+### Websockets /events/transfer/import
 Imports an app as ZIP archive and provides incremental feedback.
 
 Message protocol:
@@ -339,7 +339,7 @@ Message protocol:
     - After that the import pipeline specific steps are reported
     - If StepType: "STORE_INSTANCE" has "Success: true" then the import was successfull
 
-### Websockets /api/{version}/events/transfer/apps/{id}/start
+### Websockets /events/transfer/apps/{id}/start
 Starts an available app and provides incremental feedback.
 
 Route parameters:
@@ -370,7 +370,7 @@ Note: Older versions may use **/events**.
 ### PUT /api/cancel/{id}
 Cancel the task identified by the given ID. Applies to all operations that return a cancel id.
 
-### GET /api/{version}/devicename
+### GET /devicename
 Returns the current device name if set.
 
 Response codes:
@@ -390,7 +390,7 @@ GET /api/0.2.0/devicename
 "IoT Gateway Server 10:5-dev"
 ```
 
-### PUT /api/{version}/devicename?{query}
+### PUT /devicename?{query}
 Sets the device name of the server.
 
 Query parameters:
@@ -409,7 +409,7 @@ PUT /api/0.2.0/devicename?name=IoT%20Gateway%20Server%2010%3A5-dev
 ## Transfer Technology - Files API
 Some specifics about the implementation of the files api is described below. For more information see the Resource-Management category.
 
-### GET /api/{version}/files?{}
+### GET /files?{}
 
 Query parameters:
 - category
@@ -438,7 +438,7 @@ GET /api/0.2.0/files?category=instances
 ]
 ```
 
-### GET /api/{version}/files/{id}?{}
+### GET /files/{id}?{}
 
 If ID refers to an instance or template id then the file system of the ZIP file will be served.
 
@@ -499,21 +499,21 @@ Content-Type: video/mp4
 ## Transfer Technology - Templates
 These endpoints are specific to the templates version of the transfer app.
 
-### GET /api/{version}/transfer/templates
+### GET /transfer/templates
 TODO
 
-### GET /api/{version}/transfer/templates/{id}
+### GET /transfer/templates/{id}
 TODO
 
-### DELETE /api/{version}/transfer/templates/{id}
+### DELETE /transfer/templates/{id}
 TODO
 
-### POST /api/{version}/transfer/templates/{id}/instantiate
+### POST /transfer/templates/{id}/instantiate
 Start the app instantiation process.
 
 TODO
 
-### SSE /api/{version}/transfer/templates/{id}/build
+### SSE /transfer/templates/{id}/build
 Execute the build process and finish it on success. Provides incremental feedback.
 
 SSE channels:
@@ -587,62 +587,62 @@ https://<server_url>:54179
 ## Transfer Technology - Administration
 The subsequent endpoints define the system module of the transfer app that serves administrative purposes around Docker and Docker-Compose.
 
-### GET /api/{version}/system/images
+### GET /system/images
 TODO
 
-### GET /api/{version}/system/images/{id}
+### GET /system/images/{id}
 TODO
 
-### GET /api/{version}/system/images/{id}/export
+### GET /system/images/{id}/export
 TODO
 
-### DELETE /api/{version}/system/images/{id}
+### DELETE /system/images/{id}
 TODO
 
-### POST /api/{version}/system/images
+### POST /system/images
 TODO
 
-### DELETE /api/{version}/system/prune/images
+### DELETE /system/prune/images
 TODO
 
-### GET /api/{version}/system/containers
+### GET /system/containers
 TODO
 
-### GET /api/{version}/system/containers/{id}
+### GET /system/containers/{id}
 TODO
 
-### PUT /api/{version}/system/containers/{id}/start
+### PUT /system/containers/{id}/start
 TODO
 
-### PUT /api/{version}/system/containers/{id}/stop
+### PUT /system/containers/{id}/stop
 TODO
 
-### PUT /api/{version}/system/containers/{id}/restart
+### PUT /system/containers/{id}/restart
 TODO
 
-### DELETE /api/{version}/system/containers/{id}/remove
+### DELETE /system/containers/{id}/remove
 TODO
 
-### DELETE /api/{version}/system/prune/containers
+### DELETE /system/prune/containers
 TODO
 
-### GET /api/{version}/system/volumes
+### GET /system/volumes
 TODO
 
-### GET /api/{version}/system/volumes/{name}
+### GET /system/volumes/{name}
 TODO
 
-### DELETE /api/{version}/system/volumes/{name}?{query}
+### DELETE /system/volumes/{name}?{query}
 TODO
 
 Query parameters:
 - force: boolean
 
-### DELETE /api/{version}/system/prune/volumes
+### DELETE /system/prune/volumes
 TODO
 
-### Websockets /api/{version}/events/system/loadimage
-Allows to incrementally upload individual Docker images that are then uploaded to the configured Docker daemon. Works just like **Websockets /api/{version}/events/transfer/import** but with much fewer reported steps at the end. The docker image should be in the TAR format that **docker save** put out.
+### Websockets /events/system/loadimage
+Allows to incrementally upload individual Docker images that are then uploaded to the configured Docker daemon. Works just like **Websockets /events/transfer/import** but with much fewer reported steps at the end. The docker image should be in the TAR format that **docker save** put out.
 
 ## Transfer App v2.2.2-inst-dev
 Important interfaces of this version documented to interact with the older API that was in use. For information about further interfaces the app itself must be investigated or the Swagger documentation opened.

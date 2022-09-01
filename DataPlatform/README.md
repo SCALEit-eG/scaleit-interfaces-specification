@@ -22,7 +22,7 @@ Implements or uses the interface of [AssetManagement](../AssetManagement/README.
 
 ## REST
 
-### GET /api/{version}/assets/{id}/values?{}
+### GET /assets/{id}/values?{}
 Measuring values
 
 Query parameters:
@@ -31,15 +31,15 @@ Query parameters:
 - step: string
     - time step
 
-### POST /api/{version}/assets/{id}/values
+### POST /assets/{id}/values
 
-### PUT /api/{version}/assets/{id}/values
+### PUT /assets/{id}/values
 
-### DELETE /api/{version}/assets/{id}/values
+### DELETE /assets/{id}/values
 
-### GET /api/{version}/policy
+### GET /policy
 Gets the policy rules for storage etc.
 
-### PUT /api/{version}/policy
+### PUT /policy
 
 ## MQTT

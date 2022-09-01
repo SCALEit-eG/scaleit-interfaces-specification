@@ -40,7 +40,7 @@ Data: SensorSystemMappingMessage
 
 ## REST
 
-### GET /api/{version}/metadata
+### GET /metadata
 list of available metadata types
 
 Response codes:
@@ -53,7 +53,7 @@ Response headers:
 Response body:
 - string[]
 
-### GET /api/{version}/metadata/{type}
+### GET /metadata/{type}
 retrieve the metadata message for the given type
 
 Route parameters:
@@ -78,7 +78,7 @@ GET /api/0.2.0/metadata/DisplayAttributes
 GET /api/0.2.0/metadata/MasterData
 ```
 
-### GET /api/{version}/MeasuringValues
+### GET /MeasuringValues
 the current (last) measuring values
 
 Response codes:

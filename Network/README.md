@@ -14,8 +14,8 @@ Connectivity types:
 - REST HTTP, SSE
 - Websockets
 
-### GET /api/{version}/connectivity
+### GET /connectivity
 read the current connectivity details
 
-### PUT /api/{version}/connectivity
+### PUT /connectivity
 change the connectivity details
