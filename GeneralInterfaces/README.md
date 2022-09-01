@@ -6,9 +6,11 @@ Interfaces defined here apply in general and typically serve several categories 
 The base url should come implicitly before all documented HTTP endpoints although there may be exceptions that need to be stated explicitly.
 
 ```
-Base URL := http[s]://{host}[:{port}]:[{prefix}]/api[/{version}]
+Base URL := {protocol}://{host}[:{port}]:[{prefix}]/api[/{version}]
+{protocol} := http[s] | ws[s]
 ```
 
+- Protocol considers HTTP which is also used for SSE and websockets
 - If explicitly referred to the placeholder should be: **{base}**
 
 Examples:
