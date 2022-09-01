@@ -5,6 +5,7 @@ Describes interfaces that enable the management and sharing of resources between
 
 1. [Files](#files)
 2. [App Filesystem](#app-filesystem)
+3. [System Information](#system-information)
 
 ## Files
 
@@ -273,3 +274,33 @@ config%2F%25custom%25%20config%3F.json
 base64 -->
 Y29uZmlnLyVjdXN0b20lIGNvbmZpZz8uanNvbg==
 ```
+
+## System Information
+
+- Information about an OS, software stack and hardware information
+
+### GET /systeminfo
+Retrieve basic hardware and software information about the device / system of interest.
+
+Response codes:
+- 200 OK: data
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- SysInfo
+
+
+### GET /systeminfo/processes
+Retrieve information about running processes in the system.
+
+Response codes:
+- 200 OK: data
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- SysInfoProcess[]
+

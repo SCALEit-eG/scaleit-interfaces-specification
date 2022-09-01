@@ -1,6 +1,6 @@
 # Asset Management
 
-Asset := a thing of value to an organization, mostly physical
+Asset := a thing of value to an organization, physical or virtual
 
 ## Identification
 
@@ -10,7 +10,7 @@ Identification through URLs, see [Details of AAS 4.4](https://industrialdigitalt
 
 ## Registration Process
 
-### MQTT
+- Usage of MQTT topics
 
 ### Publish AlarmAndEvent/Registration
 asset gets registered
@@ -18,7 +18,7 @@ asset gets registered
 ### Subscribe {gauid}/AlarmAndEvent/Status
 confirmation of the registration
 
-## REST
+## Asset Management
 
 ### GET /assets?{filterquery}
 get all available assets or a filtered subset
