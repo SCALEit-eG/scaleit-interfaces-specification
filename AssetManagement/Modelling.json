@@ -1,0 +1,182 @@
+[
+    {
+        "Info": "Just a playground to experiment with data structures"
+    },
+    {
+        "Assets":
+        [
+            {
+                "Gauid": "urn:scaleit:dev:assets:1:1:sensor1",
+                "Label": "Sensor 1",
+                "AssetType": "Sensor",
+                "AssetKind": "Physical",
+                "Owners": [
+                    "sensor.owner@mail.com"
+                ],
+                "Groups": [
+                    "urn:scaleit:groups:scaleit_sensors"
+                ],
+                "Assignees": [
+                    "sensor.worker@mail.com"
+                ],
+                "Created": "2022-09-03T15:00:45.333Z",
+                "LastChanged": "2022-09-04T20:15:00.333Z"
+            },
+            {
+                "Gauid": "urn:scaleit:dev:assets:1:1:sensor-system1",
+                "Label": "Sensor System 1",
+                "AssetType": "SensorSystem",
+                "AssetKind": "Virtual"
+            },
+            {
+                "Gauid": "urn:scaleit:dev:assets:1:1:sensor-app-template1",
+                "Label": "Sensor App Template 1",
+                "AssetType": "App",
+                "AssetKind": "Virtual"
+            },
+            {
+                "AssetKind": "<Physical|Virtual|Complex>"
+            },
+            {
+                "Gauid": "https://scale-it.org",
+                "Label": "SCALE it eG",
+                "AssetType": "Organisation",
+                "AssetKind": "Complex",
+                "Owners": [
+                    "info@scale-it.org"
+                ],
+                "Assignees": [
+                    "cleistner@scale-it.org"
+                ],
+                "IdPaths": [
+                    "https://scale-it.org",
+                    "http://scale-it.org",
+                    "urn:scaleit",
+                    "https://digiz.scale-it.org"
+                ]
+            },
+            {
+                "Gauid": "urn:scaleit:groups:scaleit_sensors",
+                "Label": "Sensor Group",
+                "AssetType": "Group",
+                "AssetKind": "Virtual",
+                "Assignees": [
+                    "some.worker@scale-it.org"
+                ]
+            },
+            {
+                "Gauid": "urn:global:definitions:base",
+                "Label": "Global Definitions Base Type",
+                "AssetType": "Definition",
+                "AssetKind": "Virtual"
+            },
+            {
+                "Gauid": "urn:global:definitions:assets:computer",
+                "Label": "Computer Definition",
+                "AssetType": "AssetDefinition",
+                "AssetKind": "Virtual",
+                "ProvidedDataTypes": [
+                    "urn:global:definitions:datatypes:pcinfo"
+                ],
+                "RestrictDataTypes": false
+            },
+            {
+                "Gauid": "urn:global:definitions:assets:computer:desktop-pc",
+                "Label": "Desktop PC Definition",
+                "AssetType": "AssetDefinition",
+                "AssetKind": "Virtual"
+            },
+            {
+                "Gauid": "urn:global:definitions:assets:computer:server",
+                "Label": "Server Definition",
+                "AssetType": "AssetDefinition",
+                "AssetKind": "Virtual"
+            },
+            {
+                "Gauid": "urn:global:definitions:datatypes:pcinfo",
+                "Label": "PC Info DataType Definition",
+                "AssetType": "DataTypeDefinition",
+                "AssetKind": "Virtual"
+            },
+            {
+                "Gauid": "https://digiz.scale-it.org:52000/vms/scaleit-linux-vm-739",
+                "Label": "SCALE it Linux VM for Order 739",
+                "AssetType": "VM",
+                "AssetKind": "Virtual",
+                "Owners": [
+                    "cleistner@scale-it.org"
+                ]
+            }
+        ],
+        "Data":
+        [
+            {
+                "Gauid": "urn:scaleit:dev:assets:1:1:sensor1",
+                "DataType": "Metadata",
+                "Data": [
+                    {
+                        "MetadataType": "MasterData",
+                        "SensorType": "Temperature",
+                        "Label": "Temperature Sensor",
+                        "Exponent": 1,
+                        "Unit": "°C",
+                        "?": "?"
+                    }
+                ]
+            },
+            {
+                "Gauid": "urn:scaleit:dev:assets:1:1:sensor1",
+                "DataType": "SensorValue",
+                "Data": {
+                    "Value": 20,
+                    "TimeStamp": "2020-10-01T10:45:15.123Z"
+                }
+            },
+            {
+                "Gauid": "urn:scaleit:dev:assets:1:1:sensor-app-template1",
+                "DataType": "App",
+                "Data": {
+                    "...": "see app asset information"
+                }
+            }
+        ],
+        "Rel":
+        [
+            {
+                "Asset1": "urn:scaleit:dev:assets:1:1:sensor1",
+                "Asset2": "urn:scaleit:dev:assets:1:1:sensor-system1",
+                "RelType": "belongs_to"
+            },
+            {
+                "RelType": "<part_of|belongs_to|connected_to|deployed_on|depends_on|...>"
+            },
+            {
+                "Asset1": "urn:scaleit:groups:scaleit_sensors",
+                "Asset2": "https://scale-it.org",
+                "RelType": "belongs_to"
+            },
+            {
+                "Asset1": "urn:global:definitions:assets:computer:desktop-pc",
+                "Asset2": "urn:global:definitions:assets:computer",
+                "RelType": "type_of"
+            },
+            {
+                "Asset1": "urn:global:definitions:assets:computer:server",
+                "Asset2": "urn:global:definitions:assets:computer",
+                "RelType": "type_of"
+            }
+        ],
+        "Operations": [
+            {
+                "Asset:": "https://digiz.scale-it.org:52000/vms/scaleit-linux-vm-739",
+                "Label": "restart",
+                "Description": "Restarts the VM",
+                "Interface": {
+                    "Type": "http",
+                    "Address": "https://digiz.scale-it.org:52000/vms/scaleit-linux-vm-739/restart"
+                }
+            }
+        ],
+        "Events": []
+    }
+]

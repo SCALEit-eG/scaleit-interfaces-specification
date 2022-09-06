@@ -536,6 +536,8 @@ An app instance is represented as a ZIP archive with the following structure:
 - LICENSE.txt?
 - screenshots/?
     - {name}.{png|jpg}?
+- licenses/?
+    - {name}.lic + {name}.crt + {name}.pfx
 
 Through the docker-compose.yml it is possible to orchestrate the app. Docker images need to be available when the app starts and may be retrievable on the server the Docker runs and thus they are optional. It must not contain a **build context**.
 
