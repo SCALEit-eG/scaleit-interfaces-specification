@@ -73,6 +73,7 @@ Response codes:
 - 204 No Content: no valid license available
 - 401 Unauthorized: no key provided
 - 403 Forbidden: key is not authorized for the app
+- 404 Not found: app not found
 
 Response headers:
 - Content-Type: application/json
@@ -98,7 +99,7 @@ Response codes:
 - 204 No Content: no valid license available
 - 401 Unauthorized: no key provided
 - 403 Forbidden: key is not authorized for the app
-- 404 Not found: no license for license ID
+- 404 Not found: app not found or no license for license ID
 
 Response headers:
 - Content-Type: application/zip
