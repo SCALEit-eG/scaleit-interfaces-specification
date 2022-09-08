@@ -97,7 +97,6 @@ Request headers:
 
 Response codes:
 - 200 OK: valid license available
-- 204 No Content: no valid license available
 - 400 Bad Request: invalid app id or licenses incomplete
 - 401 Unauthorized: no key provided
 - 403 Forbidden: key is not authorized for the app
