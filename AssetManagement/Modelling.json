@@ -48,7 +48,7 @@
                 "Assignees": [
                     "cleistner@scale-it.org"
                 ],
-                "IdPaths": [
+                "Namespace": [
                     "https://scale-it.org",
                     "http://scale-it.org",
                     "urn:scaleit",
