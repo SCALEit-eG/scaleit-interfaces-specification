@@ -124,6 +124,7 @@ Request body:
 Response codes:
 - 200 OK: license uploaded
 - 400 Bad Request: ZIP archive not valid or incomplete
+- 404 Not found: app not found
 
 ### DELETE /transfer/apps/{aid}/licenses/{lid}
 Remove a license of an app.
@@ -142,7 +143,18 @@ Response codes:
 - 200 OK: license found and deleted
 - 401 Unauthorized: no key provided
 - 403 Forbidden: key is not authorized for the app
-- 404 Not found: no license for license ID
+- 404 Not found: no license for license ID or app not found
+
+### PUT /transfer/apps/{aid}/licensekey
+Request to send the license key to the specified app.
+
+Route parameters:
+- aid: string, required
+    - ID of the app
+
+Response codes:
+- 200 OK: license found and deleted
+- 404 Not found: app not found
 
 ## Licensing - System Information
 
