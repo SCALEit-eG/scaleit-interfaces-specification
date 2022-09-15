@@ -135,15 +135,9 @@ Route parameters:
 - lid: string, required
     - ID of the license
 
-Request headers:
-- Authorization: Key {key}
-    - Used for authorized access to the license
-
 Response codes:
 - 200 OK: license found and deleted
 - 400 Bad Request: invalid app id
-- 401 Unauthorized: no key provided
-- 403 Forbidden: key is not authorized for the app
 - 404 Not found: no license for license ID or app not found
 
 ### PUT /transfer/apps/{aid}/licensekey
@@ -154,8 +148,8 @@ Route parameters:
     - ID of the app
 
 Response codes:
-- 200 OK: license found and deleted
-- 400 Bad Request: invalid app id
+- 200 OK: license key sent to the app
+- 400 Bad Request: invalid app id or app provides no info about possible connection endpoint
 - 404 Not found: app not found
 
 ## Licensing - System Information
