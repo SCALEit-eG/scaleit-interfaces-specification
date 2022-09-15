@@ -123,7 +123,7 @@ Request body:
 
 Response codes:
 - 200 OK: license uploaded
-- 400 Bad Request: ZIP archive not valid or incomplete
+- 400 Bad Request: ZIP archive not valid or incomplete or app id invalid
 - 404 Not found: app not found
 
 ### DELETE /transfer/apps/{aid}/licenses/{lid}
@@ -141,6 +141,7 @@ Request headers:
 
 Response codes:
 - 200 OK: license found and deleted
+- 400 Bad Request: invalid app id
 - 401 Unauthorized: no key provided
 - 403 Forbidden: key is not authorized for the app
 - 404 Not found: no license for license ID or app not found
@@ -154,6 +155,7 @@ Route parameters:
 
 Response codes:
 - 200 OK: license found and deleted
+- 400 Bad Request: invalid app id
 - 404 Not found: app not found
 
 ## Licensing - System Information
