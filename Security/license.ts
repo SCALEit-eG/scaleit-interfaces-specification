@@ -1,8 +1,19 @@
+/**
+ * Holds basic license information intended for
+ * an overview
+ */
 export interface License{
     /** whether the license can be used */
     Valid: boolean;
     /** information from the x509 certificate */
     Certificate: CertificateData,
+}
+
+/**
+ * Provides the actual details that a license contains
+ * and should only be accessed authorized
+ */
+export interface LicenseDetails extends License{
     /** app specific license data */
     License: any;
 }

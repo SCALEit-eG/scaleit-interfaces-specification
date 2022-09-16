@@ -63,6 +63,8 @@ Query parameters:
     - If true then an array of all licenses of the app will be returned
 - also_invalid: boolean, optional, default: false
     - Also returns licenses that are invalid
+- details: boolean, optional, default: true
+    - Requests license details making authorization mandatory
 
 Request headers:
 - Authorization: Key {key}
@@ -72,7 +74,7 @@ Response codes:
 - 200 OK: valid license(s) available
 - 204 No Content: no valid license available
 - 400 Bad Request: invalid app id or licenses incomplete
-- 401 Unauthorized: no key provided
+- 401 Unauthorized: no key provided when details requested
 - 403 Forbidden: key is not authorized for the app
 - 404 Not found: app not found
 
@@ -81,6 +83,7 @@ Response headers:
 
 Response body:
 - License[]
+    - LicenseDetails[] if authorized
 
 ### GET /transfer/apps/{aid}/licenses/{lid}
 Retrieve the license files of a specific license.
@@ -151,6 +154,21 @@ Response codes:
 - 200 OK: license key sent to the app
 - 400 Bad Request: invalid app id or app provides no info about possible connection endpoint
 - 404 Not found: app not found
+
+### GET /transfer/licenses/{lickey}
+Retrieve the license details of a license given the license key.
+
+Route parameters:
+- lickey: string, required
+    - License key
+
+Response codes:
+- 200 OK: active license for key found
+- 400 Bad Request: no license key given
+- 404 Not found: license key not found / invalid or no license
+
+Response body:
+- LicenseDetails
 
 ## Licensing - System Information
 
