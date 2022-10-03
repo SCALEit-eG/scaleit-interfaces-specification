@@ -58,6 +58,7 @@ License information must be provided to bind the license to a specific context. 
 - App: needed to bind license to an app
     - Config: Name, Version, Product number
     - Image digests: hash values for all referenced container images
+        - See [Challenges of Uniquely Identifying Images](https://blog.aquasec.com/docker-image-tags) for issues
 - App specific information: needed by the app to enable / disable features
 
 ## Licensing - Transfer App Interfaces
