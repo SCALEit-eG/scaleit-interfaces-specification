@@ -6,6 +6,10 @@
             "MAC": "080027623383",
             "Manufacturer": "",
             "ProductName": ""
+        },
+        "TPM": {
+            "Fingerprint": "2f147598f653a73e1bf13fbbca5da166f656be22",
+            "HashEncryptedFingerprint": "8388bea942e3c9de8e2f09cb91de2581ee0ab015"
         }
     },
     "App": {
