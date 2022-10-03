@@ -3,6 +3,7 @@ Description: >
   This is a potential
   description of the app.
 Version: '1.0.0'
+ProductNumber: 'abcdefg123456'
 Imported: '2000-04-01T06:00:00.000Z'
 Frontends:
  - Port: 54180

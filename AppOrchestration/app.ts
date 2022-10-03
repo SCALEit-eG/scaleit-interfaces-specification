@@ -16,6 +16,7 @@ export interface AppConfig{
     Name: string;
     Description?: string;
     Version: string;
+    ProductNumber: string;
     Imported?: Date;
     Frontends?: ConnectionPoint[];
     Middlelayers?: ConnectionPoint[];

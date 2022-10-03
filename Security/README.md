@@ -44,6 +44,22 @@ License files shall be guarded against manipulation and forgery using digital si
     - SHA1 and SHA256 are possible, SHA1 is used for identification because it is shorter
     - During validation SHA256 shall be used
 
+### License Information
+
+License information must be provided to bind the license to a specific context. This information will be secured against forgery and manipulation with the help of a digital signature and a trusted PKI.
+
+- Device: needed to bind license to a device
+    1. Network Adapter
+        - MAC address, adapter type, etc.
+        - See [NIC information](../ResourceManagement/SysInfo.ts)
+    2. TPM
+        - Provisioned TPM
+        - Fingerprint and encrypted fingerprint of securely stored digital certificate
+- App: needed to bind license to an app
+    - Config: Name, Version, Product number
+    - Image digests: hash values for all referenced container images
+- App specific information: needed by the app to enable / disable features
+
 ## Licensing - Transfer App Interfaces
 
 - When an app is deployed it is assigned a unique key that is associated with its app id
