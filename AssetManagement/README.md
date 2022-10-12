@@ -17,15 +17,8 @@ Globally unique identification of devices: Gauid := global asset unique identifi
 
 Identification through URIs, see [Details of AAS 4.4](https://industrialdigitaltwin.org/wp-content/uploads/2021/09/07_details_of_the_asset_administration_shell_part1_v3_en_2020.pdf)
 
-## Registration Process
-
-- Usage of MQTT topics
-
-### Publish AlarmAndEvent/Registration
-asset gets registered
-
-### Subscribe {gauid}/AlarmAndEvent/Status
-confirmation of the registration
+- URIs create hierarchies
+- URI namespaces / prefixes can be reserved for an asset hierarchy
 
 ## Asset Management
 
@@ -101,17 +94,17 @@ GET /assets?limit=100
 GET /assets?type=App&network=true&from=urn%3Ascaleit%3Adev%3Aassets%3A1%3A1%3Asensor-app-template1
 ```
 
+### POST /assets
+add / register an asset
+
 ### GET /assets/{id}
 get information about a specific asset
 
 ### PUT /assets/{id}
-change information about an asset like geoposition
-
-### POST /assets
-add an asset to the root of the asset tree
+change metainformation of an asset
 
 ### DELETE /assets/{id}
-delete an asset
+delete an asset and optionally its hierarchy
 
 ## Asset Data
 
