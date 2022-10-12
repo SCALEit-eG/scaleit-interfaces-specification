@@ -112,7 +112,7 @@
         [
             {
                 "Gauid": "urn:scaleit:dev:assets:1:1:sensor1",
-                "DataType": "Metadata",
+                "DataType": "SensorMetadata",
                 "Data": [
                     {
                         "MetadataType": "MasterData",
@@ -120,7 +120,10 @@
                         "Label": "Temperature Sensor",
                         "Exponent": 1,
                         "Unit": "°C",
-                        "?": "?"
+                        "?": "?",
+                        "DataRate": 0,
+                        "MinValue": -1,
+                        "MaxValue": 2
                     }
                 ]
             },
