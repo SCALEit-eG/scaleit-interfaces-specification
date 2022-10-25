@@ -106,11 +106,32 @@ change metainformation of an asset
 ### DELETE /assets/{id}
 delete an asset and optionally its hierarchy
 
+## Asset Types
+
+### GET /assettypes
+
+### GET /assettypes/{type}
+
 ## Asset Data
+
+Binary data can be put in the system and be given an asset relative file URL.
 
 ### GET /assets/{id}/data
 
-### GET /assets/{id}/data/{datatype}
+### POST /assets/{id}/data
+Register a new datatype with specific version and optionally make it default.
+
+### GET /assets/{id}/data/{datatype}?{filterquery}
+
+### POST /assets/{id}/data/{datatype}
+
+### DELETE /assets/{id}/data/{datatype}
+
+### GET /assets/{id}/data/{datatype}/{element}
+
+### PUT /assets/{id}/data/{datatype}/{element}
+
+### DELETE /assets/{id}/data/{datatype}/{element}
 
 ## Asset Relationships
 
@@ -147,7 +168,17 @@ Types of asset relationships:
 
 ### GET /assets/{id}/rel
 
+### POST /assets/{id}/rel
+
 ### GET /assets/{id}/rel/{reltype}
+
+### POST /assets/{id}/rel/{reltype}
+
+### GET /assets/{id}/rel/{reltype}/{relid}
+
+### PUT /assets/{id}/rel/{reltype}/{relid}
+
+### DELETE /assets/{id}/rel/{reltype}/{relid}
 
 ## Asset Events
 

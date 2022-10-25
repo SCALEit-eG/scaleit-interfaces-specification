@@ -1,0 +1,19 @@
+- Asset
+    - ATypeA
+        - A1
+        - A2
+    - ATypeB
+        - B1
+- Data
+    - DTypeA
+        - ATypeA
+            - DAA1
+            - DAA2
+        - ATypeB
+            - DAB1
+    - DTypeB
+        - ATypeA
+            - DBA1
+        - ATypeB
+            - DBB1
+            - DBB2

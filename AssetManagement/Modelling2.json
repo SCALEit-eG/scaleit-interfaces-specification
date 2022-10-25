@@ -1,0 +1,22 @@
+[
+    {
+        "Info": "Extends and improves the data modelling"
+    },
+    {
+        "Assets": [
+            {
+                "Id": "",
+                "Label": "",
+                "AltIds": [],
+                "AssetType": "",
+                "AssetKind": "",
+                "Owners": [],
+                "Groups": [],
+                "Assignees": [],
+                "Created": "",
+                "LastChanged": "",
+                "Namespaces": []
+            }
+        ]
+    }
+]
