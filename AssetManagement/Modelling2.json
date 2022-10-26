@@ -5,17 +5,31 @@
     {
         "Assets": [
             {
-                "Id": "",
-                "Label": "",
-                "AltIds": [],
-                "AssetType": "",
-                "AssetKind": "",
-                "Owners": [],
+                "Id": "urn:scale-it.org",
+                "Label": "SCALE it eG",
+                "AltIds": [
+                    "https://scale-it.org",
+                    "https://www.scale-it.org"
+                ],
+                "AssetType": "Organisation",
+                "AssetKind": "Complex",
+                "Owners": [
+                    "info@scale-it.org"
+                ],
                 "Groups": [],
-                "Assignees": [],
-                "Created": "",
-                "LastChanged": "",
-                "Namespaces": []
+                "Assignees": [
+                    "cleistner@scale-it.org"
+                ],
+                "Created": "2022-01-01",
+                "LastChanged": "2022-02-01",
+                "Namespaces": [
+                    "urn:scale-it.org",
+                    "https://scale-it.org",
+                    "https://www.scale-it.org"
+                ]
+            },
+            {
+                "Id": "urn:scale-it.org:sensorwall"
             }
         ]
     }

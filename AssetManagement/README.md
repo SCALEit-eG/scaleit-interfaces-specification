@@ -20,6 +20,15 @@ Identification through URIs, see [Details of AAS 4.4](https://industrialdigitalt
 - URIs create hierarchies
 - URI namespaces / prefixes can be reserved for an asset hierarchy
 
+## Identities
+Assets are assigned ownership and authorization to identities. These identities can be person entities or non-person entities. Both identities are identified by mere strings.
+
+The identity strings could be:
+- E-Mail for a person entity
+- Device Id or domain name registered in a digital certificate for a non-person entity
+
+Authentication, i.e. establishing an identity, is assumed to be done by an authentication component before this API.
+
 ## Asset Management
 
 Types of Assets:
@@ -88,50 +97,206 @@ Response codes:
 - 403 Forbidden: No read rights: not global or for the given asset
 - 404 Not Found: asset in the "from" parameter not found
 
+Response type:
+- Array&lt;Asset\\&gt; or Graph&lt;Asset\\&gt;
+
 Examples:
 ```
 GET /assets?limit=100
 GET /assets?type=App&network=true&from=urn%3Ascaleit%3Adev%3Aassets%3A1%3A1%3Asensor-app-template1
 ```
 
-### POST /assets
-add / register an asset
+### POST /assets?{query}
+Add a new asset on the root level or beneath a specific existing asset.
+
+Query parameters:
+- parentId: string, optional
+    - if given the ID of the parent asset
+
+Request body:
+- Asset
+
+Response codes:
+- 201 Created: new item created
+- 400 Bad Request: violation of data definition
+- 401 Unauthorized: not yet authenticated
+- 403 Forbidden: not authorized
+- 409 Conflict: asset for Id already exists
+
+Response headers:
+- Content-Type: text/plain
+- Location: url for new asset
+
+Response body:
+- status message as plain text string
 
 ### GET /assets/{id}
-get information about a specific asset
+Get information about a specific asset.
+
+Route parameters:
+- id: Asset ID
+
+Response codes:
+- 200 OK: asset found
+- 401 / 403
+- 404 Not Found: asset not found
+
+Response body:
+- Asset
 
 ### PUT /assets/{id}
-change metainformation of an asset
+Change metainformation of an asset. Not all metainformation is allowed to change. Fields that are left empty or null are assumed to not change. Typical use cases include:
+- Change ownership or assign authorized identities
+- Change the ID, alternative IDs or namespaces
 
-### DELETE /assets/{id}
-delete an asset and optionally its hierarchy
+Route parameters:
+- id: Asset ID
+
+Request body:
+- Asset
+
+Response codes:
+- 200 OK: asset found and successfully changed
+- 404 Bad Request: asset not changed because invalid data or change of unchangeable fields was requested
+- 401 / 403: unauthenticated or unauthorized to make changes to asset
+- 404 Not Found: asset not found
+
+### DELETE /assets/{id}?{query}
+Delete an asset and optionally its hierarchy.
+
+Route parameters:
+- id: Asset ID
+
+Query parameters:
+- recursive: boolean, optional, default=false
+    - if true then all assets below the given asset will be deleted as well
+
+Response codes:
+- 200 OK: asset found and deleted
+- 401 / 403: unauthenticated or unauthorized to make changes to asset
+- 404 Not Found: asset not found
 
 ## Asset Types
 
-### GET /assettypes
+### GET /assettypes?{query}
+Retrieves a list of all or a filtered subset of registered asset types.
+
+Query parameters:
+- qid: string, optional
+    - search in the ID fields
+- qlabel: string, optional
+    - search in the label fields
+- qop: "and", "or", default: "or"
+    - logical operator for search parameters if both were given
+
+Response codes:
+- 200 OK: asset types found
+- 204 No Content: no asset types available or found
+- 400 Bad Request: query parameter violation
+- 401 / 403: unauthenticated or unauthorized
+
+Response body:
+- AssetType[]
+
+### POST /assettypes
+Registers a new asset type.
+
+Request body:
+- AssetType
+
+Response codes:
+- 201 Created: new asset type registered
+- 400 Bad Request: data violation
+- 401 / 403: unauthenticated or unauthorized
+- 409 Conflict: Id for new asset type already in use
+
+Response headers:
+- Location: URI of new asset type if created
 
 ### GET /assettypes/{type}
+Get the metainformation about a specific asset type.
+
+Route parameters:
+- type: Id of the asset type
+
+Response codes:
+- 200 OK: asset type found
+- 401 / 403: unauthenticated or unauthorized
+- 404 Not Found: asset type not found
+
+Response body:
+- AssetType
+
+### PUT /assettypes/{type}?{query}
+Change the metainformation of an asset type. Typically the allowed data types are configured or the display label is changed.
+
+Route parameters:
+- type: Id of the asset type
+
+Query parameters:
+- checkdata: boolean, optional, default=false
+    - delete all data for unallowed data types
+
+Request body:
+- AssetType
+    - Missing or null entries are ignored
+
+Response codes:
+- 200 OK: found and changed
+- 401 / 403: unauthenticated or unauthorized
+- 404 Not Found: asset type not found
+
+### DELETE /assettypes/{type}?{query}
+Delete an asset type and all derived assets.
+
+Route parameters:
+- type: Id of the asset type
+
+Query parameters:
+- recursive: boolean, optional, default=false
+    - Also delete all assets that are beneath the deleted assets
+
+Response codes:
+- 200 OK: found and deleted
+- 401 / 403: unauthenticated or unauthorized
+- 404 Not Found: asset type not found
 
 ## Asset Data
 
 Binary data can be put in the system and be given an asset relative file URL.
 
-### GET /assets/{id}/data
+### GET /assets/{id}/data?{filter}
+Query an asset for data.
 
 ### POST /assets/{id}/data
+Post a new data element to an asset.
+
+### GET /assets/{id}/data/{element}
+Get a specific data element.
+
+### PUT /assets/{id}/data/{element}
+Change a data element.
+
+### DELETE /assets/{id}/data/{element}
+Delete a data element.
+
+## Data Types
+Data types have a version and a schema to restrict the kind of data that can be posted to specific assets.
+
+### GET /datatypes?{query}
+List or search all available data types.
+
+### POST /datatypes
 Register a new datatype with specific version and optionally make it default.
 
-### GET /assets/{id}/data/{datatype}?{filterquery}
+### GET /datatypes/{dtype}
+Retrieve metainformation about a datatype.
 
-### POST /assets/{id}/data/{datatype}
+### PUT /datatypes/{dtype}
+Change a datatype.
 
-### DELETE /assets/{id}/data/{datatype}
-
-### GET /assets/{id}/data/{datatype}/{element}
-
-### PUT /assets/{id}/data/{datatype}/{element}
-
-### DELETE /assets/{id}/data/{datatype}/{element}
+### DELETE /datatypes/{dtype}
+Delete a datatype and 
 
 ## Asset Relationships
 
