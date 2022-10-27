@@ -1,19 +1,76 @@
 {
     "NewOrder": {
         "OrderNumber": "?",
-        "App": {
-            "Name": "Some App",
-            "Version": "1.0.0",
-            "ProductNumber": "?"
-        },
-        "OrderQuantity": 1,
+        "OrderDate": "2022-10-20T10:32:44.123Z",
         "PaymentStatus": "open",
-        "LicenceTerms": {
-            "?": "?",
-            "...": "..."
-        }
+        "Items": [
+            {
+                "App": {
+                    "Name": "Some App",
+                    "Version": "1.0.0",
+                    "ProductNumber": "?"
+                },
+                "OrderQuantity": 1,
+                "LicenceTerms": {
+                    "?": "?",
+                    "...": "..."
+                }
+            }
+        ]
     },
     "OrderUpdate": {
-        "PaymentStatus": "paid"
+        "PaymentStatus": "paid",
+        "PaymentDate": "2022-10-27T16:04:12.123Z"
+    },
+    "ExampleOrder1": {
+        "OrderNumber": "?",
+        "OrderDate": "2022-10-20T10:32:44.123Z",
+        "PaymentStatus": "open",
+        "Items": [
+            {
+                "App": {
+                    "Name": "Asset Management",
+                    "Version": "1.0.0",
+                    "ProductNumber": "?"
+                },
+                "OrderQuantity": 1,
+                "LicenceTerms": {
+                    "Assets": 100,
+                    "ActiveSupport": true,
+                    "StorageCapacity": "100gb",
+                    "Eventing": "mqtt",
+                    "Plugins": [
+                        "user management",
+                        "certificate store"
+                    ]
+                }
+            }
+        ]
+    },
+    "ExampleOrder2": {
+        "OrderNumber": "?",
+        "OrderDate": "2022-10-20T10:32:44.123Z",
+        "PaymentDate": "2022-10-27T16:04:12.123Z",
+        "PaymentStatus": "paid",
+        "Items": [
+            {
+                "App": {
+                    "Name": "Asset Management",
+                    "Version": "1.0.0",
+                    "ProductNumber": "?"
+                },
+                "OrderQuantity": 1,
+                "LicenceTerms": {
+                    "Assets": 100,
+                    "ActiveSupport": true,
+                    "StorageCapacity": "100gb",
+                    "Eventing": "mqtt",
+                    "Plugins": [
+                        "user management",
+                        "certificate store"
+                    ]
+                }
+            }
+        ]
     }
 }

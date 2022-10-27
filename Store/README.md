@@ -27,7 +27,7 @@ Request headers:
 - Content-Type: application/x-pem-file
 
 Request body:
-- Certificate file in PEM format i.e. base64 encoded certificate
+- x509 Certificate file in PEM format i.e. base64 encoded certificate
 
 Response codes:
 - 200 OK: login successful, access token returned
@@ -38,7 +38,7 @@ Response body:
 - Access token in JWT format
 
 ### POST /orders
-Send a new order to the app store providing order information for one single app with chosen licence terms.
+Send a new order to the app store providing order information for one or more apps with chosen licence terms.
 
 Request headers:
 - Content-Type: application/json

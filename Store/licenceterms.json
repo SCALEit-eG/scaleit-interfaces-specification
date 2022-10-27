@@ -1,0 +1,90 @@
+[
+    {
+        "EntryName": "Assets",
+        "Label": {
+            "de": "Anzahl der Assets",
+            "en_US": "Number of Assets"
+        },
+        "EntryType": "number",
+        "Default": 10,
+        "MinValue": 1
+    },
+    {
+        "EntryName": "ActiveSupport",
+        "Label": {
+            "de": "Support durch Dienstleister",
+            "en_US": "Active support"
+        },
+        "EntryType": "check",
+        "Default": false
+    },
+    {
+        "EntryName": "StorageCapacity",
+        "Label": {
+            "de": "Speichergröße",
+            "en_US": "Storage Capacity"
+        },
+        "EntryType": "selection",
+        "Options": [
+            {
+                "Value": "50gb",
+                "Label": {
+                    "en_US": "50 GB"
+                }
+            },
+            {
+                "Value": "100gb",
+                "Label": {
+                    "en_US": "100 GB"
+                }
+            },
+            {
+                "Value": "500gb",
+                "Label": {
+                    "en_US": "500 GB"
+                }
+            }
+        ]
+    },
+    {
+        "EntryName": "Eventing",
+        "Label": {
+            "de": "Ereignisbenachrichtigungen",
+            "en_US": "Event Notifications"
+        },
+        "EntryType": "selection",
+        "Default": "none",
+        "Options": [
+            {
+                "Value": "none",
+                "Label": {
+                    "en_US": "None",
+                    "de": "Keine"
+                }
+            },
+            {
+                "Value": "mqtt",
+                "Label": {
+                    "en_US": "MQTT"
+                }
+            },
+            {
+                "Value": "kafka",
+                "Label": {
+                    "en_US": "Apache Kafka"
+                }
+            }
+        ]
+    },
+    {
+        "EntryName": "Plugins",
+        "Label": {
+            "de": "Benutzer- und Zertifikatverwaltung",
+            "en_US": "User and Certificate Management"
+        },
+        "FixValue": [
+            "user management",
+            "certificate store"
+        ]
+    }
+]
