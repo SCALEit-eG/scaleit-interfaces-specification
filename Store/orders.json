@@ -1,0 +1,19 @@
+{
+    "NewOrder": {
+        "OrderNumber": "?",
+        "App": {
+            "Name": "Some App",
+            "Version": "1.0.0",
+            "ProductNumber": "?"
+        },
+        "OrderQuantity": 1,
+        "PaymentStatus": "open",
+        "LicenceTerms": {
+            "?": "?",
+            "...": "..."
+        }
+    },
+    "OrderUpdate": {
+        "PaymentStatus": "paid"
+    }
+}
