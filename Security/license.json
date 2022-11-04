@@ -1,4 +1,9 @@
 {
+    "LicenseNumber": 1,
+    "Order": {
+        "OrderNumber": "?",
+        "OrderDate": "2022-10-10T14:14:59.333Z"
+    },
     "Device": {
         "NIC": {
             "Name": "enp0s3",
@@ -23,7 +28,7 @@
             "sha256:fe33500a347fbdb6f1b095d8d2803ff03fc822967bc59ecb0df6a03e88fbfde2"
         ]
     },
-    "?": {
+    "LicenceTerms": {
         "?": "..."
     }
 }

@@ -1,3 +1,5 @@
+import { SysNicInfo } from "../ResourceManagement/SysInfo";
+
 /**
  * Holds basic license information intended for
  * an overview
@@ -14,8 +16,44 @@ export interface License{
  * and should only be accessed authorized
  */
 export interface LicenseDetails extends License{
+    /**
+     * needed to differentiate between licenses for the same order;
+     * should be incremented by one for each new license for the same
+     * order
+     */
+    LicenseNumber: number;
+    /** information that assigns this license to an order */
+    Order: {
+        /** unique order number */
+        OrderNumber: string;
+        /** date of the order */
+        OrderDate: Date;
+    };
+    /** data that binds the license to a device */
+    Device: {
+        /** binding using a network adapter */
+        NIC?: SysNicInfo;
+        /** binding using TPM */
+        TPM?: {
+            /** fingerprint of the secretly stored certificate */
+            Fingerprint: string;
+            /** hash of the encrypted fingerprint */
+            HashEncryptedFingerprint: string;
+        }
+    };
+    /** data that binds the license to an app */
+    App: {
+        /** identifying part of the app config */
+        Config: {
+            Name: string;
+            Version: string;
+            ProductNumber: string;
+        },
+        /** hashes / Ids of the container images that are used */
+        Images: string[];
+    };
     /** app specific license data */
-    License: any;
+    LicenseTerms: {[key: string]: any};
 }
 
 export interface CertificateData{
