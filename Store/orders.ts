@@ -14,6 +14,8 @@ export interface Order{
 export interface OrderItem{
     /** basic app information */
     App: OrderAppEntry;
+    /** For how many days the license is valid */
+    Duration: number;
     /** how many instances / licenses */
     OrderQuantity: number;
     /** app specific license terms */
