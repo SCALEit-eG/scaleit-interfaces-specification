@@ -4,9 +4,17 @@
  */
 export interface AppInstance{
     App: AppConfig;
-    Status?: string;
+    Busy: boolean;
+    Status?: AppStatus;
     Images: Array<DockerImage>;
     Containers: Array<DockerContainer>;
+}
+
+export enum AppStatus{
+    Running = "Running",
+    Partially_Running = "Partially Running",
+    Stopped = "Stopped",
+    Unknown = "Unknown"
 }
 
 /**

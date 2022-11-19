@@ -82,7 +82,7 @@ export interface AssetType{
 }
 
 /** Specific data item belonging to an asset */
-export interface Data{
+export interface AssetData{
     /** Automatically generated ID */
     Id: string;
     /** Asset Id */
@@ -103,8 +103,18 @@ export interface Data{
     Data?: any;
 }
 
+/** Partial asset data intended for posting new data */
+export interface AssetDataPost{
+    DataType: string;
+    Version: string;
+    Binary?: string;
+    MIMEType?: string;
+    Data?: any;
+}
+
+
 /** Registered data type that is managed like a special asset */
-export interface DataType{
+export interface AssetDataType{
     /** Datatype Id for the datatype, should be a URI */
     Id: string;
     /** Display name for the datatype */
@@ -114,20 +124,20 @@ export interface DataType{
     /** Version Id of the default version to use or null to use the latest */
     DefaultVersion: string;
     /** Available versions */
-    Versions: Array<DataTypeVersion>;
+    Versions: Array<AssetDataTypeVersion>;
     /** Optional regular expression to restrict allowed version identifiers */
     VersioningPattern: string;
 }
 
 /** Specific version of a particular data type */
-export interface DataTypeVersion{
+export interface AssetDataTypeVersion{
     /** Version identifier e.g. using semantic versioning */
     VersionId: string;
     /** Release / publish date of the version */
     Release: Date;
     /** Display name of the version / release */
     Label: string;
-    /** serialized JSON schema to verify published data against */
+    /** serialized and plain base64 encoded JSON schema to verify published data against */
     Schema: string;
 }
 
@@ -135,10 +145,16 @@ export interface DataTypeVersion{
  * Relationship modelling through binary
  * relationships
  */
- export interface Relation{
+// TODO
+export interface AssetRelation {
+    /** Id of "from" or "first" asset */
     Asset1: string;
+    /** Id of "to" or "second" asset */
     Asset2: string;
+    /** Id / name of the relationship */
     RelType: string;
+    /** data directly associated with the relationship */
     RelData: any;
+    /** true to indicate that there is no "from" or "to" */
     Bidirectional: boolean;
 }

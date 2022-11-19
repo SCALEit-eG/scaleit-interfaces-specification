@@ -263,25 +263,129 @@ Response codes:
 
 ## Asset Data
 
-Binary data can be put in the system and be given an asset relative file URL.
+Binary data can be put in the system and be given an asset relative file URL. Default data is however JSON.
 
 ### GET /assets/{id}/data?{filter}
 Query an asset for data.
 
+Route parameters:
+- id: Asset Id
+
+Query parameters:
+- binary: boolean, optional, default: false
+    - true to look for binary data only
+    - false to look for JSON data only
+- mime: string, optional
+    - MIME type if binary=true
+- dtype: string, optional
+    - Id of the datatype to restrict query to
+- fromCreated: ISO date string, optional
+    - data created at or after the given date
+- toCreated: ISO date string, optional
+    - data created at or before the given date
+- fromModified: ISO date string, optional
+    - data modfied at or after the given date
+- toModified: ISO date string, optional
+    - date modified at or before the given date
+- propertyX: string, optional
+    - property path in the data with dot notation
+    - X is a number corresponding to the value parameters
+    - X can be omitted
+    - must refrence a primitive data type namely string, number, boolean or date
+- valueX: any, optional
+    - string value interpreted as string, number, boolean or date
+    - depends on Xproperty
+    - filter for direct value
+    - takes precedence over other value parameters
+- valuesX: array of any, optional
+    - similar to Xvalue
+    - represents a value "in" values query
+- valueFromX: any, optional
+    - similar to Xvalue
+    - represents the from part in a "between" query or equal or greater than
+- valueToX: any, optional
+    - similar to Xvalue
+    - represents the to part in a "between" query or equal or less than
+
+Response codes:
+- 200 OK: data retrieved
+- 204 No Content: no data available
+- 400 Bad Request: route or query parameter violation
+    - In particular if a number X for a value parameter is given and no corresponding propertyX was given
+- 401 / 403: unauthenticated or unauthorized
+- 404 Not Found: asset not found
+
+Response body:
+- AssetData[]
+
 ### POST /assets/{id}/data
-Post a new data element to an asset.
+Post a new data element to an asset. It can be JSON or binary data.
+
+Route parameters:
+- id: Asset Id
+
+Request headers:
+- Content-Type:
+    - application/json: for JSON data
+    - multipart/form-data: for binary data
+        - key: metadata, Content-Type: application/json
+        - data: binary blob, Content-Type: application/octet-stream
+
+Request body:
+- AssetDataPost
+- AssetDataPost + binary data
+
+Response codes:
+- 201 Created: data successfully submitted
+- 400 Bad Request: violation of request data that was sent
+- 401 / 403
+- 404 Not Found: asset not found
 
 ### GET /assets/{id}/data/{element}
 Get a specific data element.
 
+Route parameters:
+- id: Asset Id
+- element: data element Id
+
+Response codes:
+- 200 OK: data found
+- 400 Bad Request: route parameters wrong
+- 401 / 403
+- 404 Not Found: asset or data not found
+
+Response body:
+- AssetData
+
 ### PUT /assets/{id}/data/{element}
 Change a data element.
+
+Route parameters:
+- id: Asset Id
+- element: data element Id
+
+For request headers and request body see [POST /assets/{id}/data](#post-assetsiddata)
+
+Response codes:
+- 200 OK: data successfully changed
+- 400 Bad Request: violation of request data that was sent
+- 401 / 403
+- 404 Not Found: asset not found or element not found
 
 ### DELETE /assets/{id}/data/{element}
 Delete a data element.
 
+Route parameters:
+- id: Asset Id
+- element: data element Id
+
+Response codes:
+- 200 OK: data element successfully deleted
+- 400 Bad Request: required parameter not given
+- 404 Not Found: asset or element not found
+
 ## Data Types
-Data types have a version and a schema to restrict the kind of data that can be posted to specific assets.
+Data types have a version and a schema to restrict the kind of data that can be posted to specific assets. As schema JSON schema is used.
 
 ### GET /datatypes?{query}
 List or search all available data types.
@@ -297,6 +401,18 @@ Change a datatype.
 
 ### DELETE /datatypes/{dtype}
 Delete a datatype and 
+
+### POST /datatypes/{dtype}/versions
+Add a version to a datatype.
+
+### GET /datatypes/{dtype}/versions/{version}
+Get a specific data type version.
+
+### PUT /datatypes/{dtype}/versions/{version}
+Change a specific version.
+
+### DELETE /datatypes/{dtype}/versions/{version}
+Delete a specific version.
 
 ## Asset Relationships
 
@@ -363,9 +479,14 @@ Operations are directly executed on the assets. It shall be implemented through 
 ### GET /assets/{id}/ops
 Get a list of all operations of the requested asset.
 
-### POST /assets/{id}/ops/{opid}
+### POST /assets/{id}/ops
+Register a new operation on the asset.
 
 ### PUT /assets/{id}/ops/{opid}
+Change an operation on an asset.
+
+### DELETE /assets/{id}/ops/{opid}
+Delete an operation.
 
 ### PUT /assets/{id}/ops/{opid}/call
 Call a specific operation of an asset.

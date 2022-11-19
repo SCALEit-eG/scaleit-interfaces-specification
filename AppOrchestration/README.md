@@ -53,6 +53,7 @@ Query parameters:
 
 Response codes:
 - 200 OK: app found
+- 400 Bad Request: app id not given
 - 404 Not found: app not found
 
 Response headers:
@@ -115,7 +116,7 @@ Route parameters:
 Response codes:
 - 200 OK: app and icon found
 - 204 No Content: no icon available
-- 400 Bad Request: app id not given
+- 400 Bad Request: id invalid
 - 404 Not Found: app not found
 
 Response headers:
@@ -140,7 +141,7 @@ Route parameters:
 Response codes:
 - 200 OK: app and readme found
 - 204 No Content: no readme available
-- 400 Bad Request: app id not given
+- 400 Bad Request: id invalid
 - 404 Not Found: app not found
 
 Request headers:
@@ -175,9 +176,11 @@ Query parameters:
 
 Response codes:
 - 200 OK: app instance successfully removed
-- 400 Bad Request: app id not given
+- 400 Bad Request: app id invalid, app is busy
 - 404 Not Found: app instance not found
-- 409 Conflict: app instance still runs and force=false
+- 409 Conflict
+    - app instance still runs and force=false
+    - image still needed if remove_images=true
 
 Example:
 ```
@@ -192,7 +195,10 @@ Route parameters:
 
 Response codes:
 - 200 OK: App instance found
-- 400 Bad Request: app id not given
+- 400 Bad Request:
+    - app id not given
+    - app is busy
+    - no valid license
 - 404 Not Found: ap instance not found
 
 Response headers:
@@ -213,13 +219,19 @@ Route parameters:
 - id: app instance id
 
 Query parameters:
+- remove_images: boolean, optional, default: false
+    - Remove referenced container images
 - remove_volumes: boolean, optional, default: false
     - Remove used docker volumes
 
 Response codes:
 - 200 OK: app instance found
-- 400 Bad Request: app id not given
+- 400 Bad Request
+    - app id not given
+    - app is busy
 - 404 Not Found: app instance not found
+- 409 Conflict:
+    - app image still needed if remove_images=true
 
 Response headers:
 - Content-Type: application/json
@@ -263,8 +275,8 @@ GET /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/logs?lines=30
 Refreshes the status information of all apps, whereby the status updates are sent asynchronously via SSE and the operation is only done if there is no refresh scheduled already.
 
 Response codes:
-- 200 OK: refresh will be performed
-- 400 Bad Request: transfer app is already busy refreshing
+- 202 Accepted: refresh will be performed
+- 409 Conflict: transfer app is already busy refreshing
 
 Example:
 ```
@@ -272,7 +284,7 @@ PUT /api/0.2.0/transfer/refresh/apps
 ```
 
 ### GET /transfer/refresh/apps
-Returns if the app is currently busy refreshing the status of all apps or not.
+Returns if the transfer app is currently busy refreshing the status of all apps or not.
 
 Response codes:
 - 200 OK: always
@@ -296,8 +308,11 @@ Route parameters:
 
 Response codes:
 - 200 OK: app instance is scheduled to be refreshed
-- 400 Bad Request: app instance is already being refreshed or app id not given
+- 400 Bad Request: app instance is already being refreshed or app id invalid
 - 404 Not Found: app instance not found
+
+Response body:
+- AppInstance
 
 Example:
 ```
