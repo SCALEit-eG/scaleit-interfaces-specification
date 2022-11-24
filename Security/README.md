@@ -90,7 +90,7 @@ Request headers:
 Response codes:
 - 200 OK: valid license(s) available
 - 204 No Content: no valid license available
-- 400 Bad Request: invalid app id or licenses incomplete
+- 400 Bad Request: some licenses incomplete
 - 401 Unauthorized: no key provided when details requested
 - 403 Forbidden: key is not authorized for the app
 - 404 Not found: app not found
@@ -117,7 +117,7 @@ Request headers:
 
 Response codes:
 - 200 OK: valid license available
-- 400 Bad Request: invalid app id or licenses incomplete
+- 400 Bad Request: app or license Id not given
 - 401 Unauthorized: no key provided
 - 403 Forbidden: key is not authorized for the app
 - 404 Not found: app not found or no license for license ID
@@ -145,6 +145,7 @@ Response codes:
 - 200 OK: license uploaded
 - 400 Bad Request: ZIP archive not valid or incomplete or app id invalid
 - 404 Not found: app not found
+- 409 Conflict: license with the same name already existing
 
 ### DELETE /transfer/apps/{aid}/licenses/{lid}
 Remove a license of an app.
@@ -157,7 +158,7 @@ Route parameters:
 
 Response codes:
 - 200 OK: license found and deleted
-- 400 Bad Request: invalid app id
+- 400 Bad Request: app is busy
 - 404 Not found: no license for license ID or app not found
 
 ### PUT /transfer/apps/{aid}/licensekey
@@ -169,7 +170,11 @@ Route parameters:
 
 Response codes:
 - 200 OK: license key sent to the app
-- 400 Bad Request: invalid app id or app provides no info about possible connection endpoint
+- 400 Bad Request
+    - invalid app id
+    - app provides no info about possible connection endpoint
+    - server address not configured
+    - no connection endpoint reachable 
 - 404 Not found: app not found
 
 ### GET /transfer/licenses/{lickey}

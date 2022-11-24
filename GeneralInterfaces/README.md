@@ -151,3 +151,37 @@ Example:
 ```
 PUT /api/cancel/c80c63d8-764d-4e37-94bc-7f3baffeed8d
 ```
+
+## Configuration
+
+Interfaces for settings and configuration
+
+- Settings are a simple key value mechanism for configuration
+
+### GET /settings
+Retrieves the currently active settings.
+
+Response headers:
+- Content-Type: application/json
+
+Response codes:
+- 200 OK: settings are available
+- 204 No Content: no settings available
+
+Response body:
+- object with strings as keys and any possible types as values
+
+### PUT /settings
+Changes the settings or configuration respectively.
+
+Request headers:
+- Content-Type: application/json
+
+Request body:
+- object with strings as keys and any possible types as values
+    - null values are ignored
+
+Response codes:
+- 200 OK: settings successfully changed
+- 400 Bad Request: wrong data format or types
+- 404 Not Found: no settings available

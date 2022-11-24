@@ -319,24 +319,6 @@ Example:
 PUT /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/refresh
 ```
 
-### GET /transfer/recognize/apps
-Investigates the Docker containers of the server and recognizes apps according to naming conventions.
-
-Response codes:
-- 200 OK: at least one app was recognized
-- 204 No Content: no app has been recognized
-
-Response headers:
-- Content-Type: application/json
-
-Response body:
-- DockerApp
-
-Example:
-```
-GET /api/0.2.0/transfer/recognize
-```
-
 ### Websockets /events/transfer/import
 Imports an app as ZIP archive and provides incremental feedback.
 
@@ -384,42 +366,6 @@ Note: Older versions may use **/events**.
 
 ### PUT /api/cancel/{id}
 Cancel the task identified by the given ID. Applies to all operations that return a cancel id.
-
-### GET /devicename
-Returns the current device name if set.
-
-Response codes:
-- 200 OK: device name was set
-- 204 No Content: no device name has been set
-
-Response headers:
-- Content-Type: application/json
-
-Response body:
-- string
-
-Example:
-```
-GET /api/0.2.0/devicename
-
-"IoT Gateway Server 10:5-dev"
-```
-
-### PUT /devicename?{query}
-Sets the device name of the server.
-
-Query parameters:
-- name: string, required
-    - device name
-
-Response codes:
-- 200 OK: device name successfully set
-- 400 Bad Request: no device name given
-
-Example:
-```
-PUT /api/0.2.0/devicename?name=IoT%20Gateway%20Server%2010%3A5-dev
-```
 
 ## Transfer Technology - Files API
 Some specifics about the implementation of the files api is described below. For more information see the Resource-Management category.
@@ -660,6 +606,63 @@ TODO
 
 ### Websockets /events/system/loadimage
 Allows to incrementally upload individual Docker images that are then uploaded to the configured Docker daemon. Works just like **Websockets /events/transfer/import** but with much fewer reported steps at the end. The docker image should be in the TAR format that **docker save** put out.
+
+## Transfer App v3.1
+Some version specific interfaces that are removed for 4.x.
+
+### GET /devicename
+Returns the current device name if set.
+
+Response codes:
+- 200 OK: device name was set
+- 204 No Content: no device name has been set
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- string
+
+Example:
+```
+GET /api/0.2.0/devicename
+
+"IoT Gateway Server 10:5-dev"
+```
+
+### PUT /devicename?{query}
+Sets the device name of the server.
+
+Query parameters:
+- name: string, required
+    - device name
+
+Response codes:
+- 200 OK: device name successfully set
+- 400 Bad Request: no device name given
+
+Example:
+```
+PUT /api/0.2.0/devicename?name=IoT%20Gateway%20Server%2010%3A5-dev
+```
+
+### GET /transfer/recognize/apps
+Investigates the Docker containers of the server and recognizes apps according to naming conventions.
+
+Response codes:
+- 200 OK: at least one app was recognized
+- 204 No Content: no app has been recognized
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- DockerApp
+
+Example:
+```
+GET /api/0.2.0/transfer/recognize
+```
 
 ## Transfer App v2.2.2-inst-dev
 Important interfaces of this version documented to interact with the older API that was in use. For information about further interfaces the app itself must be investigated or the Swagger documentation opened.
