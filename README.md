@@ -2,6 +2,14 @@
 
 All interfaces for the SCALE it platform and apps are documented in this repository. Members of SCALE it eG and associated partners work together to ensure compatibility in the software suite.
 
+## Table of Contents
+1. [Repository Structure](#repository-structure)
+2. [Concepts](#concepts)
+3. [Categories](#categories)
+4. [Contributing](#contributing)
+5. [Conventions](#conventions)
+6. [License](#license)
+
 ## Repository Structure
 
 - README.md: description and general overview
@@ -87,6 +95,9 @@ Interfaces are assigned to categories. These categories are listed subsequently.
     - Assurance of compatibility
 - Paperless Production
     - Electronic labels
+- Administration
+    - Server administration
+    - Logging
 
 # Contributing
 

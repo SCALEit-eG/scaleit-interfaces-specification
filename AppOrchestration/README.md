@@ -10,7 +10,7 @@ Interfaces for services that can deploy and orchestrate apps.
 5. [App Template](#app-template)
 6. [App ID](#app-id)
 7. [App Config](#app-config)
-8. [Transfer Technology - Administration](#transfer-technology---administration)
+8. [Transfer Technology - Container System Module](#transfer-technology---container-system-module)
 9. [Transfer App v2.2.2-inst-dev](#transfer-app-v222-inst-dev)
 
 ## Transfer Technology
@@ -547,62 +547,236 @@ http://<server_url>:54280/cgi/ui
 https://<server_url>:54179
 ```
 
-## Transfer Technology - Administration
-The subsequent endpoints define the system module of the transfer app that serves administrative purposes around Docker and Docker-Compose.
+## Transfer Technology - Container System Module
+The subsequent endpoints define the system module of the transfer app that serves administrative purposes around Docker and Docker Compose. Data models returned will mostly reflect those from the Docker API.
 
 ### GET /system/images
-TODO
+Retrieve the list of available container images.
+
+Response headers:
+- Content-Type: application/json
+
+Response codes:
+- 200 OK: at least one image found
+- 204 No Content: no images available
 
 ### GET /system/images/{id}
-TODO
+Get detailed information about a container image.
+
+Route parameters:
+- id: string, required
+    - Image ID
+
+Response headers:
+- Content-Type: application/json
+
+Response codes:
+- 200 OK: image found
+- 404 Not Found: image not found
 
 ### GET /system/images/{id}/export
-TODO
+Download the serialized container image.
 
-### DELETE /system/images/{id}
-TODO
+Route parameters:
+- id: string, required
+    - Image ID
 
-### POST /system/images
-TODO
+Response headers:
+- Content-Type: application/x-tar
 
-### DELETE /system/prune/images
-TODO
+Response codes:
+- 200 OK: image found
+- 404 Not Found: image not found
 
-### GET /system/containers
-TODO
+### DELETE /system/images/{id}?{query}
+Delete a container image from the system.
 
-### GET /system/containers/{id}
-TODO
-
-### PUT /system/containers/{id}/start
-TODO
-
-### PUT /system/containers/{id}/stop
-TODO
-
-### PUT /system/containers/{id}/restart
-TODO
-
-### DELETE /system/containers/{id}/remove
-TODO
-
-### DELETE /system/prune/containers
-TODO
-
-### GET /system/volumes
-TODO
-
-### GET /system/volumes/{name}
-TODO
-
-### DELETE /system/volumes/{name}?{query}
-TODO
+Route parameters:
+- id: string, required
+    - Image ID
 
 Query parameters:
-- force: boolean
+- force: boolean, optional, default=false
+    - true to force removal
+
+Response codes:
+- 200 OK: image found
+- 400 Bad Request: image could not be deleted probably because it is still in use
+- 404 Not Found: image not found
+
+### POST /system/images
+Upload a container image to the server to load it into the system.
+
+Request headers:
+- application/x-tar
+
+Request body:
+- container image as binary data
+
+Response codes:
+- 200 OK: image successfully uploaded
+- 400 Bad Request: given data invalid
+
+### DELETE /system/prune/images?{query}
+Delete all unused images and return their IDs.
+
+Query parameters:
+- all: boolean, optional, default=false
+    - true to remove all unused images and not just dangling ones
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- string[]
+
+Response codes:
+- 200 OK: at least one image removed
+- 304 Not Modified: no image removed
+
+### GET /system/containers
+Retrieve the list of all containers in the system.
+
+Response headers:
+- Content-Type: application/json
+
+Response codes:
+- 200 OK: some containers available
+- 204 No Content: no container available
+
+### GET /system/containers/{id}
+Get detailed information about a specific container.
+
+Route parameters:
+- id: string, required
+    - Container ID
+
+Response headers:
+- Content-Type: application/json
+
+Response codes:
+- 200 OK: container found
+- 404 Not Found: container not found
+
+### PUT /system/containers/{id}/start
+Start a particular container.
+
+Route parameters:
+- id: string, required
+    - Container ID
+
+Response codes:
+- 200 OK: container found
+- 404 Not Found: container not found
+
+### PUT /system/containers/{id}/stop
+Stop a particular container.
+
+Route parameters:
+- id: string, required
+    - Container ID
+
+Response codes:
+- 200 OK: container found
+- 404 Not Found: container not found
+
+### PUT /system/containers/{id}/restart
+Restart a particular container.
+
+Route parameters:
+- id: string, required
+    - Container ID
+
+Response codes:
+- 200 OK: container found
+- 404 Not Found: container not found
+
+### DELETE /system/containers/{id}?{query}
+Remove a container from the system.
+
+Route parameters:
+- id: string, required
+    - Container ID
+
+Query parameters:
+- force: boolean, optional, default=false
+    - true to force removal
+- volumes: boolean, optional, default=false
+    - remove anonymous volumes of the container
+
+Response codes:
+- 200 OK: container found and removed
+- 404 Not Found: container not found
+
+### DELETE /system/prune/containers?{query}
+Remove all stopped containers and return their IDs.
+
+Query parameters:
+- force: boolean, optional, default=false
+    - true to force removal
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- string[]
+
+Response codes:
+- 200 OK: some containers removed
+- 304 Not Modified: no container removed
+
+### GET /system/volumes
+List all container volumes in the system.
+
+Response headers:
+- Content-Type: application/json
+
+Response codes:
+- 200 OK: some volumes available
+- 204 No Content: no volumes available
+
+### GET /system/volumes/{name}
+Get detailed information about a particular volume.
+
+Route parameters:
+- name: string, required
+    - ID / name of the volume
+
+Response headers:
+- Content-Type: application/json
+
+Response codes:
+- 200 OK: volume found
+- 404 Not Found: volume not found
+
+### DELETE /system/volumes/{name}?{query}
+Delete a particular volume from the system.
+
+Route parameters:
+- name: string, required
+    - ID / name of the volume
+
+Query parameters:
+- force: boolean, optional, default=false
+    - true to remove even when the volume is in use
+
+Response codes:
+- 200 OK: Volume found and removed
+- 400 Bad Request: Volume could not be removed
+- 404 Not Found: Volume not found
 
 ### DELETE /system/prune/volumes
-TODO
+Remove all unused volumes and return their IDs.
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- string[]
+
+Response codes:
+- 200 OK: some volumes removed
+- 304 Not Modified: no volume removed
 
 ### Websockets /events/system/loadimage
 Allows to incrementally upload individual Docker images that are then uploaded to the configured Docker daemon. Works just like **Websockets /events/transfer/import** but with much fewer reported steps at the end. The docker image should be in the TAR format that **docker save** put out.
