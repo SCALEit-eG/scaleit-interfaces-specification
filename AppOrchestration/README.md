@@ -31,7 +31,7 @@ Response codes:
 
 Example:
 ```
-POST /api/0.2.0/transfer/import
+POST /api/1/transfer/import
 Content-Type: multipart/form-data; boundary=--------------------------854348040641744448699751
 Content-Length: 25828282
  
@@ -64,7 +64,7 @@ Response body:
 
 Example:
 ```
-GET /api/0.2.0/transfer/export/ScaleIT%20node-red%3A2.2.2?with_images=true
+GET /api/1/transfer/export/ScaleIT%20node-red%3A2.2.2?with_images=true
 ```
 
 ### GET /transfer/apps
@@ -82,7 +82,7 @@ Response body:
 
 Example:
 ```
-GET /api/0.2.0/transfer/apps
+GET /api/1/transfer/apps
 ```
 
 ### GET /transfer/apps/{id}
@@ -104,7 +104,7 @@ Response body:
 
 Example:
 ```
-GET /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg
+GET /api/1/transfer/apps/simple%20webserver%3A1.0.0-dbg
 ```
 
 ### GET /transfer/apps/{id}/icon
@@ -129,7 +129,7 @@ Response body:
 
 Example:
 ```
-GET /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/icon
+GET /api/1/transfer/apps/simple%20webserver%3A1.0.0-dbg/icon
 ```
 
 ### GET /transfer/apps/{id}/readme
@@ -157,7 +157,7 @@ Response body:
 
 Example:
 ```
-GET /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/readme
+GET /api/1/transfer/apps/simple%20webserver%3A1.0.0-dbg/readme
 ```
 
 ### DELETE /transfer/apps/{id}?{query}
@@ -184,7 +184,7 @@ Response codes:
 
 Example:
 ```
-DELETE /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg?force=true&remove_images=false
+DELETE /api/1/transfer/apps/simple%20webserver%3A1.0.0-dbg?force=true&remove_images=false
 ```
 
 ### PUT /transfer/apps/{id}/start
@@ -209,7 +209,7 @@ Response body:
 
 Example:
 ```
-PUT /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/start
+PUT /api/1/transfer/apps/simple%20webserver%3A1.0.0-dbg/start
 ```
 
 ### PUT /transfer/apps/{id}/stop?{query}
@@ -241,7 +241,7 @@ Response body:
 
 Example:
 ```
-PUT /api/0.2.0/transfer/apps/ScaleIT%20node-red%3A2.2.2/stop?remove_volumes=true
+PUT /api/1/transfer/apps/ScaleIT%20node-red%3A2.2.2/stop?remove_volumes=true
 ```
 
 ### GET /transfer/apps/{id}/logs?{query}
@@ -268,7 +268,7 @@ Response body:
 
 Example:
 ```
-GET /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/logs?lines=30
+GET /api/1/transfer/apps/simple%20webserver%3A1.0.0-dbg/logs?lines=30
 ```
 
 ### PUT /transfer/refresh/apps
@@ -280,7 +280,7 @@ Response codes:
 
 Example:
 ```
-PUT /api/0.2.0/transfer/refresh/apps
+PUT /api/1/transfer/refresh/apps
 ```
 
 ### GET /transfer/refresh/apps
@@ -297,7 +297,7 @@ Response body:
 
 Example:
 ```
-GET /api/0.2.0/transfer/refresh/apps
+GET /api/1/transfer/refresh/apps
 ```
 
 ### PUT /transfer/apps/{id}/refresh
@@ -316,7 +316,7 @@ Response body:
 
 Example:
 ```
-PUT /api/0.2.0/transfer/apps/simple%20webserver%3A1.0.0-dbg/refresh
+PUT /api/1/transfer/apps/simple%20webserver%3A1.0.0-dbg/refresh
 ```
 
 ### Websockets /events/transfer/import
@@ -379,7 +379,7 @@ Query parameters:
 
 Example:
 ```
-GET /api/0.2.0/files?category=instances
+GET /api/1/files?category=instances
 
 [
     {
@@ -415,7 +415,7 @@ Example app instance ZIP:
 
 The app has the id: "example%20app%3A1.0"
 ```
-GET /api/0.2.0/files/example%20app%3A1.0
+GET /api/1/files/example%20app%3A1.0
 
 [
     {
@@ -451,7 +451,7 @@ GET /api/0.2.0/files/example%20app%3A1.0
     }
 ]
 
-GET /api/0.2.0/files/example%20app%3A1.0%2F%2FResources%2Ftutorial.mp4
+GET /api/1/files/example%20app%3A1.0%2F%2FResources%2Ftutorial.mp4
 
 Content-Type: video/mp4
 <tutorial.mp4>
@@ -574,6 +574,22 @@ Response codes:
 - 200 OK: image found
 - 404 Not Found: image not found
 
+### POST /system/images
+Upload a container image to the server to load it into the system.
+
+Request headers:
+- application/x-tar
+
+Request body:
+- container image as binary data
+
+Response headers:
+- Location: url to the image
+
+Response codes:
+- 201 Created: image successfully uploaded
+- 400 Bad Request: given data invalid
+
 ### GET /system/images/{id}/export
 Download the serialized container image.
 
@@ -603,19 +619,6 @@ Response codes:
 - 200 OK: image found
 - 400 Bad Request: image could not be deleted probably because it is still in use
 - 404 Not Found: image not found
-
-### POST /system/images
-Upload a container image to the server to load it into the system.
-
-Request headers:
-- application/x-tar
-
-Request body:
-- container image as binary data
-
-Response codes:
-- 200 OK: image successfully uploaded
-- 400 Bad Request: given data invalid
 
 ### DELETE /system/prune/images?{query}
 Delete all unused images and return their IDs.
@@ -667,6 +670,7 @@ Route parameters:
 
 Response codes:
 - 200 OK: container found
+- 304 Not Modified: no effect
 - 404 Not Found: container not found
 
 ### PUT /system/containers/{id}/stop
@@ -678,6 +682,7 @@ Route parameters:
 
 Response codes:
 - 200 OK: container found
+- 304 Not Modified: no effect
 - 404 Not Found: container not found
 
 ### PUT /system/containers/{id}/restart
@@ -689,6 +694,7 @@ Route parameters:
 
 Response codes:
 - 200 OK: container found
+- 304 Not Modified: no effect
 - 404 Not Found: container not found
 
 ### DELETE /system/containers/{id}?{query}
@@ -799,7 +805,7 @@ Response body:
 
 Example:
 ```
-GET /api/0.2.0/devicename
+GET /api/1/devicename
 
 "IoT Gateway Server 10:5-dev"
 ```
@@ -817,7 +823,7 @@ Response codes:
 
 Example:
 ```
-PUT /api/0.2.0/devicename?name=IoT%20Gateway%20Server%2010%3A5-dev
+PUT /api/1/devicename?name=IoT%20Gateway%20Server%2010%3A5-dev
 ```
 
 ### GET /transfer/recognize/apps
@@ -835,7 +841,7 @@ Response body:
 
 Example:
 ```
-GET /api/0.2.0/transfer/recognize
+GET /api/1/transfer/recognize
 ```
 
 ## Transfer App v2.2.2-inst-dev

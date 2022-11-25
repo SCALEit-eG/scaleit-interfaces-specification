@@ -85,6 +85,10 @@ Query parameters:
     - Cannot bet used together with tree
 - type: string, optional
     - Returns only assets of the given type
+- q: string, optional
+    - Search term for label and description
+- tags: array of strings, optional
+    - Restrict to the given tags
 
 Request headers:
 - Authorization
@@ -390,29 +394,142 @@ Data types have a version and a schema to restrict the kind of data that can be 
 ### GET /datatypes?{query}
 List or search all available data types.
 
+Query parameters:
+- q: string, optional
+    - Search term to look for in label and description
+- tags: array of strings, optional
+    - Restrict to the given tags
+- vfrom: iso date string
+    - Restrict to data types with versions released not before the given date
+- vto: iso date string
+    - Restrict to data types with versions released not after the given date
+
+Response body:
+- AssetDataType[]
+
+Response codes:
+- 200 OK: some data types found
+- 204 No Content: no data types found
+
 ### POST /datatypes
 Register a new datatype with specific version and optionally make it default.
+
+Request body:
+- AssetDataTypeAdd
+
+Response codes:
+- 201 Created: data type successfully created
+- 400 Bad Request: data given invalid
+- 409 Conflict: data type with the same ID already exists
 
 ### GET /datatypes/{dtype}
 Retrieve metainformation about a datatype.
 
-### PUT /datatypes/{dtype}
-Change a datatype.
+Route parameters:
+- dtype: data type ID
 
-### DELETE /datatypes/{dtype}
-Delete a datatype and 
+Response body:
+- AssetDataType
+
+Response codes:
+- 200 OK: data type found
+- 404 Not Found: data type not found
+
+### PUT /datatypes/{dtype}
+Change a datatype whereby all null values for existing fields are ignored.
+
+Route parameters:
+- dtype: data type ID
+
+Request body:
+- AssetDataTypeChange
+
+Response body:
+- AssetDataType
+
+Response codes:
+- 200 OK: data type successfully changed
+- 400 Bad Request: given data invalid
+- 404 Not Found: data type not found
+
+### DELETE /datatypes/{dtype}?{query}
+Delete a datatype and all of its versions.
+
+Route parameters:
+- dtype: data type ID
+
+Query parameters:
+- force: boolean, optional, default=false
+    - Force the delete operation and remove all data of the given type
+
+Response codes:
+- 200 OK: found and deleted
+- 400 Bad Request: not allowed because there is data of the data type and removal was not forced
+- 404 Not Found: data type not found
 
 ### POST /datatypes/{dtype}/versions
 Add a version to a datatype.
 
+Route parameters:
+- dtype: data type ID
+
+Request body:
+- AssetDataTypeVersion
+
+Response codes:
+- 201 Created: new version added for the data type
+- 400 Bad Request: invalid data given
+- 404 Not Found: data type not found
+- 409 Conflict: version with the same ID already exists
+
 ### GET /datatypes/{dtype}/versions/{version}
 Get a specific data type version.
+
+Route parameters:
+- dtype: data type ID
+- version: version ID
+
+Response body:
+- AssetDataTypeVersion
+
+Response codes:
+- 200 OK: version found for given data type
+- 404 Not Found: version or data type not found
 
 ### PUT /datatypes/{dtype}/versions/{version}
 Change a specific version.
 
+Route parameters:
+- dtype: data type ID
+- version: version ID
+
+Request body:
+- AssetDataTypeVersion
+
+Response body:
+- AssetDataTypeVersion
+
+Response codes:
+- 200 OK: found and changed
+- 400 Bad Request: invalid data
+- 404 Not Found: data type or version not found
+- 409 Conflict: if version identifier changed and it is already in use
+
 ### DELETE /datatypes/{dtype}/versions/{version}
 Delete a specific version.
+
+Route parameters:
+- dtype: data type ID
+- version: version ID
+
+Query parameters:
+- force: boolean, optional, default=false
+    - Force the delete operation and remove all data for the given version
+
+Response codes:
+- 200 OK: version removed
+- 400 Bad Request: not forced and data still available
+- 404 Not Found: data type or version not found
 
 ## Asset Relationships
 

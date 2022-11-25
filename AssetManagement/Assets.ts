@@ -4,6 +4,10 @@ export interface Asset{
     Id: string;
     /** Display name of the asset */
     Label: string;
+    /** Textual description */
+    Description: string;
+    /** Tags for finding purposes */
+    Tags: Array<string>;
     /** Alternative IDs */
     AltIds: Array<string>
     /** Registered asset type */
@@ -119,10 +123,14 @@ export interface AssetDataType{
     Id: string;
     /** Display name for the datatype */
     Label: string;
+    /** Textual description */
+    Description: string;
+    /** Tags for finding purposes */
+    Tags: Array<string>;
     /** if false then only one version is allowed with an empty version identifier */
     AllowVersioning: boolean;
     /** Version Id of the default version to use or null to use the latest */
-    DefaultVersion: string;
+    DefaultVersion?: string;
     /** Available versions */
     Versions: Array<AssetDataTypeVersion>;
     /** Optional regular expression to restrict allowed version identifiers */
@@ -141,6 +149,29 @@ export interface AssetDataTypeVersion{
     Schema: string;
 }
 
+/** data to change a data type */
+export interface AssetDataTypeChange{
+    Label: string;
+    /** enables or disables versioning */
+    AllowVersioning: boolean;
+    /** if set must already exist */
+    DefaultVersion: string;
+    /** may disable existing versions */
+    VersioningPattern: string;
+}
+
+/** data to add a data type */
+export interface AssetDataTypeAdd{
+    Id: string;
+    Label: string;
+    AllowVersioning: boolean;
+    VersioningPattern: string;
+    /** first version for the datatype */
+    Version: AssetDataTypeVersion;
+    /** make first version the default version */
+    SetDefault: boolean;
+}
+
 /**
  * Relationship modelling through binary
  * relationships
@@ -153,8 +184,8 @@ export interface AssetRelation {
     Asset2: string;
     /** Id / name of the relationship */
     RelType: string;
-    /** data directly associated with the relationship */
-    RelData: any;
+    /** Id for the data directly associated with the relationship */
+    RelData: string;
     /** true to indicate that there is no "from" or "to" */
     Bidirectional: boolean;
 }
