@@ -797,6 +797,7 @@ Further events are transmitted for particular assets.
 TODO
 
 ## Asset Events
+TODO
 
 Events are predefined or custom event types registered for an asset.
 
@@ -810,6 +811,7 @@ Retrieve information that defines the asset kind, accessibility, data format and
 Register an event for an asset. It may be just static information how to access the event or it may instruct the system to actively listen for external data.
 
 ## Asset Operations
+TODO
 
 Operations are directly executed on the assets. It shall be implemented through simple webhooks without parameter as the necessary data may be retrieved by the asset itself from the configured data.
 
