@@ -1,13 +1,42 @@
+export interface BasicInfo{
+    /** Name or title */
+    Label?: string;
+    /** Tags for finding purposes */
+    Tags?: Array<string>;
+    /** Detailed description, possibly of complex text type and decoded */
+    Description?: string;
+    /** MIME type of the description or text/plain as default */
+    MIMEType?: SupportedTextMIMEType;
+    /** Encoding used for the description or none as default */
+    Encoding?: SupportedEncoding;
+}
+
+/** Supported MIME Type for text data fields */
+export enum SupportedTextMIMEType{
+    Plain = "text/plain",
+    Html = "text/html",
+    Markdown = "text/markdown",
+    Richtext = "text/richtext"
+}
+
+/** Encoding used for specific data */
+export enum SupportedEncoding{
+    /** text as is */
+    None = "none",
+    URLEncoding = "url",
+    Base64 = "base64",
+    /** base 64 safe url encoding */
+    Base64Url = "base64url",
+    /** usage of html character encodings */
+    Html = "html"
+}
+
 /** Asset signifies any tangible or non tangible thing of value */
 export interface Asset{
     /** Asset ID, Gauid, should be a URI */
     Id: string;
-    /** Display name of the asset */
-    Label: string;
-    /** Textual description */
-    Description: string;
-    /** Tags for finding purposes */
-    Tags: Array<string>;
+    /** Descriptive info of the asset */
+    Info: BasicInfo;
     /** Alternative IDs */
     AltIds: Array<string>
     /** Registered asset type */
@@ -28,6 +57,8 @@ export interface Asset{
     Namespaces: Array<string>;
     /** Permission policies on the asset */
     Permissions: AssetPermissions;
+    /** Predefined asset as immutable marker by the asset management system */
+    Predefined: boolean;
 }
 
 /** Permission policies on an asset */
@@ -43,7 +74,6 @@ export interface AssetPermissions{
 }
 
 /** Access control lists or permission policy respectively for an asset */
-// TODO
 export interface ACL{
     ReadMetadata: boolean;
     ChangeMetadata: boolean;
@@ -61,16 +91,23 @@ export interface Identity{
     Permissions: GlobalPermissions;
 }
 
-// TODO
+/** permissions that apply independently from assets */
 export interface GlobalPermissions{
     AssignNamespaces: boolean;
-    RegisterAssetTypes: boolean;
+    ManageAssetTypes: boolean;
     GloballyAssignOwners: boolean;
-    RegisterDataTypes: boolean;
+    ManageDataTypes: boolean;
+    ManageRelationTypes: boolean;
 }
 
 export enum AssetKind{
-    "Physical", "Virtual", "Complex"
+    Physical = "Physical",
+    Virtual = "Virtual",
+    Complex = "Complex",
+    /** declare the asset to be a data type */
+    AssetDataType = "Asset Data Type",
+    /** declare the asset to be a relationship type */
+    AssetRelationType = "Asset Relationship Type"
 }
 
 /** AssetType registering valid asset types which itself is managed as a special asset */
@@ -118,15 +155,7 @@ export interface AssetDataPost{
 
 
 /** Registered data type that is managed like a special asset */
-export interface AssetDataType{
-    /** Datatype Id for the datatype, should be a URI */
-    Id: string;
-    /** Display name for the datatype */
-    Label: string;
-    /** Textual description */
-    Description: string;
-    /** Tags for finding purposes */
-    Tags: Array<string>;
+export interface AssetDataType extends Asset {
     /** if false then only one version is allowed with an empty version identifier */
     AllowVersioning: boolean;
     /** Version Id of the default version to use or null to use the latest */
@@ -151,7 +180,7 @@ export interface AssetDataTypeVersion{
 
 /** data to change a data type */
 export interface AssetDataTypeChange{
-    Label: string;
+    Info: BasicInfo;
     /** enables or disables versioning */
     AllowVersioning: boolean;
     /** if set must already exist */
@@ -162,8 +191,7 @@ export interface AssetDataTypeChange{
 
 /** data to add a data type */
 export interface AssetDataTypeAdd{
-    Id: string;
-    Label: string;
+    Info: BasicInfo;
     AllowVersioning: boolean;
     VersioningPattern: string;
     /** first version for the datatype */
@@ -176,7 +204,6 @@ export interface AssetDataTypeAdd{
  * Relationship modelling through binary
  * relationships
  */
-// TODO
 export interface AssetRelation {
     /** Id of "from" or "first" asset */
     Asset1: string;
@@ -185,7 +212,26 @@ export interface AssetRelation {
     /** Id / name of the relationship */
     RelType: string;
     /** Id for the data directly associated with the relationship */
-    RelData: string;
+    RelData?: string;
     /** true to indicate that there is no "from" or "to" */
     Bidirectional: boolean;
+}
+
+export interface AssetRelationAdd {
+    /** Id of the other asset that acts as second or "to" asset */
+    ToAsset: string;
+    /** Id / name of the relationship */
+    RelType: string;
+    /** Id for the data directly associated with the relationship */
+    RelData?: string;
+    /** true to indicate that there is no "from" or "to" */
+    Bidirectional: boolean;
+}
+
+/** Relationship type, also managed as a special asset */
+export interface AssetRelationType extends Asset {
+    /** How often a particular asset can be the source of this type of relationship, -1 for infinite */
+    AllowedFrom: number;
+    /** How often a particular asset can be the target of this type of relationship, -1 for infinite */
+    AllowedTo: number;
 }

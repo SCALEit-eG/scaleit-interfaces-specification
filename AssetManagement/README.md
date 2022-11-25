@@ -2,6 +2,20 @@
 
 Asset := a thing of value to an organization, physical or virtual
 
+## Table of Contents
+
+1. [Considerations](#considerations)
+2. [Identifications](#identification)
+3. [Check List](#asset-management-check-list)
+4. [Asset Management](#asset-management-1)
+5. [Asset Types](#asset-types)
+6. [Asset Data](#asset-data)
+7. [Data Types](#data-types)
+8. [Asset Relationships](#asset-relationships)
+9. [Eventing](#eventing)
+10. [Asset Events](#asset-events)
+11. [Asset Operations](#asset-operations)
+
 ## Considerations
 
 - Assets need to be uniquely identifiable
@@ -28,6 +42,27 @@ The identity strings could be:
 - Device Id or domain name registered in a digital certificate for a non-person entity
 
 Authentication, i.e. establishing an identity, is assumed to be done by an authentication component before this API.
+
+## Asset Management Check List
+
+- How is Asset defined?
+- What kinds of assets can be modeled?
+- Is there a notion of asset kind or asset type and what does it mean?
+- How are assets identified?
+- What belongs to the metadata of an asset?
+- How can data be associated with an asset?
+- How can this data be queried and managed with CRUD operations?
+- Can a certain structure of the data be enforced?
+- Is data type versioning supported?
+- How can asset relationships be modeled?
+- Are there predefined relationships with special meaning?
+- What serializations of asset metadata and data are supported?
+- What kind of events are supported to report when something in the asset management changes?
+- How are the events propagated?
+- Can custom events be defined?
+- Are operations on assets supported?
+- How are permissions on assets and their data managed?
+- Are there global permissions?
 
 ## Asset Management
 
@@ -159,11 +194,36 @@ Route parameters:
 Request body:
 - Asset
 
+Response body:
+- Asset
+
 Response codes:
 - 200 OK: asset found and successfully changed
 - 404 Bad Request: asset not changed because invalid data or change of unchangeable fields was requested
 - 401 / 403: unauthenticated or unauthorized to make changes to asset
 - 404 Not Found: asset not found
+
+### (PUT /assets/{id}/move?{query})
+Note: This operation is not necessary and should not be used because asset hierarchies are formed through a special relationship type. Furthermore, IDs are only restricted through reserved namespaces and otherwise free to use.
+
+Move the asset in the hierarchy and thereby also change the ID and propagate the ID changes.
+
+Route parameters:
+- id: Asset ID
+
+Query parameters:
+- to: string, optional
+    - Asset ID
+    - if not given then the root hierarchy is assumed
+
+Response body:
+- Asset
+
+Response codes:
+- 200 OK: asset successfully moved
+- 400 Bad Request: invalid target
+- 404 Not Found: asset or target asset not found
+- 409 Conflict: at the target there is already a child asset with the same resulting ID
 
 ### DELETE /assets/{id}?{query}
 Delete an asset and optionally its hierarchy.
@@ -244,6 +304,9 @@ Query parameters:
 Request body:
 - AssetType
     - Missing or null entries are ignored
+
+Response body:
+- AssetType
 
 Response codes:
 - 200 OK: found and changed
@@ -370,6 +433,9 @@ Route parameters:
 
 For request headers and request body see [POST /assets/{id}/data](#post-assetsiddata)
 
+Response body:
+- AssetData
+
 Response codes:
 - 200 OK: data successfully changed
 - 400 Bad Request: violation of request data that was sent
@@ -419,7 +485,8 @@ Request body:
 
 Response codes:
 - 201 Created: data type successfully created
-- 400 Bad Request: data given invalid
+- 400 Bad Request: data given invalid or asset has the wrong kind
+- 404 Not Found: asset not found for the ID
 - 409 Conflict: data type with the same ID already exists
 
 ### GET /datatypes/{dtype}
@@ -515,7 +582,7 @@ Response codes:
 - 404 Not Found: data type or version not found
 - 409 Conflict: if version identifier changed and it is already in use
 
-### DELETE /datatypes/{dtype}/versions/{version}
+### DELETE /datatypes/{dtype}/versions/{version}?{query}
 Delete a specific version.
 
 Route parameters:
@@ -564,21 +631,174 @@ Types of asset relationships:
 - extends: assets may extend each other to directly derive an extended asset from an existing instance
     - Example: ?
 
-### GET /assets/{id}/rel
+### GET /assets/{id}/rel?{query}
+Retrieve all relationships of a particular asset.
+
+Route parameters:
+- id: string
+    - Asset ID
+
+Query parameters:
+- type: string, optional
+    - filter for the specific type
+
+Response body:
+- AssetRelation[]
+
+Response codes:
+- 200 OK: asset found and relationships available
+- 204 No Content: asset found but no relationships found for the query
+- 400 Bad Request: query parameter violation
+- 404 Not Found: asset not found
 
 ### POST /assets/{id}/rel
+Add a relationship to an asset. The asset for which the relationship is added is considered to be the "from" or first asset and the other as the second or "to" asset.
 
-### GET /assets/{id}/rel/{reltype}
+Route parameters:
+- id: Asset ID
 
-### POST /assets/{id}/rel/{reltype}
+Request body:
+- AssetRelationAdd
 
-### GET /assets/{id}/rel/{reltype}/{relid}
+Response codes:
+- 201 Created: relationship established
+- 400 Bad Request: invalid data given
+- 404 Not Found: first or second asset not found or relationship type not found
+- 409 Conflict: relationship of the same type for the referenced assets already exists
 
-### PUT /assets/{id}/rel/{reltype}/{relid}
+### DELETE /assets/{id}/rel/{id2}?{query}
+Delete the relationships between two assets.
 
-### DELETE /assets/{id}/rel/{reltype}/{relid}
+Route parameters:
+- id: Asset ID
+- id2: ID of the other asset
+
+Query parameters:
+- type: string, optional
+    - remove only the relationship of the given type otherwise all
+- remove_data: boolean, optional, default=false
+    - Remove the associated data if any
+
+Response codes:
+- 200 OK: relationship found and removed
+- 304 Not Modified: if type not given and no relationships available
+- 404 Not Found: one of the assets not found or relationship not existing if type was given
+
+### GET /reltypes?{query}
+List available relationships.
+
+Query parameters:
+- q: string, optional
+    - search term
+- tags: string array, optional
+    - filter tags
+
+Response body:
+- AssetRelationType[]
+
+Response codes:
+- 200 OK: relationship types available
+- 204 No Content: no relationship types available
+
+### POST /reltypes
+Add a relationship type.
+
+Request body:
+- AssetRelationType
+
+Response codes:
+- 201 Created: relationship type successfully registered
+- 400 Bad Request: data given invalid or asset has the wrong kind
+- 404 Not Found: asset not found for the given ID
+- 409 Conflict: relationship with the same ID already exists
+
+### GET /reltypes/{reltype}
+Get a specific relationship type.
+
+Route parameters:
+- reltype: string
+    - ID of the relationship type
+
+Response body:
+- AssetRelationType
+
+Response codes:
+- 200 OK: relationship type found
+- 404 Not Found: relationship type not found
+
+### PUT /reltypes/{reltype}
+Change the relationship type asset.
+
+Route parameters:
+- reltype: string
+    - ID of the relationship type
+
+Request body:
+- AssetRelationType
+    - null values are ignored
+
+Response body:
+- AssetRelationType
+
+Response codes:
+- 200 OK: relationship type found and changed
+- 400 Bad Request: invalid data
+- 404 Not Found: relationship type not found
+
+### DELETE /reltypes/{reltype}?{query}
+Remove a relationship type and possibly all concrete relationships of its type.
+
+Route parameters:
+- reltype: string
+    - ID of the relationship type
+
+Query parameters:
+- force: boolean, optional, default=false
+    - remove all relationships of the type
+
+Response code:
+- 200 OK: found and removed
+- 400 Bad Request: relationship type found but could not remove if force was false and relationships exist
+- 404 Not Found: relationship type not found
+
+## Eventing
+Eventing refers to the predefined events and event types that the system supports to inform about changes.
+
+### SSE /events
+The base endpoint for eventing is extended with the following event types.
+
+- AssetAdded
+- AssetChanged
+- AssetDeleted
+- AssetTypeAdded
+- AssetTypeChanged
+- AssetTypeDeleted
+- RelationTypeAdded
+- RelationTypeChanged
+- RelationTypeDeleted
+
+For all events the ID of the asset is transmitted.
+
+### SSE /events/assets/{id}
+Further events are transmitted for particular assets.
+
+- DataAdded
+    - Element ID: string
+- DataChanged
+    - Element ID: string
+- DataRemoved
+    - Element ID: string
+- RelationshipAdded
+    - AssetRelation
+- RelationshipRemoved
+    - AssetRelation
+
+### MQTT?
+TODO
 
 ## Asset Events
+
+Events are predefined or custom event types registered for an asset.
 
 ### GET /assets/{id}/events
 List the event types that an asset supports.
