@@ -793,25 +793,49 @@ Further events are transmitted for particular assets.
 - RelationshipRemoved
     - AssetRelation
 
-### MQTT?
-TODO
+### MQTT Events
+
+Topics are built after a configured prefix and are the same as [SSE /events](#sse-events).
+- {prefix}/{event}
+
+### MQTT Asset Events
+
+Further topics are built for each asset but need to be activated and again a prefix is prepended. Thus their paths are:
+- {prefix}/Assets/{id}/{event}
+
+The {event} part is the same as [SSE /events/assets/{id}](#sse-eventsassetsid).
 
 ## Asset Events
-TODO
 
 Events are predefined or custom event types registered for an asset.
 
-### GET /assets/{id}/events
+For the functionality there are several options:
+1. Consider predefined and custom event types and let extensions decide how an event is raised
+2. Instead of extensions HTTP POST calls could raise an event and for that use the predefined events from the eventing
+
+### GET /assettypes/{type}/events
 List the event types that an asset supports.
 
-### GET /assets/{id}/events/{eventtype}
-Retrieve information that defines the asset kind, accessibility, data format and structure.
+### POST /assettypes/{type}/events
+Register an event for an asset.
 
-### POST /assets/{id}/events
-Register an event for an asset. It may be just static information how to access the event or it may instruct the system to actively listen for external data.
+### GET /assettypes/{type}/events/{eventtype}
+Get detailed information about the event type.
+
+### PUT /assettypes/{type}/events/{eventtype}
+Change the configuration of an event.
+
+### DELETE /assettypes/{type}/events/{eventtype}
+Remove an event.
+
+### POST /assettypes/{type}/events/{eventtype}
+Raise an event.
+
+### POST /assettypes/{type}/events/{eventtype}/register
+Register a webhook for an event.
 
 ## Asset Operations
-TODO
+Note: Operations are currently out of scope and not considered.
 
 Operations are directly executed on the assets. It shall be implemented through simple webhooks without parameter as the necessary data may be retrieved by the asset itself from the configured data.
 

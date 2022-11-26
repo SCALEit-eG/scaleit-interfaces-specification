@@ -38,7 +38,7 @@ export interface Asset{
     /** Descriptive info of the asset */
     Info: BasicInfo;
     /** Alternative IDs */
-    AltIds: Array<string>
+    AltIds: Array<string>;
     /** Registered asset type */
     AssetType: string;
     /** Asset kind */
@@ -101,13 +101,18 @@ export interface GlobalPermissions{
 }
 
 export enum AssetKind{
+    /** tangible assets */
     Physical = "Physical",
+    /** non-tangible assets */
     Virtual = "Virtual",
+    /** combined systems that may have tangible and non-tangible components */
     Complex = "Complex",
     /** declare the asset to be a data type */
     AssetDataType = "Asset Data Type",
     /** declare the asset to be a relationship type */
-    AssetRelationType = "Asset Relationship Type"
+    AssetRelationType = "Asset Relationship Type",
+    /** declare the asset to be a defined event */
+    AssetEvent = "Asset Event"
 }
 
 /** AssetType registering valid asset types which itself is managed as a special asset */
@@ -235,3 +240,106 @@ export interface AssetRelationType extends Asset {
     /** How often a particular asset can be the target of this type of relationship, -1 for infinite */
     AllowedTo: number;
 }
+
+/**
+ * Event, treated as special asset
+ * 
+ * Every raised event must reference an asset. 
+ * 
+ * Available template variables:
+ * - {EventId}: Id of the event asset
+ * - {AssetId}: Id of the referenced asset 
+ * - {DataTypeId}: Id of the data type, only if configured
+ * - {VersionId}: Id of the version, only if configured
+ * 
+ * All Ids are URL encoded
+ */
+export interface AssetEvent extends Asset {
+    /** If set restricts the data of the event to the referenced data type */
+    DataId?: string;
+    /** Only in combination with DataId, restricts to a specific version */
+    Version?: string;
+    /** Configured channels on which to broadcast the event */
+    EventChannels: EventChannel[];
+    /** Direct subscribers to the event */
+    Subscribers: Webhook[];
+}
+
+/**
+ * Special event that is raised automatically when data of a specific asset changes.
+ * It adds the following template variables:
+ * - {DataEventName}: name of the data event
+ * 
+ * Template variables may be used in some fields like the path
+ * entry of the event channels for dynamic configuration.
+ */
+export interface AssetDataEvent extends Asset {
+    /**
+     * Asset for which to raise events when data changes. The
+     * data can be restricted with DataId and Version.
+     */
+    AssetId: string;
+    /** Value for new data event */
+    UseNewData: string;
+    /** Value for data changed event */
+    UseChangedData: string;
+    /** Value for data removed event */
+    UseRemovedData: string;
+}
+
+export interface EventChannel {
+    /** Path part in the URI of the event channel */
+    Path: string;
+    /** How the path is treated */
+    PathKind: PathKind;
+
+    /** Abstract method for strategy pattern */
+    broadcast(): void;
+}
+
+export enum PathKind {
+    /** doesn't resolve template variables */
+    Literal = "literal",
+    /** looks for template variables and resolves them */
+    Template = "template"
+}
+
+/**
+ * SSE uses a system wide configured prefix in order not to
+ * clash with defined HTTP and SSE endpoints 
+ */
+export interface SSEEventChannel extends EventChannel {}
+
+/**
+ * It also uses a prefix for the same purpose as SSE
+ */
+export interface WebsocketsEventChannel extends EventChannel { }
+
+/**
+ * MQTT topics may be chosen freely and because another
+ * system is referenced the access credentials must be given
+ * accordingly.
+ */
+export interface MQTTEventChannel extends EventChannel {
+    Protocol: string;
+    Host: string;
+    Port: number;
+    /** Template variables possible */
+    Username: string;
+    Password: string;
+    /** Template variables possible */
+    ClientId: string;
+    /** 0, 1 or 2, default=1 */
+    QoS: number;
+    /** in seconds, 0 to disable, default=60 */
+    Keepalive: number;
+    Retain: boolean;
+    /** Asset ID + Data ID for the CA file */
+    CAFile: string;
+    /** Asset ID + Data ID for the client certificate file */
+    ClientCertFile: string;
+    /** Asset ID + Data ID for the client certificate private key file */
+    ClientKeyFile: string;
+}
+
+export interface Webhook {}
