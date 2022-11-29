@@ -18,6 +18,13 @@
         - Network Adapter (NIC), MAC Address
         - Secure Element
 
+## Identity
+
+- Support needed for person and non-person identities
+
+### GET /identity
+Retrieves information about the active identity of the request or session depending on the whether sessions are used.
+
 ## Licensing
 
 License files shall be guarded against manipulation and forgery using digital signatures with x509 certificates coming from a trusted CA within a PKI.

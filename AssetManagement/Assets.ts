@@ -75,28 +75,46 @@ export interface AssetPermissions{
 
 /** Access control lists or permission policy respectively for an asset */
 export interface ACL{
+    /** read / view the metadata of an asset */
     ReadMetadata: boolean;
+    /** change the metadata of an asset */
     ChangeMetadata: boolean;
+    /** view data related to the asset */
     ReadData: boolean;
-    PostData: boolean;
+    /** add new data to the asset */
+    AddData: boolean;
+    /** change or remove data elements of the asset */
     ChangeOrDeleteData: boolean;
-    /** only for asset type assets */
-    ConfigureDataTypes: boolean;
+    /** Create, change and delete asset types locally */
+    ManageAssetTypes: boolean;
+    /** Right to assign ownership locally */
+    AssignOwners: boolean;
+    /** Create, change and delete data types locally */
+    ManageDataTypes: boolean;
+    /** Create, change and delete asset types locally */
+    ManageRelationTypes: boolean;
 }
 
 export interface Identity{
     /** Unique identifier for a person or non-person entity */
     Id: string;
+    /** Descriptive information */
+    Info: BasicInfo;
     /** Permissions for global operations */
     Permissions: GlobalPermissions;
 }
 
 /** permissions that apply independently from assets */
 export interface GlobalPermissions{
+    /** Namespaces can only be assigned by authorized identities */
     AssignNamespaces: boolean;
+    /** Create, change and delete asset types globally */
     ManageAssetTypes: boolean;
+    /** Right to assign ownership of root assets */
     GloballyAssignOwners: boolean;
+    /** Create, change and delete data types globally */
     ManageDataTypes: boolean;
+    /** Create, change and delete asset types globally */
     ManageRelationTypes: boolean;
 }
 
@@ -107,6 +125,8 @@ export enum AssetKind{
     Virtual = "Virtual",
     /** combined systems that may have tangible and non-tangible components */
     Complex = "Complex",
+    /** declare the asset to designate an asset type */
+    AssetType = "Asset Type",
     /** declare the asset to be a data type */
     AssetDataType = "Asset Data Type",
     /** declare the asset to be a relationship type */
@@ -116,11 +136,7 @@ export enum AssetKind{
 }
 
 /** AssetType registering valid asset types which itself is managed as a special asset */
-export interface AssetType{
-    /** Unique URI for the asset type */
-    Id: string;
-    /** Display name for the asset type */
-    Label: string;
+export interface AssetType extends Asset{
     /** restricts data types to the given ones if AllowsAll is false; URIs of the data types */
     DataTypes: string[];
     /** allows all data types */
