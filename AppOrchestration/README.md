@@ -199,7 +199,7 @@ Response codes:
     - app id not given
     - app is busy
     - no valid license
-- 404 Not Found: ap instance not found
+- 404 Not Found: app instance not found
 
 Response headers:
 - Content-Type: application/json
