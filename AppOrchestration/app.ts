@@ -6,8 +6,8 @@ export interface AppInstance{
     App: AppConfig;
     Busy: boolean;
     Status?: AppStatus;
-    Images: Array<DockerImage>;
-    Containers: Array<DockerContainer>;
+    Images: Array<ContainerImage>;
+    Containers: Array<Container>;
 }
 
 export enum AppStatus{
@@ -51,9 +51,9 @@ export interface ConnectionPoint{
 }
 
 /**
- * Information about a docker container
+ * Information about a container
  */
-export interface DockerContainer{
+export interface Container{
     Name: string;
     Id: string;
     ImageId?: string;
@@ -66,10 +66,9 @@ export interface DockerContainer{
 }
 
 /**
- * Information about a docker image
+ * Information about a container image
  */
-export interface DockerImage
-{
+export interface ContainerImage {
     Name: string;
     Id?: string;
     Created?: Date;
