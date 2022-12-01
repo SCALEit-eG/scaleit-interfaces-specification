@@ -185,3 +185,14 @@ Response codes:
 - 200 OK: settings successfully changed
 - 400 Bad Request: wrong data format or types
 - 404 Not Found: no settings available
+
+## Error Responses
+
+- Error responses should be standardized
+- Should provide user friendly parts for human readability
+- Should provide machine interpretable parts with detailed and concise semantics
+
+### REST
+
+1. HTTP error codes should be used correctly
+2. Problem details following RFC7807 should be used see [problem.ts](./problem.ts)
