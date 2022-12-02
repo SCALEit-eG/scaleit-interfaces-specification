@@ -311,6 +311,9 @@ Response codes:
 - 400 Bad Request: app instance is already being refreshed or app id invalid
 - 404 Not Found: app instance not found
 
+Response headers:
+- Content-Type: application/json
+
 Response body:
 - AppInstance
 
@@ -318,6 +321,19 @@ Example:
 ```
 PUT /api/1/transfer/apps/simple%20webserver%3A1.0.0-dbg/refresh
 ```
+
+### GET /transfer/recognize/apps
+Recognize all containerized projects that run on the system.
+
+Response codes:
+- 200 OK: at least one project recognized
+- 204 No Content: no project recognized
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- data from docker containers API
 
 ### Websockets /events/transfer/import
 Imports an app as ZIP archive and provides incremental feedback.
@@ -361,6 +377,9 @@ Uses this general interface and extends it with the following event channels:
 - Remove
     - data: AppInstance
     - an app was removed
+- Refresh
+    - data: boolean
+    - app is currently busy refreshing all apps or has finished
 
 Note: Older versions may use **/events**.
 
