@@ -132,6 +132,16 @@ Response headers:
 - Connection: keep-alive
 - Cache-Control: no-cache
 
+### Websockets /events
+Websocket endpoint that does the same as the corresponding SSE endpoint, namely sending messages for different types of events.
+
+Protocol:
+- Client should send nothing
+    - Middlelayer ignores or discards all client data
+- Middlelayer sends messages for events that occurred
+    - Data: MiddlelayerMessage&lt;?&gt;
+    - For status specifically: MiddlelayerMessage&lt;StatusData&gt;
+
 ## Process Management
 
 A process hereby refers to an identifiable procedure or task that takes place in an app.

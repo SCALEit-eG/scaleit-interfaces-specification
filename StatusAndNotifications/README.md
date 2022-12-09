@@ -16,6 +16,11 @@ Response headers:
 Response body:
 - StatusMessage
 
+Example:
+```
+GET /api/1.2/status
+```
+
 ## States
 
 Possible states of an application or asset.
