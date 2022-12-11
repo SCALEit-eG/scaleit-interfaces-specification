@@ -106,7 +106,11 @@ GET /api/versions/0.5.0-dev
 ## Events
 
 ### SSE /events
-Server-sent events endpoint; allows asynchronous communication from the server to the client
+Server-sent events endpoint that allows asynchronous communication from the server to the client. Refer to the following references for details:
+- https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events
+- https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
+- https://developer.mozilla.org/en-US/docs/Web/API/EventSource
+- https://html.spec.whatwg.org/multipage/server-sent-events.html
 
 Reserved event types:
 - status
@@ -114,6 +118,10 @@ Reserved event types:
 - ping (technical)
 - open
     - Usage by frontend only to indicate connection was established
+- message
+    - should not be used because according to the SSE spec the event is raised for events with that name and also for unnamed events
+- error
+    - also represents a standard frontend event
 
 Other considerations:
 - state
