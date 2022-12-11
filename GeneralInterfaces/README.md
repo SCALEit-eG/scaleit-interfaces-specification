@@ -108,11 +108,15 @@ GET /api/versions/0.5.0-dev
 ### SSE /events
 Server-sent events endpoint; allows asynchronous communication from the server to the client
 
-Supported channels:
+Reserved event types:
 - status
     - data: StatusMessage
-- state
 - ping (technical)
+- open
+    - Usage by frontend only to indicate connection was established
+
+Other considerations:
+- state
 - AlarmAndEvent
 - Information
 - MeasuringValue
