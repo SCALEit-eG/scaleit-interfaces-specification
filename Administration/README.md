@@ -55,3 +55,21 @@ Response codes:
 - 304 Not Modified: no logs affected
 - 400 Bad Request: query parameter violations
 - 404 Not Found: unknown log level given
+
+## Data Maintenance
+Services hold data and this data potentially has a schema or data definition. The following aspects should be covered by the interfaces:
+- Data import / export
+    - Useful for backups, deployment changes, data exporting
+- Data migrations
+
+### GET /adm/data/export
+Export the data of the system. This data is also referred to as data dump.
+
+### PUT /adm/data/import
+Import a data dump into the system.
+
+Query parameters:
+- clean: boolean, default=false
+    - if true delete all data in the current system otherwise merge the data
+- replace: boolean, default=false
+    - if true then replace conflicting existing data with the import data otherwise fail

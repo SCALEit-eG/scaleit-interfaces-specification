@@ -100,7 +100,60 @@ Example:
 ```
 GET /api/versions/0.5.0-dev
 
-<swagger.json>
+<openapi.json>
+```
+
+## API Documentation
+API documentation follows the OpenAPI standard.
+
+- **Note:** Paths beginning with "/apidoc" are absolute and don't start with /api
+
+### GET /apidoc/{version}/openapi.json
+Retrieve the OpenAPI documentation of the API.
+
+Route parameters:
+- version: string, required
+    - version identifier
+
+Response codes:
+- 200 OK: version supported
+- 404 Not Found: version not supported
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- JSON adhering to OpenAPI specification
+
+Example:
+```
+GET /apidoc/1.2/openapi.json
+
+<openapi.json>
+```
+
+### GET /apidoc/{version}/swagger.json
+Location of the Swagger UI to access a graphical interface for the API.
+
+Route parameters:
+- version: string, required
+    - version identifier
+
+Response codes:
+- 200 OK: Swagger UI available
+- 404 Not Found: No Swagger UI available
+
+Response headers:
+- Content-Type: text/html
+
+Response body:
+- Website that renders a Swagger UI
+
+Example:
+```
+GET /apidoc/1.2/swagger.json
+
+<Swagger Website>
 ```
 
 ## Events
