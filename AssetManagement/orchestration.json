@@ -5,20 +5,44 @@
             "Label": "Ubuntu Server Device",
             "DeviceType": "Physical",
             "OS": {
-                "Type": "Linux"
+                "Type": "Linux",
+                "Variant": "Ubuntu",
+                "Edition": "Server",
+                "Release": "22.04"
             },
             "InstructionSet": "amd64",
-            "Network": {
-                "IPv4": [
-                    "10.198.153.32"
-                ]
-            }
+            "NetworkInterfaces": [
+                {
+                    "AdapterName": "ens160",
+                    "AdapterType": "Ethernet",
+                    "MAC": "00:50:56:9f:38:b3",
+                    "IPv4": [
+                        "10.198.153.32"
+                    ],
+                    "IPv6": [
+                        "2a00:7b80:454:2000::xxx"
+                    ],
+                    "Gateway4": "10.198.153.1",
+                    "Netmask4": "24",
+                    "Gateway6": "2a00:7b80:454::1",
+                    "Netmask6": "48",
+                    "Nameservers": [
+                        "10.198.153.1",
+                        "8.8.4.4"
+                    ]
+                }
+            ]
         },
         {
             "Id": "urn:scale-it.org:devices:2",
             "Label": "Raspberry Pi",
             "DeviceType": "Physical",
-            "OS": "Linux",
+            "OS": {
+                "Type": "Linux",
+                "Variant": "Raspberry Pi OS",
+                "Edition": "Lite",
+                "Release": "2022-09-22"
+            },
             "InstructionSet": "armv7",
             "Network": {
                 "IPv4": [
@@ -30,7 +54,12 @@
             "Id": "urn:scale-it.org:devices:3",
             "Label": "Windows 7 Workstation",
             "DeviceType": "Physical",
-            "OS": "Windows",
+            "OS": {
+                "Type": "Windows",
+                "Variant": "Windows 7",
+                "Edition": "Home",
+                "Release": "7601"
+            },
             "InstructionSet": "x86",
             "Network": {
                 "IPv4": [
@@ -42,13 +71,90 @@
             "Id": "urn:scale-it.org:devices:4",
             "Label": "openSUSE Tumbleweed VM",
             "DeviceType": "Virtual",
-            "OS": "Linux",
+            "OS": {
+                "Type": "Linux",
+                "Variant": "openSUSE Tumbleweed",
+                "Edition": null,
+                "Release": "84.87.20221026.6e969c9"
+            },
             "InstructionSet": "x86",
             "Network": {
                 "IPv4": [
                     "192.168.153.90"
                 ]
             }
+        },
+        {
+            "Id": "urn:scale-it.org:devices:yuma-elabel-yellow",
+            "Label": "YUMA eLabel PC Yellow Zone",
+            "DeviceType": "Physical",
+            "OS": {
+                "Type": "Windows",
+                "Variant": "Windows 10",
+                "Edition": "Pro",
+                "Release": "19044.2364"
+            },
+            "InstructionSet": "amd64",
+            "Network": [
+                {
+                    "AdapterName": "dmz-virtual-switch",
+                    "AdapterType": "Virtual",
+                    "MAC": "00-15-5D-B2-23-06",
+                    "IPv4": [
+                        "192.168.152.2"
+                    ],
+                    "Gateway4": "192.168.152.1",
+                    "Netmask4": "255.255.255.0",
+                    "Nameservers": [
+                        "192.168.152.1",
+                        "8.8.4.4"
+                    ]
+                },
+                {
+                    "AdapterName": "Zone-Red",
+                    "AdapterType": "Ethernet"
+                },
+                {
+                    "AdapterName": "Zone-Yellow",
+                    "AdapterType": "Ethernet"
+                }
+            ]
+        },
+        {
+            "Id": "urn:scale-it.org:devices:yuma-elabel-yellow:scaleit-red",
+            "Label": "YUMA eLabel SCALE it VM Red",
+            "DeviceType": "Virtual",
+            "OS": {
+                "Type": "Linux",
+                "Variant": "Ubuntu",
+                "Edition": "Server",
+                "Release": "18.04"
+            },
+            "InstructionSet": "amd64",
+            "Network": [
+                {
+                    "AdapterName": "eth0",
+                    "AdapterType": "Ethernet",
+                    "MAC": "00-15-5D-B2-23-0d",
+                    "IPv4": [
+                        "192.168.153.90"
+                    ],
+                    "Gateway4": "192.168.153.1",
+                    "Netmask4": "255.255.255.0"
+                }
+            ]
+        },
+        {
+            "Id": "urn:scale-it.org:devices:yuma-elabel-yellow:pfsense",
+            "Label": "YUMA eLabel pfSense",
+            "DeviceType": "Virtual",
+            "OS": {
+                "Type": "Linux",
+                "Variant": "Ubuntu",
+                "Edition": "Server",
+                "Release": "18.04"
+            },
+            "InstructionSet": "amd64"
         }
     ],
     "Apps": [

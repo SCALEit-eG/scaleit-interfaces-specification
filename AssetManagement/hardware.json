@@ -104,7 +104,105 @@
             ]
         }
     ],
-    "ComputerMemory": [],
-    "NetworkInterfaceController": [],
+    "ComputerMemory": [
+        {
+            "Label": "Crucial 8GB DDR4-3200 CL22",
+            "Brand": "Crucial",
+            "Capacitiy": "8 GB",
+            "FormFactor": "SODIMM",
+            "MemoryType": "DDR4",
+            "Voltage": "1.2 V",
+            "Latency": "CL22",
+            "Frequency": "3200 MHz"
+        },
+        {
+            "Label": "Kingston FURY Beast Black 16GB DDR5-5200 CL40",
+            "Brand": "Kingston",
+            "Capacitiy": "16 GB",
+            "FormFactor": "DIMM",
+            "MemoryType": "DDR5",
+            "Voltage": "1.25 V",
+            "Latency": "CL40",
+            "Frequency": "5200 MHz"
+        }
+    ],
+    "NetworkInterfaceController": [
+        {
+            "Label": "Intel I211 Gigabit Network Connection",
+            "Brand": "Intel",
+            "AdapterType": "Ethernet 802.3",
+            "Interface": "PCIe v2.1",
+            "DataRate": "1 Gbit/s"
+        },
+        {
+            "Label": "ENW-9803",
+            "Brand": "Planet",
+            "AdapterType": "Ethernet 802.3",
+            "Interface": "RJ45",
+            "DataRate": "10 Gbit/s"
+        }
+    ],
+    "DataDrive": [
+        {
+            "Label": "Samsung 870 EVO SSD",
+            "Brand": "Samsung",
+            "Series": "SSD 870 EVO",
+            "Capacity": "250 GB",
+            "StorageDriveType": "SSD",
+            "Interface": {
+                "InterfaceType": "SATA",
+                "DataRate": "6 GB/s"
+            },
+            "FormFactor": "2.5 inch",
+            "FormType": "internal",
+            "DataReadRate": "560 MB/s",
+            "DataWriteRate": "530 MB/s",
+            "TotalWriteCapacity": "150 TB"
+        },
+        {
+            "Label": "Kingston NV2 SSD",
+            "Brand": "Kingston",
+            "Capacity": "2 TB",
+            "StorageDriveType": "SSD",
+            "Interface": {
+                "InterfaceType": "PCIe 4.0 x4 NVMe",
+                "NVMe": true
+            },
+            "FormFactor": "M.2 2280",
+            "FormType": "internal",
+            "DataReadRate": "3500 MB/s",
+            "DataWriteRate": "2800 MB/s",
+            "TotalWriteCapacity": "640 TB"
+        },
+        {
+            "Label": "Seagate IronWolf 4TB",
+            "Brand": "Seagate",
+            "Capacity": "4 TB",
+            "StorageDriveType": "HDD",
+            "Interface": {
+                "InterfaceType": "SATA",
+                "DataRate": "6 GB/s"
+            },
+            "FormFactor": "3.5 inch",
+            "FormType": "internal",
+            "RPM": "5400",
+            "DataTransferRate": "202 MB/s"
+        },
+        {
+            "Label": "Samsung T7 Shield Portable SSD",
+            "Brand": "Samsung",
+            "Capacity": "1 TB",
+            "StorageDriveType": "SSD",
+            "Interface": {
+                "InterfaceType": "USB-C 3.2",
+                "NVMe": true
+            },
+            "FormFactor": "M.2 2280",
+            "FormType": "external",
+            "DataReadRate": "3500 MB/s",
+            "DataWriteRate": "2800 MB/s",
+            "TotalWriteCapacity": "640 TB"
+        }
+    ],
     "GPU": []
 }
