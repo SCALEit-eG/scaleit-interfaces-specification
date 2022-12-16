@@ -1,0 +1,75 @@
+{
+    "Devices": [
+        {
+            "ProductName": "exone BUSINESS S 1201",
+            "Manufacturer": "exone",
+            "CPU": {
+                "Brand": "Intel",
+                "ModelNumber": "BX8071512700K",
+                "Chipset": "Intel 600",
+                "Cores": 12,
+                "MinSpeed": "3.6 GHz",
+                "MaxSpeed": "4.9 GHz",
+                "ProcessorSocket": "Socket LGA 1700"
+            },
+            "ComputerMemory": [
+                {
+                    "Brand": "Corsair",
+                    "ModelNumber": "CMH32GX4M2D3600C18W",
+                    "Type": "DDR4",
+                    "Capacity": "8 GB",
+                    "MinSpeed": "2400 MHz",
+                    "MaxSpeed": "3600 MHz",
+                    "FormFactor": "DIMM",
+                    "Latency": "CL40",
+                    "Voltage": "1.35 V"
+                }
+            ],
+            "Mainboard": {
+                "Chipset": "Intel H510"
+            },
+            "Datadrives": [],
+            "NetworkInterfaceControllers": [
+                {
+                    "Speed": "1 Gbit/s"
+                }
+            ],
+            "GPU": []
+        }
+    ],
+    "Computers": [
+        {
+            "OS": {
+                "Name": "Microsoft Windows 10 Home",
+                "Type": "Windows",
+                "Architecture": "amd64"
+            },
+            "Profiles": [
+                {
+                    "EnvironmentVariables": [
+                        {
+                            "Name": "JAVA_HOME",
+                            "Value": "C:\\Programme\\Java\\JDK17"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "Services": [
+        {
+            "Name": "Calculator",
+            "Version": "1.0",
+            "ProductNumber": "ABC123",
+            "Developer": "Software GmbH",
+            "Parts": [
+            ]
+        }
+    ],
+    "SoftwareComponent": [],
+    "Identifiers": {
+        "SerialNumber": "",
+        "ModelNumber": "",
+        "ProductNumber": ""
+    }
+}

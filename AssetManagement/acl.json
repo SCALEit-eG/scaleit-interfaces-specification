@@ -1,0 +1,31 @@
+{
+    "ACLS": [
+        {
+            "Owners": [
+                "urn:scale-it.org:identity:scaleit"
+            ],
+            "Assignees": [
+                "urn:scale-it.org:identities:chrl",
+                "urn:scale-it.org:identity:machx"
+            ],
+            "Groups": [
+                "urn:scale-it.org:groups:sensor-users"
+            ],
+            "AssigneeRights": {
+                "Read": true,
+                "Edit": true,
+                "Delete": true
+            },
+            "GroupRights": {
+                "Read": true,
+                "Edit": true,
+                "Delete": false
+            },
+            "OtherRights": {
+                "Read": true,
+                "Edit": false,
+                "Delete": false
+            }
+        }
+    ]
+}

@@ -1,0 +1,110 @@
+{
+    "CPU": [
+        {
+            "Label": "AMD Ryzen 9 7950X",
+            "Brand": "AMD",
+            "ModelNumber": "100-100000514WOF",
+            "Series": "AMD Ryzen",
+            "CoreFamily": "AMD",
+            "Cores": 16,
+            "Multithreading": true,
+            "Threads": 32,
+            "MinClockRate": "4.5 GHz",
+            "MaxClockRate": "5.7 GHz",
+            "ProcessorSocket": "AM5",
+            "BaseTDP": "170 W",
+            "MaxTDP": "230 W",
+            "L1Cache": "1 MB",
+            "L2Cache": "16 MB",
+            "L3Cache": "64 MB",
+            "Microarchitecture": "Zen 4",
+            "InstructionSet": "x86-64",
+            "MaxOpTemp": "95°C",
+            "LaunchDate": "2022-9-27",
+            "IntegratedGraphics": "AMD Radeon HD",
+            "MemoryTypes": [
+                "DDR5"
+            ],
+            "MaxMemory": "128 GB",
+            "SupportingChipsets": [
+                "X670E",
+                "X670",
+                "B650E",
+                "B650"
+            ],
+            "SupportedExtensions": [
+                "AES",
+                "AMD-V",
+                "AVX",
+                "AVX2",
+                "AVX512",
+                "FMA3",
+                "MMX(+)",
+                "SHA",
+                "SSE",
+                "SSE2",
+                "SSE3",
+                "SSE4.1",
+                "SSE4.2",
+                "SSE4A",
+                "SSSE3",
+                "x86-64"
+            ]
+        },
+        {
+            "Label": "Intel Core i7-12700K",
+            "Brand": "Intel",
+            "ModelNumber": "BX8071512700KSRL4N",
+            "Series": "Intel Core i7",
+            "CoreFamily": "12700K",
+            "Cores": 12,
+            "Threads": 20,
+            "MinClockRate": "2.7 GHz",
+            "MaxClockRate": "5 GHz",
+            "ProcessorSocket": "FCLGA1700",
+            "BaseTDP": "125 W",
+            "MaxTDP": "190 W",
+            "L1Cache": "1 MB",
+            "L2Cache": "12 MB",
+            "L3Cache": "25 MB",
+            "Microarchitecture": "Alder Lake",
+            "InstructionSet": "x86-64",
+            "MaxOpTemp": "100°C",
+            "LaunchDate": "2021-10-01",
+            "IntegratedGraphics": "Intel UHD Graphics 770",
+            "MemoryTypes": [
+                "DDR4",
+                "DDR5"
+            ],
+            "MaxMemory": "128 GB",
+            "SupportingChipsets": [
+                "Z790",
+                "Z690",
+                "H670",
+                "H610",
+                "B660",
+                "Q670"
+            ],
+            "SupportedExtensions": [
+                "MMX",
+                "SSE3",
+                "AVX",
+                "AES",
+                "RdRand",
+                "ADX",
+                "x86-16",
+                "x86-32",
+                "x86-64",
+                "Real",
+                "Protected",
+                "SMM",
+                "VT-x",
+                "VT-d",
+                "VMD"
+            ]
+        }
+    ],
+    "ComputerMemory": [],
+    "NetworkInterfaceController": [],
+    "GPU": []
+}

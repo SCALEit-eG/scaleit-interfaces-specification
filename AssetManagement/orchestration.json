@@ -1,0 +1,483 @@
+{
+    "Devices": [
+        {
+            "Id": "urn:scale-it.org:devices:1",
+            "Label": "Ubuntu Server Device",
+            "DeviceType": "Physical",
+            "OS": {
+                "Type": "Linux"
+            },
+            "InstructionSet": "amd64",
+            "Network": {
+                "IPv4": [
+                    "10.198.153.32"
+                ]
+            }
+        },
+        {
+            "Id": "urn:scale-it.org:devices:2",
+            "Label": "Raspberry Pi",
+            "DeviceType": "Physical",
+            "OS": "Linux",
+            "InstructionSet": "armv7",
+            "Network": {
+                "IPv4": [
+                    "192.168.153.165"
+                ]
+            }
+        },
+        {
+            "Id": "urn:scale-it.org:devices:3",
+            "Label": "Windows 7 Workstation",
+            "DeviceType": "Physical",
+            "OS": "Windows",
+            "InstructionSet": "x86",
+            "Network": {
+                "IPv4": [
+                    "192.168.178.70"
+                ]
+            }
+        },
+        {
+            "Id": "urn:scale-it.org:devices:4",
+            "Label": "openSUSE Tumbleweed VM",
+            "DeviceType": "Virtual",
+            "OS": "Linux",
+            "InstructionSet": "x86",
+            "Network": {
+                "IPv4": [
+                    "192.168.153.90"
+                ]
+            }
+        }
+    ],
+    "Apps": [
+        {
+            "Id": "urn:scale-it.org:apps:sensors:sensor-app-template:2.0.0",
+            "Name": "Sensor App Template",
+            "Version": "2.0.0",
+            "ProductNumber": "AAA",
+            "Developer": "urn:scale-it.org:identity:scaleit",
+            "Components": [
+                {
+                    "Id": "urn:scale-it.org:comps:sensors:sensor-frontend:1.4.0",
+                    "LocalId": null
+                },
+                {
+                    "Id": "urn:scale-it.org:comps:sensors:sensor-middlelayer:2.1.7",
+                    "LocalId": null
+                },
+                {
+                    "Id": "urn:scale-it.org:comps:sensors:sensor-backend:1.0.0",
+                    "LocalId": null
+                }
+            ]
+        }
+    ],
+    "SoftwareComponents": [
+        {
+            "Id": "urn:scale-it.org:comps:sensors:sensor-frontend:1.4.0",
+            "Name": "Sensor Frontend",
+            "Version": "1.4.0",
+            "Type": "Container",
+            "ContainerImage": "urn:scale-it.org:images:sensors:sensor-frontend:1.4.0",
+            "OS": [
+                "linux",
+                "windows",
+                "macos"
+            ],
+            "InstructionSet": [
+                "amd64",
+                "x86",
+                "armv7",
+                "armv8"
+            ],
+            "Connectivity": [
+                {
+                    "Type": "View",
+                    "Protocol": "https",
+                    "Port": 80,
+                    "Path": "/"
+                }
+            ]
+        },
+        {
+            "Id": "urn:scale-it.org:comps:sensors:sensor-middlelayer:2.1.7",
+            "Name": "Sensor Middlelayer",
+            "Version": "2.1.7",
+            "Type": "Container",
+            "ContainerImage": "urn:scale-it.org:images:sensors:sensor-middlelayer:2.1.7",
+            "OS": [
+                "linux",
+                "windows",
+                "macos"
+            ],
+            "InstructionSet": [
+                "amd64",
+                "x86",
+                "armv7",
+                "armv8"
+            ],
+            "Connectivity": [
+                {
+                    "Type": "API",
+                    "Protocol": "https",
+                    "Port": 5000,
+                    "Path": "/"
+                },
+                {
+                    "Type": "API",
+                    "Protocol": "SSE",
+                    "Port": 5000,
+                    "Path": "/"
+                },
+                {
+                    "Type": "API",
+                    "Protocol": "Websockets",
+                    "Port": 5000,
+                    "Path": "/"
+                },
+                {
+                    "Type": "API",
+                    "Protocol": "MQTT",
+                    "External": true
+                }
+            ]
+        },
+        {
+            "Id": "urn:scale-it.org:comps:sensors:sensor-backend:1.1.0",
+            "Name": "Sensor Backend",
+            "Version": "1.1.0",
+            "Type": "Container",
+            "ContainerImage": "urn:scale-it.org:images:sensors:sensor-backend:1.1.0",
+            "OS": [
+                "linux",
+                "windows",
+                "macos"
+            ],
+            "InstructionSet": [
+                "amd64",
+                "x86",
+                "armv7",
+                "armv8"
+            ],
+            "Connectivity": [
+                {
+                    "Type": "API",
+                    "Protocol": "MQTT",
+                    "External": true
+                }
+            ]
+        }
+    ],
+    "ContainerImages": [
+        {
+            "Id": "urn:scale-it.org:images:sensors:sensor-frontend:1.4.0",
+            "Digest:": "sha256:sdhqodhqwoidhqwhdwoqhdqwods",
+            "Tags": [
+                "scale-it.org:53001/scaleit/sensors/sensor-frontend:1.4.0"
+            ],
+            "OS": "linux",
+            "Arch": "amd64",
+            "LastModified": "2022-03-01",
+            "Signature": {
+                "Issuer": "urn:scale-it.org:certs:scaleit-ca",
+                "SignatureType": "JWS",
+                "Value": "{header}.{payload}.{signature}"
+            }
+        },
+        {
+            "Id": "urn:scale-it.org:images:sensors:sensor-middlelayer:2.1.7",
+            "Digest:": "sha256:sdhqodhqwoidhqwhdwoqhdqwods",
+            "Tags": [
+                "scale-it.org:53001/scaleit/sensors/sensor-middlelayer:2.1.7"
+            ],
+            "OS": "linux",
+            "Arch": "amd64",
+            "LastModified": "2022-02-22",
+            "Volumes": [
+                {
+                    "Path": "/data",
+                    "Name": "data-vol",
+                    "External": false
+                },
+                {
+                    "Path": "/config",
+                    "Name": "sensor-config-vol",
+                    "External": true
+                }
+            ],
+            "Ports": [
+                {
+                    "Port": 5000,
+                    "Protocol": "tcp",
+                    "Address": "0.0.0.0"
+                }
+            ],
+            "EnvironmentVariables": {
+                "MQTT__BROKER": "mqtt://localhost:1883"
+            }
+        },
+        {
+            "Id": "urn:scale-it.org:images:sensors:sensor-backend:1.1.0",
+            "Digest:": "sha256:sdhqodhqwoidhqwhdwoqhdqwods",
+            "Tags": [
+                "scale-it.org:53001/scaleit/sensors/sensor-backend:1.1.0"
+            ],
+            "OS": "linux",
+            "Arch": "amd64",
+            "LastModified": "2022-01-17"
+        }
+    ],
+    "Platforms": [
+        {
+            "Id": "urn:scale-it.org:platform:sdm4fzi",
+            "Label": "SCALE it SDM4FZI Orchestration Platform",
+            "DeploymentCapabilities": [
+                {
+                    "LocalId": "Device 1 Transfer App",
+                    "Type": "urn:scale-it.org:technologies:transfer-tech:4.0.0",
+                    "Devices": [
+                        "urn:scale-it.org:devices:1"
+                    ],
+                    "Access": {
+                        "IPv4": "10.198.153.32",
+                        "Hostname": "digiz.scale-it.org",
+                        "Port": 54168,
+                        "Protocol": "https",
+                        "Path": "/api"
+                    }
+                },
+                {
+                    "LocalId": "Enterprise Workstation App Pool",
+                    "Type": "urn:scale-it.org:technologies:app-pool:1.0.0",
+                    "Devices": [
+                        "urn:scale-it.org:devices:3",
+                        "urn:scale-it.org:devices:4"
+                    ],
+                    "Access": {
+                        "IPv4": "192.168.178.70",
+                        "Hostname": "digiz.scale-it.org",
+                        "Port": 54148,
+                        "Protocol": "https",
+                        "Path": "/api"
+                    }
+                }
+            ]
+        }
+    ],
+    "DeploymentTypes": [
+        {
+            "Id": "urn:scale-it.org:technologies:transfer-tech:4.0.0",
+            "Version": "4.0.0",
+            "Label": "SCALE it Transfer Technology",
+            "Compatibility": {
+                "OS": [
+                    "linux"
+                ],
+                "InstructionSet": [
+                    "amd64",
+                    "x86",
+                    "armv7",
+                    "armv8"
+                ],
+                "Component": [
+                    "Container"
+                ]
+            },
+            "MultiNode": false,
+            "Dependencies": [
+                {
+                    "DependencyType": "Core",
+                    "Name": "DockerEngine",
+                    "Version": "20.10",
+                    "Multiple": false
+                },
+                {
+                    "DependencyType": "Core",
+                    "Name": "DockerCompose",
+                    "Version": "2",
+                    "Multiple": false
+                }
+            ]
+        },
+        {
+            "Id": "urn:scale-it.org:technologies:app-pool:1.0.0",
+            "Version": "1.0.0",
+            "Label": "SCALE it App Pool",
+            "Compatibility": {
+                "OS": [
+                    "linux"
+                ],
+                "InstructionSet": [
+                    "amd64",
+                    "x86",
+                    "armv7",
+                    "armv8"
+                ],
+                "Component": [
+                    "Container"
+                ]
+            },
+            "MultiNode": true,
+            "Dependencies": [
+                {
+                    "DependencyType": "DeploymentType",
+                    "Id": "urn:scale-it.org:technologies:transfer-tech:4.0.0",
+                    "Multiple": true
+                }
+            ]
+        }
+    ],
+    "Deployments": [
+        {
+            "Id": "urn:scale-it.org:platform:sdm4fzi:deployments:abcdef123456",
+            "App": "urn:scale-it.org:apps:sensors:sensor-app-template:2.0.0",
+            "Platform": "urn:scale-it.org:platform:sdm4fzi",
+            "Config": {
+                "Components": [
+                    {
+                        "Id": "urn:scale-it.org:comps:sensors:sensor-middlelayer:2.1.7",
+                        "LocalId": null,
+                        "Network": {
+                            "Ports": [
+                                {
+                                    "ExposedPort": 54002,
+                                    "InternalPort": 5000,
+                                    "ExternalHost": "0.0.0.0",
+                                    "InternalHost": "0.0.0.0",
+                                    "Protocol": "tcp"
+                                }
+                            ]
+                        },
+                        "EnvironmentVariables": {
+                            "MQTT__BROKER": "mqtts://digiz.scale-it.org:8883"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "Licenses": [
+        {
+            "Id": "urn:scale-it.org:licenses:apps:sensor-app:orderX:licenseY",
+            "Order": "urn:...?",
+            "App": "urn:scale-it.org:apps:sensors:sensor-app-template:2.0.0",
+            "Device": "urn:scale-it.org:devices:2",
+            "Certificate": "urn:scale-it.org:certs:machx",
+            "Signature": {
+                "Issuer": "",
+                "SignatureType": "JWS",
+                "Value": "{header}.{payload}.{signature}"
+            },
+            "LicenseNumber": "1",
+            "LicenseTerms": {
+                "?": "..."
+            }
+        }
+    ],
+    "Certificates": [
+        {
+            "Id": "urn:scale-it.org:certs:scaleit-ca",
+            "Issuer": "urn:scale-it.org:certs:scaleit-ca",
+            "FingerprintSHA1": "abcdef",
+            "FingerprintSHA256": "abcdef123456",
+            "Issued": "2022-12-01T17:20:45.123Z",
+            "Expires": "2022-12-31T23:59:59.999Z",
+            "Subject": {
+                "CommonName": "",
+                "Country": "DE",
+                "Org": "",
+                "OrgUnit": "",
+                "Email": "",
+                "State": "",
+                "Locality": ""
+            },
+            "KeyUsage": [
+                "critical",
+                "digitalSignature",
+                "cRLSign",
+                "keyCertSign"
+            ],
+            "BasicConstraints": [
+                "critical",
+                "CA:TRUE",
+                "pathlen:0"
+            ],
+            "SigningPolicy": {},
+            "SubjectKeyIdentifier": "hash",
+            "AuthorityKeyIdentifier": "keyid:always, issuer"
+        },
+        {
+            "Id": "urn:scale-it.org:certs:machx",
+            "Issuer": "urn:scale-it.org:certs:scaleit-ca",
+            "FingerprintSHA1": "abcdef",
+            "FingerprintSHA256": "abcdef123456",
+            "Issued": "2022-12-01T17:20:45.123Z",
+            "Expires": "2022-12-31T23:59:59.999Z",
+            "Subject": {
+                "CommonName": "",
+                "Country": "DE",
+                "Org": "",
+                "OrgUnit": "",
+                "Email": "",
+                "State": "",
+                "Locality": ""
+            },
+            "KeyUsage": [
+                "digitalSignature",
+                "keyEncipherment",
+                "dataEncipherment",
+                "nonRepudiation"
+            ],
+            "BasicConstraints": [
+                "CA:FALSE"
+            ],
+            "ExtendedKeyUsage": [
+                "serverAuth",
+                "clientAuth"
+            ]
+        }
+    ],
+    "Identities": [
+        {
+            "Id": "urn:scale-it.org:identities:chrl",
+            "IdentityType": "Person",
+            "Name": "Chr L",
+            "E-Mail": "chrl@scale-it.org",
+            "Organisation": "urn:scale-it.org:identity:scaleit",
+            "Roles": [
+                "developer",
+                "administrator",
+                "project coordinator"
+            ],
+            "Country": "DE"
+        },
+        {
+            "Id": "urn:scale-it.org:identity:scaleit",
+            "IdentityType": "Organisation",
+            "Label": "SCALE it eG",
+            "Address": {
+                "PostalCode": "XXXXX",
+                "City": "Aalen",
+                "State": "Baden-Wuerttemberg",
+                "Country": "DE",
+                "Location": "Street 11"
+            }
+        },
+        {
+            "Id": "urn:scale-it.org:identity:machx",
+            "IdentityType": "Machine",
+            "Label": "Automated Machine X",
+            "Certificates": [
+                "urn:scale-it.org:certs:machx"
+            ]
+        }
+    ],
+    "Groups": [
+        {
+            "Id": "urn:scale-it.org:groups:sensor-users",
+            "Label": "Sensor Users"
+        }
+    ]
+}
