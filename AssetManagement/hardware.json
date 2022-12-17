@@ -104,7 +104,7 @@
             ]
         }
     ],
-    "ComputerMemory": [
+    "MainMemory": [
         {
             "Label": "Crucial 8GB DDR4-3200 CL22",
             "Brand": "Crucial",
@@ -202,6 +202,159 @@
             "DataReadRate": "3500 MB/s",
             "DataWriteRate": "2800 MB/s",
             "TotalWriteCapacity": "640 TB"
+        }
+    ],
+    "Mainboard": [
+        {
+            "Label": "ASUS ROG Strix B550-A",
+            "Brand": "ASUS",
+            "ModelNumber": "",
+            "FormFactor": "ATX",
+            "Chipset": "AMD B550",
+            "CPUSockets": [
+                {
+                    "CPUType": "AMD",
+                    "Socket": "AM4"
+                }
+            ],
+            "MemorySlots": {
+                "MemoryType": "DDR4",
+                "MaxCapacitiy": "128 GB",
+                "Count": 4,
+                "FormFactor": "DIMM",
+                "ClockRate": "2133 MHz"
+            },
+            "BIOS": {
+                "BIOSType": "UEFI AMI BIOS",
+                "ROM": "256 MB"
+            },
+            "ExpansionCardSlots": [
+                {
+                    "SlotType": "PCIe x16",
+                    "Count": 2
+                },
+                {
+                    "SlotType": "PCIe 4.0 x16",
+                    "Count": 1
+                },
+                {
+                    "SlotType": "PCIe x4",
+                    "Count": 1
+                },
+                {
+                    "SlotType": "PCIe x3",
+                    "Count": 3
+                },
+                {
+                    "SlotType": "M.2",
+                    "Count": 2
+                }
+            ],
+            "Interfaces": [
+                {
+                    "InterfaceType": "DisplayPort",
+                    "Internal": false,
+                    "Count": 1
+                },
+                {
+                    "InterfaceType": "HDMI",
+                    "Internal": false,
+                    "Count": 1
+                },
+                {
+                    "InterfaceType": "USB 3.1 Typ-A",
+                    "Internal": false,
+                    "Count": 1
+                },
+                {
+                    "InterfaceType": "USB 3.1 Typ-C",
+                    "Internal": false,
+                    "Count": 1
+                },
+                {
+                    "InterfaceType": "USB 3.0",
+                    "Internal": false,
+                    "Count": 3
+                },
+                {
+                    "InterfaceType": "USB 2.0",
+                    "Internal": false,
+                    "Count": 2
+                },
+                {
+                    "InterfaceType": "Ethernet",
+                    "Internal": false,
+                    "Count": 1
+                },
+                {
+                    "InterfaceType": "SATA",
+                    "DataRate": "6 GB/s",
+                    "Internal": true,
+                    "Count": 6
+                },
+                {
+                    "InterfaceType": "Audio",
+                    "Channel": "7.1",
+                    "Codec": "Realtek ALC1220/?ASUS SupremeFX, DTS Sound Unbound",
+                    "Count": 1
+                }
+            ],
+            "NetworkControllers": [
+                {
+                    "AdapterType": "Ethernet",
+                    "AdapterName": "Intel I225-V 2.5Gb Ethernet",
+                    "DataRate": "10/100/1000/2500 Mb/s"
+                }
+            ]
+        }
+    ],
+    "ComputerHardware": [
+        {
+            "Supplier": "exone",
+            "ArticleNumber": "136968",
+            "Mainboard": {
+                "Label": "PRIME H510M-E",
+                "Brand": "ASUS",
+                "FormFactor": "Micro-ATX",
+                "Chipset": "Intel H510",
+                "CPUSockets": [
+                    {
+                        "CPUType": "Intel",
+                        "Socket": "LGA1200"
+                    }
+                ],
+                "MemorySlots": {
+                    "MemoryType": "DDR4",
+                    "MaxCapacitiy": "64 GB",
+                    "Count": 2,
+                    "FormFactor": "DIMM"
+                },
+                "NetworkControllers": [
+                    {
+                        "AdapterType": "Ethernet",
+                        "AdapterName": "Intel i219V",
+                        "DataRate": "10/100/1000 MBit/s"
+                    }
+                ]
+            },
+            "CPU": [
+                {
+                    "Label": "Intel Core i5-11400",
+                    "Cores": 6,
+                    "Hyperthreading": true,
+                    "Threads": 12,
+                    "MinClockRate": "2.6 GHz",
+                    "MaxClockRate": "4.4 GHz",
+                    "TDP": "65 W",
+                    "ProcessorSocket": "FCLGA1200",
+                    "InstructionSet": "x86-64",
+                    "MemoryTypes": [
+                        "DDR4"
+                    ]
+                }
+            ],
+            "MainMemory": [],
+            "DataDrives": []
         }
     ],
     "GPU": []

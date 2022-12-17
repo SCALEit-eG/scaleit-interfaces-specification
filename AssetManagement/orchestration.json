@@ -16,6 +16,10 @@
                     "AdapterName": "ens160",
                     "AdapterType": "Ethernet",
                     "MAC": "00:50:56:9f:38:b3",
+                    "Manufacturer": "Intel",
+                    "ProductName": "Intel I211 Gigabit Network Connection",
+                    "DHCP4": false,
+                    "DHCP6": false,
                     "IPv4": [
                         "10.198.153.32"
                     ],
@@ -167,15 +171,15 @@
             "Components": [
                 {
                     "Id": "urn:scale-it.org:comps:sensors:sensor-frontend:1.4.0",
-                    "LocalId": null
+                    "LocalId": "frontend"
                 },
                 {
                     "Id": "urn:scale-it.org:comps:sensors:sensor-middlelayer:2.1.7",
-                    "LocalId": null
+                    "LocalId": "middlelayer"
                 },
                 {
                     "Id": "urn:scale-it.org:comps:sensors:sensor-backend:1.0.0",
-                    "LocalId": null
+                    "LocalId": "backend"
                 }
             ]
         }
@@ -286,6 +290,7 @@
             "OS": "linux",
             "Arch": "amd64",
             "LastModified": "2022-03-01",
+            "Size": "70 MB",
             "Signature": {
                 "Issuer": "urn:scale-it.org:certs:scaleit-ca",
                 "SignatureType": "JWS",
