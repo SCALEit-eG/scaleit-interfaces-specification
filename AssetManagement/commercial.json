@@ -1,0 +1,22 @@
+{
+    "Orders": [
+        {
+            "Id": "urn:scale-it.org:sales:orders:ABC123",
+            "Customer": "urn:scale-it.org:identities:organisations:xorg",
+            "OrderNumber": "ABC123",
+            "OrderDate": "2022-12-19T8:12.48.527Z",
+            "Items": [
+                {
+                    "Product": "urn:scale-it.org:sales:products:PRO123"
+                }
+            ]
+        }
+    ],
+    "Products": [
+        {
+            "Id": "urn:scale-it.org:sales:products:PRO123",
+            "ArticleNumber": "PRO123",
+            "Label": "Example Product"
+        }
+    ]
+}

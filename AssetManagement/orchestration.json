@@ -283,19 +283,32 @@
     "ContainerImages": [
         {
             "Id": "urn:scale-it.org:images:sensors:sensor-frontend:1.4.0",
-            "Digest:": "sha256:sdhqodhqwoidhqwhdwoqhdqwods",
-            "Tags": [
-                "scale-it.org:53001/scaleit/sensors/sensor-frontend:1.4.0"
+            "Fingerprints" : [
+                {
+                    "Alg": "SHA1",
+                    "Value": "asdjqwdqudqdqwd"
+                },
+                {
+                    "Alg": "SHA256",
+                    "Value": "sdhqodhqwoidhqwhdwoqhdqwods"
+                }
             ],
-            "OS": "linux",
-            "Arch": "amd64",
+            "Platform": {
+                "OS": "linux",
+                "Arch": "amd64",
+                "Runtime": "containerd"
+            },
             "LastModified": "2022-03-01",
             "Size": "70 MB",
             "Signature": {
                 "Issuer": "urn:scale-it.org:certs:scaleit-ca",
                 "SignatureType": "JWS",
-                "Value": "{header}.{payload}.{signature}"
-            }
+                "Value": "{header}.{payload}.{signature}",
+                "Encoding": "JWT"
+            },
+            "RepoTags": [
+                "scale-it.org:53001/scaleit/sensors/sensor-frontend:1.4.0"
+            ]
         },
         {
             "Id": "urn:scale-it.org:images:sensors:sensor-middlelayer:2.1.7",
@@ -345,39 +358,48 @@
             "Id": "urn:scale-it.org:platform:sdm4fzi",
             "Label": "SCALE it SDM4FZI Orchestration Platform",
             "DeploymentCapabilities": [
-                {
-                    "LocalId": "Device 1 Transfer App",
-                    "Type": "urn:scale-it.org:technologies:transfer-tech:4.0.0",
-                    "Devices": [
-                        "urn:scale-it.org:devices:1"
-                    ],
-                    "Access": {
-                        "IPv4": "10.198.153.32",
-                        "Hostname": "digiz.scale-it.org",
-                        "Port": 54168,
-                        "Protocol": "https",
-                        "Path": "/api"
-                    }
-                },
-                {
-                    "LocalId": "Enterprise Workstation App Pool",
-                    "Type": "urn:scale-it.org:technologies:app-pool:1.0.0",
-                    "Devices": [
-                        "urn:scale-it.org:devices:3",
-                        "urn:scale-it.org:devices:4"
-                    ],
-                    "Access": {
-                        "IPv4": "192.168.178.70",
-                        "Hostname": "digiz.scale-it.org",
-                        "Port": 54148,
-                        "Protocol": "https",
-                        "Path": "/api"
-                    }
-                }
+                "urn:scale-it.org:deploycap:device1transfer",
+                "urn:scale-it.org:deploycap:enterprisepool"
             ]
         }
     ],
-    "DeploymentTypes": [
+    "DeploymentCapabilities": [
+        {
+            "Id": "urn:scale-it.org:deploycap:device1transfer",
+            "LocalId": "Device 1 Transfer App",
+            "App": "urn:scale-it.org:apps:transferapp17",
+            "Type": "urn:scale-it.org:technologies:transfer-tech:4.0.0",
+            "BelongsTo": "urn:scale-it.org:platform:sdm4fzi",
+            "Devices": [
+                "urn:scale-it.org:devices:1"
+            ],
+            "Access": {
+                "IPv4": "10.198.153.32",
+                "Hostname": "digiz.scale-it.org",
+                "Port": 54168,
+                "Protocol": "https",
+                "Path": "/api"
+            }
+        },
+        {
+            "Id": "urn:scale-it.org:deploycap:enterprisepool",
+            "LocalId": "Enterprise Workstation App Pool",
+            "Type": "urn:scale-it.org:technologies:app-pool:1.0.0",
+            "BelongsTo": "urn:scale-it.org:platform:sdm4fzi",
+            "Devices": [
+                "urn:scale-it.org:devices:3",
+                "urn:scale-it.org:devices:4"
+            ],
+            "Access": {
+                "IPv4": "192.168.178.70",
+                "Hostname": "digiz.scale-it.org",
+                "Port": 54148,
+                "Protocol": "https",
+                "Path": "/api"
+            }
+        }
+    ],
+    "DeploymentCapabilityTypes": [
         {
             "Id": "urn:scale-it.org:technologies:transfer-tech:4.0.0",
             "Version": "4.0.0",
