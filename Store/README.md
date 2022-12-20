@@ -135,7 +135,7 @@ Response headers:
     - application/octet-stream: if "crt" or "pfx"
     - application/zip: if "all"
 
-### PUT /ca?{query}
+### POST /ca?{query}
 Create the CA of the store, i.e. the certificate authority to sign the licenses with.
 
 Query parameters:
