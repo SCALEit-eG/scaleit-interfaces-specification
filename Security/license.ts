@@ -4,7 +4,7 @@ import { SysNicInfo } from "../ResourceManagement/SysInfo";
  * Holds basic license information intended for
  * an overview
  */
-export interface License{
+export interface License {
     /** whether the license can be used */
     Valid: boolean;
     /** information from the x509 certificate */
@@ -15,7 +15,7 @@ export interface License{
  * Provides the actual details that a license contains
  * and should only be accessed authorized
  */
-export interface LicenseDetails extends License{
+export interface LicenseDetails extends License {
     /**
      * needed to differentiate between licenses for the same order;
      * should be incremented by one for each new license for the same
@@ -53,10 +53,20 @@ export interface LicenseDetails extends License{
         Images: string[];
     };
     /** app specific license data */
-    LicenseTerms: {[key: string]: any};
+    LicenseTerms: { [key: string]: any };
 }
 
-export interface CertificateData{
+/** Reduced license info for master view */
+export interface LicenseSimpleInfo {
+    OrderNumber: string;
+    OrderDate: Date;
+    LicenseNumber: number;
+    DeviceBinding: "NIC" | "TPM";
+    ProductNumber: string;
+}
+
+/** Information about a digital certificate */
+export interface CertificateData {
     /** SHA1 fingerprint for identification of licenses */
     Fingerprint: string;
     /** SHA256 fingerprint for additional info */
@@ -65,13 +75,16 @@ export interface CertificateData{
     ValidFrom: Date;
     /** expiration */
     ValidUntil: Date;
-    /** CommonName (CN) of the certificate, usually order number */
+    /** DistinguishedName (DN) of the certificate */
     Subject: string;
-    /** CN of the CA */
+    /** DN of the CA */
     Issuer: string;
 }
 
-export interface LicenseKey{
+/**
+ * License key to access license information
+ */
+export interface LicenseKey {
     /** key for authorized access */
     Key: string;
     /** App ID for which the key is valid */
