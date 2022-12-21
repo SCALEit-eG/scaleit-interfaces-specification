@@ -27,6 +27,7 @@ Route parameters:
 
 Response codes:
 - 200 OK: license found
+- 400 Bad Request: invalid id given
 - 404 Not Found: license not found
 
 Response headers:
@@ -44,6 +45,7 @@ Route parameters:
 
 Response codes:
 - 200 OK: license found
+- 400 Bad Request: invalid id given
 - 404 Not Found: license not found
 
 Response body:
@@ -86,7 +88,9 @@ Request headers:
 
 Response codes:
 - 200 OK: license validated and validation result returned
-- 404 Bad Request: data format invalid or no active CA
+- 400 Bad Request: data format invalid
+    - Not related to "invalid"
+- 404 Not Found: no active CA
 
 Response body:
 - ValidationResult
@@ -99,6 +103,7 @@ Delete a specific license.
 
 Response codes:
 - 200 OK: license found and deleted
+- 400 Bad Request: invalid id
 - 404 Not Found: license not found
 
 ### GET /ca

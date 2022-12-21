@@ -8,7 +8,7 @@ export interface License {
     /** whether the license can be used */
     Valid: boolean;
     /** information from the x509 certificate */
-    Certificate: CertificateData,
+    Certificate: CertificateData;
 }
 
 /**
@@ -61,7 +61,7 @@ export interface LicenseSimpleInfo {
     OrderNumber: string;
     OrderDate: Date;
     LicenseNumber: number;
-    DeviceBinding: "NIC" | "TPM";
+    DeviceBinding: "NIC" | "TPM" | "None";
     ProductNumber: string;
 }
 

@@ -9,6 +9,7 @@ Router parameters:
 - operation: string, required
 
 Operations:
+- init: Initialize the service by e.g. creating database indexes or establishing connection to a device
 - repair: Command the service to repair itself.
 - reset: Reset the configuration of the service to its defaults. No permanently stored data is allowed to be deleted during that operation.
 - clean: Delete all temporary and permantly stored data.
