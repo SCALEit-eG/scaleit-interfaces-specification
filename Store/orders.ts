@@ -1,8 +1,12 @@
-export interface Order{
+export interface Order {
     /** ID of the order */
     OrderNumber: string;
     /** date when the order was done */
     OrderDate: Date;
+    /** Unique customer Id */
+    CustomerId: string;
+    /** Unique Id of the Shop */
+    ShopId: string;
     /** date when the order was paid */
     PaymentDate: Date;
     /** payment status */
@@ -11,7 +15,7 @@ export interface Order{
     Items: OrderItem[];
 }
 
-export interface OrderItem{
+export interface OrderItem {
     /** basic app information */
     App: OrderAppEntry;
     /** For how many days the license is valid */
@@ -24,7 +28,7 @@ export interface OrderItem{
     LicenceTerms: any;
 }
 
-export interface OrderAppEntry{
+export interface OrderAppEntry {
     /** App name */
     Name: string;
     /** App version */
@@ -33,12 +37,12 @@ export interface OrderAppEntry{
     ProductNumber: string;
 }
 
-export enum PaymentStatus{
+export enum PaymentStatus {
     Open = "open",
     Paid = "paid"
 }
 
-export interface OrderUpdate{
+export interface OrderUpdate {
     /** paid or still open */
     PaymentStatus: PaymentStatus;
     /** date of payment or null */

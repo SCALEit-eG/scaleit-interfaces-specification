@@ -183,7 +183,7 @@ Response headers:
 - text/plain
 
 ### POST /orders
-Send a new order to the app store providing order information for one or more apps with chosen licence terms.
+Send a new order to the app store providing order information for one or more apps with chosen license terms.
 
 Request headers:
 - Content-Type: application/json

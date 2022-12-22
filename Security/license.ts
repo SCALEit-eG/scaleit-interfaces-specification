@@ -58,6 +58,8 @@ export interface LicenseDetails extends License {
 
 /** Reduced license info for master view */
 export interface LicenseSimpleInfo {
+    /** Probably not persisted, only for DTO at the API */
+    Id: string;
     OrderNumber: string;
     OrderDate: Date;
     LicenseNumber: number;
