@@ -49,8 +49,8 @@ export interface LicenseDetails extends License {
             Version: string;
             ProductNumber: string;
         },
-        /** hashes / Ids of the container images that are used */
-        Images: string[];
+        /** SHA256 fingerprint of the artefacts that are used */
+        Artefacts: string[];
     };
     /** app specific license data */
     LicenseTerms: { [key: string]: any };
