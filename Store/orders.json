@@ -3,6 +3,8 @@
         "OrderNumber": "?",
         "OrderDate": "2022-10-20T10:32:44.123Z",
         "PaymentStatus": "open",
+        "CustomerId": "?",
+        "ShopId": "?",
         "Items": [
             {
                 "App": {
@@ -20,6 +22,7 @@
         ]
     },
     "OrderUpdate": {
+        "ShopId": "",
         "PaymentStatus": "paid",
         "PaymentDate": "2022-10-27T16:04:12.123Z"
     },

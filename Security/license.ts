@@ -1,4 +1,5 @@
-import { SysNicInfo } from "../ResourceManagement/SysInfo";
+import { AppBinding, DeviceBinding } from "./binding";
+import { CertificateData } from "./certificate";
 
 /**
  * Holds basic license information intended for
@@ -30,28 +31,9 @@ export interface LicenseDetails extends License {
         OrderDate: Date;
     };
     /** data that binds the license to a device */
-    Device: {
-        /** binding using a network adapter */
-        NIC?: SysNicInfo;
-        /** binding using TPM */
-        TPM?: {
-            /** fingerprint of the secretly stored certificate */
-            Fingerprint: string;
-            /** hash of the encrypted fingerprint */
-            HashEncryptedFingerprint: string;
-        }
-    };
+    Device: DeviceBinding;
     /** data that binds the license to an app */
-    App: {
-        /** identifying part of the app config */
-        Config: {
-            Name: string;
-            Version: string;
-            ProductNumber: string;
-        },
-        /** SHA256 fingerprint of the artefacts that are used */
-        Artefacts: string[];
-    };
+    App: AppBinding;
     /** app specific license data */
     LicenseTerms: { [key: string]: any };
 }
@@ -65,22 +47,6 @@ export interface LicenseSimpleInfo {
     LicenseNumber: number;
     DeviceBinding: "NIC" | "TPM" | "None";
     ProductNumber: string;
-}
-
-/** Information about a digital certificate */
-export interface CertificateData {
-    /** SHA1 fingerprint for identification of licenses */
-    Fingerprint: string;
-    /** SHA256 fingerprint for additional info */
-    Fingerprint2: string;
-    /** starting date of license's validity */
-    ValidFrom: Date;
-    /** expiration */
-    ValidUntil: Date;
-    /** DistinguishedName (DN) of the certificate */
-    Subject: string;
-    /** DN of the CA */
-    Issuer: string;
 }
 
 /**

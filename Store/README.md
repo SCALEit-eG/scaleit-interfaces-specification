@@ -182,6 +182,24 @@ Response body:
 Response headers:
 - text/plain
 
+### GET /orders?{query}
+Retrieve the list of all stored orders.
+
+Query Parameters:
+- shop: string, optional
+    - Shop Id
+
+Response codes:
+- 200 OK: orders available
+- 204 No Content: no orders currently available
+- 404 Not Found: if shop Id was given and shop doesn't exist
+
+Response body:
+- Order[]
+
+Response headers:
+- Content-Type: application/json
+
 ### POST /orders
 Send a new order to the app store providing order information for one or more apps with chosen license terms.
 
@@ -203,10 +221,25 @@ Response codes:
 Response headers:
 - Location: URL for created order
 
-### GET /orders/{orderno}
+### GET /orders/{orderno}?{query}
+Get information about a specific order.
+
+Query Parameters:
+- shop: string, required
+    - Shop Id
+
+Response codes:
+- 200 OK: order and shop found
+- 404 Not Found: if order or shop not found
+
+Response body:
+- Order
+
+Response headers:
+- Content-Type: application/json
 
 ### PUT /orders/{orderno}
-Update the status of an order. Typical use case is to update the payment status.
+Update the status of an order. Typical use case is to update the payment status. The shop's identity is inferred from the provided credentials or authorization token respectively, in order to find the correct order entity.
 
 Request headers:
 - Content-Type: application/json
@@ -221,3 +254,139 @@ Response codes:
 - 401 Unauthorized: no credentials provided
 - 403 Forbidden: access token invalid or identity is unauthorized
 - 404 Not Found: order for given order number not found
+
+### GET /devices
+Get all devices that are recorded in the store.
+
+Response codes:
+- 200 OK: devices available
+- 204 No Content: no device available
+
+Response body:
+- DeviceBinding[]
+
+Response headers:
+- Content-Type: application/json
+
+### POST /devices
+Record a new device in the store.
+
+Request headers:
+- Content-Type: application/json
+
+Request body:
+- DeviceBinding[]
+
+Response codes:
+- 201 Created: device successfully created
+- 400 Bad Request: invalid data given
+    - Note: exactly one binding must be given, several are not allowed at once,
+    for that separate devices must be recorded
+- 409 Conflict: device with same binding already exists
+
+Response headers:
+- Location: url to the newly recorded device
+    - Only on success
+
+### GET /devices/{id}?{query}
+Get the information about a specific device. The Id of a device is the identifying part of the type of binding used.
+
+Route parameters:
+- id: string
+    - Identifier for the binding, depending on the type
+
+Query Parameters:
+- type: string, required
+    - Identifies the type of binding
+    - Currently supported: nic, tpm
+
+Response codes:
+- 200 OK: device found
+- 400 Bad Request: invalid type given
+- 404 Not Found: device not found
+
+Response body:
+- DeviceBinding
+
+### DELETE /devices/{id}?{query}
+Remove a recorded device from the store.
+
+For route and query parameters see [GET /devices](#get-devicesidquery).
+
+Response codes:
+- 200 OK: device found and removed
+- 400 Bad Request: invalid type given
+- 404 Not Found: device not found
+
+### GET /shops
+Get the list of currently registered shops.
+
+Response codes:
+- 200 OK: shops available
+- 204 No Content: no shop available
+
+Response body:
+- StoreShop[]
+
+Response headers:
+- Content-Type: application/json
+
+### POST /shops
+Register a new shop.
+
+### GET /shops/{id}
+Get information about a specific shop.
+
+### PUT /shops/{id}
+Change information about a registered shop.
+
+### DELETE /shops/{id}
+Deregister a particular shop from the store.
+
+### GET /apps?{query}
+Get the list of available apps.
+
+Query Parameters:
+- shop: string, optional
+    - Shop Id
+
+Response codes:
+- 200 OK: apps available
+- 204 No Content: no apps available for the request
+- 404 Not Found: shop Id not found if it was given
+
+Response body:
+- AppBinding[]
+
+Response headers:
+- Content-Type: application/json
+
+### POST /apps
+Add a new app to the store.
+
+### GET /apps/{id}?{query}
+Get information about a particular app given its product number and also the shop Id. The shop Id is required because the product number is only guaranteed to be unique per shop.
+
+Route parameters:
+- id: string
+    - Product number of the app
+
+Query Parameters:
+- shop: string, required
+    - Shop Id
+
+Response codes:
+- 200 OK: app found
+- 404 Not Found: app or shop not found
+
+Response body:
+- AppBinding
+
+Response headers:
+- Content-Type: application/json
+
+### PUT /apps/{id}?{query}
+Change the configuration or the artefacts of an app.
+
+### DELETE /apps/{id}?{query}
+Delete an app from the store.

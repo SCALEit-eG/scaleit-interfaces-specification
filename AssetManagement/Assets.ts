@@ -6,9 +6,9 @@ export interface BasicInfo{
     /** Detailed description, possibly of complex text type and decoded */
     Description?: string;
     /** MIME type of the description or text/plain as default */
-    MIMEType?: SupportedTextMIMEType;
+    MIMEType: SupportedTextMIMEType;
     /** Encoding used for the description or none as default */
-    Encoding?: SupportedEncoding;
+    Encoding: SupportedEncoding;
 }
 
 /** Supported MIME Type for text data fields */
