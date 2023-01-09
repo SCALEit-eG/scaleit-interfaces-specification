@@ -1,3 +1,4 @@
+import { AssetInfo } from "../AssetManagement/AssetInfo";
 import { AppBinding, DeviceBinding } from "./binding";
 import { CertificateData } from "./certificate";
 
@@ -57,4 +58,7 @@ export interface LicenseKey {
     Key: string;
     /** App ID for which the key is valid */
     AppId: string;
+}
+
+export class LicenseAsset extends AssetInfo {
 }

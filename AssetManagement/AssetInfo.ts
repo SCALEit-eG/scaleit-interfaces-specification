@@ -4,6 +4,11 @@ import { SupportedEncoding, SupportedTextMIMEType } from "./Assets";
 export abstract class AssetInfo {
     /** Globally unique Id */
     Id: string;
+    /**
+     * Alternative globally unique Ids useful for different types of Ids e.g. URL vs URN
+     * or if managed by different organizations
+     */
+    AltIds?: Array<string>;
     /** Local Id for easier reference */
     LocalId?: string;
     /** Descriptive name aka label of the Asset */
