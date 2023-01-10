@@ -16,6 +16,7 @@ export abstract class Identity extends AssetInfo {
     Roles?: string[];
     Email?: string;
     Address?: Address;
+    Groups?: string[];
 }
 
 export class PersonIdentity extends Identity {

@@ -13,6 +13,16 @@ export interface License {
     Certificate: CertificateData;
 }
 
+/** Order identification in a license */
+export interface LicenseOrderEntry {
+    /** unique order number for given shop */
+    OrderNumber: string;
+    /** unique Id of the shop */
+    ShopId: string;
+    /** date of the order */
+    OrderDate: Date;
+}
+
 /**
  * Provides the actual details that a license contains
  * and should only be accessed authorized
@@ -25,16 +35,11 @@ export interface LicenseDetails extends License {
      */
     LicenseNumber: number;
     /** information that assigns this license to an order */
-    Order: {
-        /** unique order number */
-        OrderNumber: string;
-        /** date of the order */
-        OrderDate: Date;
-    };
-    /** data that binds the license to a device */
-    Device: DeviceBinding;
-    /** data that binds the license to an app */
+    Order: LicenseOrderEntry;
+    /** Required data that binds the license to an app */
     App: AppBinding;
+    /** Optional data that binds the license to a device */
+    Device?: DeviceBinding;
     /** app specific license data */
     LicenseTerms: { [key: string]: any };
 }
@@ -60,5 +65,22 @@ export interface LicenseKey {
     AppId: string;
 }
 
+/**
+ * License data intended to be managed as an asset.
+ */
 export class LicenseAsset extends AssetInfo {
+    /** Unique in combination with order number */
+    LicenseNumber: number;
+    /** Order and shop info */
+    Order: LicenseOrderEntry;
+    /** Required binding to an app */
+    App: AppBinding;
+    /** Optional binding to a device */
+    Device?: DeviceBinding;
+    /** License details, app specific */
+    LicenseTerms: { [key: string]: any };
+    /** Id of the license's certificate */
+    LicenseCertificate: string;
+    /** Id of the certificate of the CA who issued the license */
+    IssuerCertificate: string;
 }
