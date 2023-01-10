@@ -120,7 +120,7 @@ export class CertificateAsset extends AssetInfo implements CertificateData {
     SignatureAlgorithm?: string;
     /** Signature value */
     Signature?: string;
-    /** Public key of the subject */
+    /** Public key of the subject, value should be base64 encoded */
     PublicKey?: AlgValue;
     /** See https://www.rfc-editor.org/rfc/rfc5280#section-4.2 */
     Extensions?: CertificateExtensions;
