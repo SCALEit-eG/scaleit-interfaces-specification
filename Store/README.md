@@ -224,12 +224,18 @@ Response headers:
 ### GET /orders/{orderno}?{query}
 Get information about a specific order.
 
+Route parameters:
+- orderno: string
+    - Only the order number
+
 Query Parameters:
 - shop: string, required
     - Shop Id
+    - not deprecated as 
 
 Response codes:
 - 200 OK: order and shop found
+- 400 Bad Request: if order number or shop id not given
 - 404 Not Found: if order or shop not found
 
 Response body:
@@ -240,6 +246,10 @@ Response headers:
 
 ### PUT /orders/{orderno}
 Update the status of an order. Typical use case is to update the payment status. The shop's identity is inferred from the provided credentials or authorization token respectively, in order to find the correct order entity.
+
+Route parameters:
+- orderno: string
+    - Order number
 
 Request headers:
 - Content-Type: application/json
@@ -254,6 +264,18 @@ Response codes:
 - 401 Unauthorized: no credentials provided
 - 403 Forbidden: access token invalid or identity is unauthorized
 - 404 Not Found: order for given order number not found
+
+### DELETE /orders/{id}
+Remove an order from the app store.
+
+Route parameters:
+- id: string
+    - Combined id including order number and shop id
+
+Response codes:
+- 200 OK: order found and deleted
+- 400 Bad Request: id invalid
+- 404 Not Found: order for id not found
 
 ### GET /devices
 Get all devices that are recorded in the store.
@@ -318,15 +340,19 @@ Response codes:
 - 400 Bad Request: invalid type given
 - 404 Not Found: device not found
 
-### GET /shops
+### GET /shops?{query}
 Get the list of currently registered shops.
+
+Query parameters:
+- isdefault: boolean, optional
+    - filter by IsDefault attribute
 
 Response codes:
 - 200 OK: shops available
 - 204 No Content: no shop available
 
 Response body:
-- StoreShop[]
+- Shop[]
 
 Response headers:
 - Content-Type: application/json
@@ -334,14 +360,63 @@ Response headers:
 ### POST /shops
 Register a new shop.
 
+Request body:
+- Shop
+
+Response codes:
+- 201 Created: shop successfully registered
+- 400 Bad Request: invalid data
+- 409 Conflict: shop identifier already taken
+
+Response headers:
+- Location: url of newly registered shop
+
 ### GET /shops/{id}
 Get information about a specific shop.
 
-### PUT /shops/{id}
-Change information about a registered shop.
+Route parameters:
+- id: string
+    - Asset Id of the shop
+
+Response codes:
+- 200 OK: shop found and returned
+- 400 Bad Request: if id not given
+- 404 Not Found: shop for id not found
+
+Response body:
+- Shop
+
+### PUT /shops
+Change information about a registered shop. There is no id as route parameter necessary as the id is already contained in the entity and an id change is not possible here.
+The id change is not possible here because id changes should be done in a centralized manner updating all references of the entity accordingly.
+
+Route parameters:
+- <del>id: string</del>
+    - Asset Id of the shop
+
+Request body:
+- Shop
+
+Response codes:
+- 200 OK: shop successfully changed
+- 400 Bad Request: data invalid
+- 404 Not Found: shop for id not found
+- 409 Conflict: Id change not possible because id already taken
+
+Response body:
+- Shop
 
 ### DELETE /shops/{id}
 Deregister a particular shop from the store.
+
+Route parameters:
+- id: string
+    - Asset Id of the shop
+
+Response codes:
+- 200 OK: shop found and deleted
+- 400 Bad Request: id not given
+- 404 Not Found: shop for id not found
 
 ### GET /apps?{query}
 Get the list of available apps.

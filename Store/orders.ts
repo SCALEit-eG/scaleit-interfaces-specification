@@ -1,4 +1,6 @@
-export interface Order {
+import { AssetInfo } from "../AssetManagement/AssetInfo";
+
+export class Order extends AssetInfo {
     /** ID of the order */
     OrderNumber: string;
     /** date when the order was done */
