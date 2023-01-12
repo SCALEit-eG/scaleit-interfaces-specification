@@ -2,8 +2,11 @@ import { LicenseDetails } from "../Security/license";
 
 /** Data needed to create a new license */
 export interface LicenseRequest {
+    /** information about the certificate for cryptographic security */
     Config: CertConfig;
+    /** required license information and bindings */
     LicenseInfo: LicenseDetails;
+    /** number of days the license is valid */
     Days?: number;
     /** if given takes precedence over days */
     Expires?: Date;

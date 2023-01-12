@@ -10,9 +10,9 @@ export class Order extends AssetInfo {
     /** Unique Id of the Shop */
     ShopId: string;
     /** date when the order was paid */
-    PaymentDate: Date;
+    PaymentDate?: Date;
     /** payment status */
-    PaymentStatus: PaymentStatus;
+    PaymentStatus?: PaymentStatus;
     /** ordered apps, at least one entry */
     Items: OrderItem[];
 }
@@ -27,7 +27,7 @@ export interface OrderItem {
     /** how many instances / licenses */
     OrderQuantity: number;
     /** app specific license terms */
-    LicenceTerms: any;
+    LicenseTerms: any;
 }
 
 export interface OrderAppEntry {
@@ -49,4 +49,6 @@ export interface OrderUpdate {
     PaymentStatus: PaymentStatus;
     /** date of payment or null */
     PaymentDate: Date;
+    /** Identifier for the shop or otherwise the default shop is assumed */
+    ShopId?: string;
 }

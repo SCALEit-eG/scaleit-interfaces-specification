@@ -16,7 +16,7 @@ Response headers:
 - Content-Type: application/json
 
 Response body:
-- LicenseSimpleInfo
+- LicenseSimpleInfo[]
 
 ### GET /licenses/{id}
 Get information about a specific license.
@@ -34,7 +34,7 @@ Response headers:
 - Content-Type: application/json
 
 Response body:
-- LicenseDetails
+- LicenseDto
 
 ### GET /licenses/{id}/export
 Download a specific license as a ZIP archive.
@@ -61,7 +61,7 @@ Response headers:
 - Content-Type: application/zip
 
 ### POST /licenses
-Create a new license issued by the current CA.
+Create a new license issued by the current CA. The provided data must uniquely identify the order item through order number, shop Id and product number.
 
 Request body:
 - LicenseRequest
@@ -72,6 +72,7 @@ Request headers:
 Response codes:
 - 201 Created: license successfully created
 - 400 Bad Request: required information missing or CA not available
+- 404 Not Found: order not found
 - 409 Conflict: no more licenses can be created for the given order number and product
 
 Response headers:
@@ -188,14 +189,22 @@ Retrieve the list of all stored orders.
 Query Parameters:
 - shop: string, optional
     - Shop Id
+- until: ISO date string, optional
+    - Orders up to the given timestamp
+- from: ISO date string, optional
+    - Orders at and after the given timestamp
+- status: "paid", "open", optional
+    - Orders with given payment status
+- customer: string, optional
+    - Orders from a given customer
 
 Response codes:
 - 200 OK: orders available
 - 204 No Content: no orders currently available
-- 404 Not Found: if shop Id was given and shop doesn't exist
+- 400 Bad Request: invalid parameter
 
 Response body:
-- Order[]
+- OrderDto[]
 
 Response headers:
 - Content-Type: application/json
@@ -221,17 +230,17 @@ Response codes:
 Response headers:
 - Location: URL for created order
 
-### GET /orders/{orderno}?{query}
+### GET /orders/{id}
 Get information about a specific order.
 
 Route parameters:
-- orderno: string
-    - Only the order number
+- id: string
+    - Combined id
 
 Query Parameters:
-- shop: string, required
+- <del>shop: string, required</del>
     - Shop Id
-    - not deprecated as 
+    - deprecated because a combined unique id is needed in the route
 
 Response codes:
 - 200 OK: order and shop found
@@ -239,7 +248,7 @@ Response codes:
 - 404 Not Found: if order or shop not found
 
 Response body:
-- Order
+- OrderDto
 
 Response headers:
 - Content-Type: application/json
@@ -260,10 +269,16 @@ Request body:
 
 Response codes:
 - 200 OK: order successfully updated
-- 400 Bad Request: order update data is wrong
+- 400 Bad Request: order update data is wrong or order number not given
 - 401 Unauthorized: no credentials provided
 - 403 Forbidden: access token invalid or identity is unauthorized
-- 404 Not Found: order for given order number not found
+- 404 Not Found: order for given order number not found, or shop not found
+
+Response body:
+- Order
+
+Response headers:
+- Content-Type: application/json
 
 ### DELETE /orders/{id}
 Remove an order from the app store.

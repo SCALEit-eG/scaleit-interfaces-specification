@@ -5,6 +5,7 @@ import { CertificateData } from "./certificate";
 /**
  * Holds basic license information intended for
  * an overview
+ * @deprecated
  */
 export interface License {
     /** whether the license can be used */
@@ -26,6 +27,7 @@ export interface LicenseOrderEntry {
 /**
  * Provides the actual details that a license contains
  * and should only be accessed authorized
+ * @deprecated
  */
 export interface LicenseDetails extends License {
     /**
@@ -46,9 +48,10 @@ export interface LicenseDetails extends License {
 
 /** Reduced license info for master view */
 export interface LicenseSimpleInfo {
-    /** Probably not persisted, only for DTO at the API */
+    /** Full Id to use at the API */
     Id: string;
     OrderNumber: string;
+    ShopId: string;
     OrderDate: Date;
     LicenseNumber: number;
     DeviceBinding: "NIC" | "TPM" | "None";
