@@ -386,6 +386,15 @@ Note: Older versions may use **/events**.
 ### PUT /api/cancel/{id}
 Cancel the task identified by the given ID. Applies to all operations that return a cancel id.
 
+Route parameters:
+- id: string
+    - Task / Operation Id
+
+Response codes:
+- 200 OK: operation found and canceled
+- 400 Bad Request: no Id given
+- 404 Not Found: operation for Id not found
+
 ## Transfer Technology - Files API
 Some specifics about the implementation of the files api is described below. For more information see the Resource-Management category.
 
