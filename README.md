@@ -98,6 +98,8 @@ Interfaces are assigned to categories. These categories are listed subsequently.
 - Administration
     - Server administration
     - Logging
+- Semantics
+    - Semantics developed by Zeiss IQS
 
 # Contributing
 
