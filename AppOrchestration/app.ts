@@ -2,7 +2,7 @@
  * Represents an app instance
  * at runtime
  */
-export interface AppInstance{
+export interface AppInstance {
     App: AppConfig;
     Busy: boolean;
     Status?: AppStatus;
@@ -10,7 +10,7 @@ export interface AppInstance{
     Containers: Array<Container>;
 }
 
-export enum AppStatus{
+export enum AppStatus {
     Running = "Running",
     Partially_Running = "Partially Running",
     Stopped = "Stopped",
@@ -20,7 +20,7 @@ export enum AppStatus{
 /**
  * Basic metadata of an app instance
  */
-export interface AppConfig{
+export interface AppConfig {
     Name: string;
     Description?: string;
     Version: string;
@@ -35,7 +35,7 @@ export interface AppConfig{
  * Used to specify a web connection point
  * on a server
  */
-export interface ConnectionPoint{
+export interface ConnectionPoint {
     Port: number;
     Path?: string;
     Protocol: string;
@@ -46,14 +46,14 @@ export interface ConnectionPoint{
  * @param app app instance config
  * @returns id as string
  */
- export function makeAppId(app: AppConfig): string{
+export function makeAppId(app: AppConfig): string {
     return `${app.Name}:${app.Version}`;
 }
 
 /**
  * Information about a container
  */
-export interface Container{
+export interface Container {
     Name: string;
     Id: string;
     ImageId?: string;
@@ -91,7 +91,7 @@ export interface ProcessResult {
 /**
  * Output line of a process
  */
-export interface ProcessLine{
+export interface ProcessLine {
     Line: string;
     RawLine: string;
     IsStdout: boolean;
@@ -101,7 +101,7 @@ export interface ProcessLine{
 /**
  * Specific result of a docker-compose up process
  */
-export interface DockerComposeUpResult extends ProcessResult{
+export interface DockerComposeUpResult extends ProcessResult {
     RunningContainers: string[];
     PulledImages: string[];
 }
@@ -111,7 +111,7 @@ export interface DockerComposeUpResult extends ProcessResult{
  * Simple structure to exchange a value
  * with a label via JSON
  */
- export interface NameValue<T> {
+export interface NameValue<T> {
     Name: string;
     Value: T;
 }
@@ -120,7 +120,7 @@ export interface DockerComposeUpResult extends ProcessResult{
  * Holds all information about a single step
  * of progress.
  */
- export interface TransferProgress {
+export interface TransferProgress {
     /**
      * Indicates the type of progress made.
      * 
@@ -143,7 +143,7 @@ export interface DockerComposeUpResult extends ProcessResult{
     Details?: string;
 }
 
-export interface AppContainer{
+export interface AppContainer {
     Image: string;
     /** exposed ports */
     Ports: number[];
@@ -152,7 +152,7 @@ export interface AppContainer{
     Names: string[];
 }
 
-export interface DockerApp{
+export interface DockerApp {
     Frontend: AppContainer;
     Middlelayer: AppContainer;
 }

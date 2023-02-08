@@ -1,1 +1,9 @@
 Copyright SCALE it eG
+
+https://www.scale-it.org
+
+This repository belongs to SCALE it eG.
+
+Copyright © SCALE it eG - All Rights Reserved.
+
+created by Christian Leistner
