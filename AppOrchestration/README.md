@@ -351,6 +351,9 @@ Message protocol:
     - At the beginning there are many StepType: "DATA_TRANSFER" messages
     - After that the import pipeline specific steps are reported
     - If StepType: "STORE_INSTANCE" has "Success: true" then the import was successfull
+    - Steps can be grouped with the "ANNOUNCEMENT" step type
+        - Potentially announces a series of steps that follow immediately
+        - The group is active until another "ANNOUNCEMENT" step occurs
 
 ### Websockets /events/transfer/apps/{id}/start
 Starts an available app and provides incremental feedback.

@@ -145,6 +145,79 @@ Topic in 1.0.0:
 enterprise/workCenter/station/controlDevice/fieldDevice/<ElementId>/processData/measuringValue
 ```
 
+It follows the following structure: \
+MQTT Topic ::= \<PreTopic\>/\<ElementId\>/\<PostTopic\> \
+\<PreTopic\> ::= enterprise/workCenter/station/controlDevice/fieldDevice \
+<PostTopic\> ::= \<dataCategory\>/\<dataSubCategory\>
+
 ### Further
 
 - Completely different aspects are considered in 1.0.0 e.g. topology between assets for asset hierarchies or bill of material, nameplate etc.
+
+## ATR MES V0.9
+
+Taken from an ATR Software presentation from 20.05.2021 serving as draft.
+
+### Base Structure
+
+In the ATR definition the payload is divided in four parts.
+```json
+{
+    "semantic": {
+        "type": "MES",
+        "version": "0.9.0",
+        "specification": "ATR Software"
+    },
+    "publisher": {
+        "name": "",
+        "id": "",
+        "version": "",
+        "location": ""
+    },
+    "metadata": {
+        "timestamp": "",
+        "GUID": "",
+        "user": {
+            "username": "",
+            "id": "",
+            "type": ""
+        },
+        "asset": {
+            "name": "",
+            "id": "",
+            "Location": ""
+        },
+        "datacategory": ""
+    },
+    "data": {
+        "?": "?",
+        "...": "..."
+    }
+}
+```
+
+- Zeiss Semantic 1.0.0 has only three parts, "metadata" is missing and partially contained in "data"
+- In ATR 0.9 the "data" field contains the actual data payload and could have an arbitrary structure
+    - Semantic 1.0 includes metadata beneath "data" and the actual payload goes into the subfield "content"
+- Zeiss 1.0 has "security" instead of just "publisher" of ATR 0.9
+    - "security" includes "publisher", optionally the "receiver", a signature and timestamp
+    - ATR 0.9 includes the timestamp in "metadata"
+
+### Metadata
+
+- Who? (Asset or User)
+- GUID: for identification of the process, e.g. in logs
+    - Not the asset id
+    - In Zeiss Semantics 1.0 there is only the "id" field in "data"
+
+### MQTT Topics
+
+- ATR 0.9 has several definitions of MQTT topic structures:
+    - Enterprise/WorkCenter/Station/ControlDevice/FieldDevice/_/{further subdivision}
+    - Enterprise/\_/\_/Order/{OrderGUID}/\_/Processing/{StepName}/{EventName}
+    - Enterprise/\_/\_/Order/{OrderGUID}/\_/Processing/Step/{StepName}/Event/{EventName}
+
+One of the main differences is that Zeiss 1.0 keeps the part "enterprise/workCenter/station/controlDevice/fieldDevice" static, while in ATR 0.9 the parts are replaced with actual data:
+- Zeiss/DEAALCZ27/Styliproduction/Console1/CZ:CZ-3DA:MR01:1/\_/MeasuringValue
+- ATR/Kalibrieren/\_/Order/{IdOrder}/\_/Kalibrieren/MoveOut
+- Zeiss3DA/Messraum01/\_/{IdMesssystem}/{IdTempSensor}/\_/MasterData
