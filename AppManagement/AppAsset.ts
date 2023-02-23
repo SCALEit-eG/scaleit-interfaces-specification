@@ -16,12 +16,14 @@ export class AppAsset extends AssetInfo implements Versionable {
     Name: string;
     /** App Version identifier */
     Version: string;
-    /** Unique product number, possibly restricted to a shop */
+    /** Global Id of the entity that makes the software product */
+    ManufacturerId: string;
+    /** Unique product number as given by the manufacturer */
     ProductNumber: string;
     /** Optional global Id of the shop that defines the product number */
     ShopId?: string;
-    /** Optional global Id of the developer identity */
-    Developer?: string;
+    /** Optional product number as given by the Shop */
+    ShopProductNumber?: string;
     /** Parts of the app */
     Components: ComponentReference[];
 }
@@ -32,7 +34,7 @@ export interface ComponentReference {
     ComponentId: string;
     /**
      * Id of the component in the scope of the app,
-     * needed if the global component Id occurse more then once in the same app
+     * needed if the global component Id occurs more than once in the same app
      */
     LocalId?: string;
 }

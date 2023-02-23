@@ -1,7 +1,7 @@
 import { StatusLabel } from "../StatusAndNotifications/Status";
 
 /** App view used externally */
-export interface App{
+export interface App {
     /** instance ID for running app */
     ID: string;
     /** App name */
@@ -23,7 +23,7 @@ export interface App{
 }
 
 /** Information to send from an app to register itself */
-export interface AppRegistration{
+export interface AppRegistration {
     /** App name */
     Name: string;
     /** Version */
@@ -37,7 +37,7 @@ export interface AppRegistration{
 }
 
 /** entry for an entire app list */
-export interface AppListItem{
+export interface AppListItem {
     /** instance ID for running app */
     ID: string;
     /** App name */
@@ -47,7 +47,7 @@ export interface AppListItem{
 }
 
 /** for editing an app */
-export interface AppEdit{
+export interface AppEdit {
     /** App name */
     Name: string;
     /** Version */
