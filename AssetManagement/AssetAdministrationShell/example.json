@@ -1,0 +1,16 @@
+{
+    "Description": {
+        "de": "Eine Beschreibung",
+        "en-us": "in English"
+    },
+    "Year": 2023,
+    "Range": {
+        "From": 10,
+        "To": 40
+    },
+    "File": {
+        "Value": "/etc/config.json",
+        "MimeType": "application/json"
+    },
+    "Label": "Some text"
+}

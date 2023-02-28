@@ -1,15 +1,25 @@
+import { AssetInfo } from "../AssetManagement/AssetInfo";
+
 /**
  * Represents an app instance
  * at runtime
  */
 export interface AppInstance {
+    /** App Metadata */
     App: AppConfig;
+    /** Whether an operation is currently being executed on the app */
     Busy: boolean;
+    /** Execution Status */
     Status?: AppStatus;
+    /** Declared container images of the app */
     Images: Array<ContainerImage>;
+    /** Available containers of the app */
     Containers: Array<Container>;
 }
 
+/**
+ * App execution status
+ */
 export enum AppStatus {
     Running = "Running",
     Partially_Running = "Partially Running",
@@ -155,4 +165,48 @@ export interface AppContainer {
 export interface DockerApp {
     Frontend: AppContainer;
     Middlelayer: AppContainer;
+}
+
+/**
+ * Collection of instances of deployment capabilities
+ */
+export class OrchestrationPlatform extends AssetInfo {
+    /** Ids of the deployment capabilities available on the platform */
+    DeploymentCapabilities: string[];
+}
+
+/**
+ * Basic deployment information for a software asset instance, more
+ * information must be given for a particular deployment type in
+ * a separate data model
+ */
+export class Deployment extends AssetInfo {
+    /** Id of the orchestration platform instance */
+    OrchestrationPlatformId: string;
+    /** Id of the deployment capability chosen on the platform */
+    DeploymentCapabilityId: string;
+    /** Id of the App type */
+    AppId: string;
+    /** Identifying number / Id for the deployed instance */
+    InstanceId: string;
+}
+
+/**
+ * Single device or device cluster on which to
+ * deploy software with a particular deployment
+ * capability type
+ */
+export class DeploymentCapability extends AssetInfo {
+    /** Id of the device or multiple if cluster */
+    DeviceIds: string[];
+    /** Id of the DC type */
+    DeploymentCapabilityTypeId: string;
+}
+
+/**
+ * Base class for specific deployment capability types
+ */
+export abstract class DeploymentCapabilityType extends AssetInfo {
+    /** Designation of the type */
+    Type: string;
 }
