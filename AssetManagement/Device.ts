@@ -100,10 +100,123 @@ export class CPUAsset extends AssetInfo {
     SupportedExtensions?: string[];
 }
 
-export class NetworkAdapterAsset extends AssetInfo {}
+/**
+ * Asset representing an network interface controller / adapter,
+ * the connection specific configuration like DHCP, gateway or
+ * IP address needs a separate data model
+ */
+export class NetworkAdapterAsset extends AssetInfo {
+    Brand: string;
+    /** Ethernet 802.3, Wireless etc. */
+    AdapterType: string;
+    /** Interface technology e.g. PCIe v2.1 */
+    Interface: string;
+    /** Data rate in bit per second bit/s */
+    DataRate: number;
+    /** 48-bit MAC address written in hexadecimal */
+    MAC: string;
+}
 
-export class MainboardAsset extends AssetInfo {}
+/**
+ * Mainboard information
+ */
+export class MainboardAsset extends AssetInfo {
+    Brand: string;
+    ModelNumber: string;
+    /** e.g. ATX */
+    FormFactor: string;
+    /** Motherboard chipset */
+    Chipset: string;
+    /** Allowed CPUs */
+    CPUSockets: {
+        CPUType: string;
+        Socket: string;
+    }[];
+    /** Supported main memory */
+    MemorySlots: {
+        MemoryType: string;
+        /** Maximum RAM capacity in bytes */
+        MaxCapacity: number;
+        /** Number of slots */
+        Count: number;
+        FormFactor: string;
+        /** RAM operating frequency in Hz */
+        ClockRate: number;
+    };
+    BIOS: {
+        BIOSType:  string;
+        /** Memory capacity of BIOS in bytes */
+        ROM: number;
+    };
+    /** Expansion cards */
+    ExpansionCardSlots: {
+        SlotType: string;
+        Count: number;
+    }[];
+    Interfaces: Array<MainboardInterfaceType>;
+}
 
-export class MainMemory extends AssetInfo {}
+export interface MainboardInterfaceType {
+    InterfaceType: string;
+}
 
-export class DataDrive extends AssetInfo {}
+export interface MainboardInterfaceBase extends MainboardInterfaceType {
+    Internal: boolean;
+    Count: number;
+}
+
+export interface MainboardStorageInterface extends MainboardInterfaceBase {
+    /** data transfer rate in bytes/s */
+    DataRate: number;
+}
+
+export interface MainboardAudioInterface extends MainboardInterfaceType {
+    Channel: string;
+    Codec: string;
+}
+
+/**
+ * Information about main memory / RAM
+ */
+export interface MainMemoryInfo {
+    /** Product label / designation */
+    Label: string;
+    Brand: string;
+    /** Storage capacity in bytes */
+    Capacity: number;
+    FormFactor: string;
+    MemoryType: string;
+    /** Voltage in Volt V */
+    Voltage: number;
+    Latency: string;
+    /** Operating frequency in Hertz Hz */
+    Frequency: number;
+}
+
+/**
+ * Data drive e.g. an SSD, HDD or USB-Stick
+ */
+export class DataDrive extends AssetInfo {
+    Brand: string;
+    Series: string;
+    /** Storage capacity in bytes */
+    Capacity: number;
+    /** SSD, HDD etc. */
+    StorageDriverType: string;
+    Interface: {
+        /** e.g. SATA or PCIe 4.0 x4 NVMe */
+        InterfaceType: string;
+        /** data transfer rate in byte/s */
+        DataRate: number;
+    };
+    /** e.g. 2.5 inch */
+    FormFactor: string;
+    /** internal / external */
+    FormType: string;
+    /** read velocity in byte/s */
+    DataReadRate: number;
+    /** write velocity in byte/s */
+    DataWriteRate: number;
+    /** Total number of bytes that can be written */
+    TotalWriteCapacity?: number;
+}
