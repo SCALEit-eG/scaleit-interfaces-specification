@@ -2,7 +2,7 @@
  * Information about computer hardware
  * and basic software stack like OS
  */
-export interface SysInfo{
+export interface SysInfo {
     OS: SysOSInfo;
     Mainboards: SysMotherboardInfo[];
     Bios: SysBiosInfo[];
@@ -11,20 +11,20 @@ export interface SysInfo{
     Memory: SysMemInfo[];
 }
 
-export interface SysOSInfo{
+export interface SysOSInfo {
     ComputerName: string;
     OSVersion: string;
     Platform: string;
     OSArchitecture: string;
 }
 
-export interface SysMotherboardInfo{
+export interface SysMotherboardInfo {
     Manufacturer: string;
     SerialNumber: string;
     Product: string;
 }
 
-export interface SysBiosInfo{
+export interface SysBiosInfo {
     Name: string;
     Manufacturer: string;
     SerialNumber: string;
@@ -35,16 +35,17 @@ export interface SysBiosInfo{
  * Information about network interface card or also
  * called network adapter
  */
-export interface SysNicInfo{
+export interface SysNicInfo {
     Name: string;
     /** e.g. ethernet, wifi, loopback or virtual bridge */
     AdapterType: string;
+    /** 48-bit MAC address written in hexadecimal */
     MAC: string;
     Manufacturer: string;
     ProductName: string;
 }
 
-export interface SysCpuInfo{
+export interface SysCpuInfo {
     Name: string;
     Description: string;
     Manufacturer: string;
@@ -54,7 +55,7 @@ export interface SysCpuInfo{
     ClockSpeed: string;
 }
 
-export interface SysMemInfo{
+export interface SysMemInfo {
     Label: string;
     Manufacturer: string;
     /** value with unit e.g. MB or GB */
@@ -64,7 +65,7 @@ export interface SysMemInfo{
     SerialNumber: string;
 }
 
-export interface SysInfoProcess{
+export interface SysInfoProcess {
     Name: string;
     Pid: string;
     /** in Byte */

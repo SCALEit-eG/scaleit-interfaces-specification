@@ -4,6 +4,8 @@ import { AssetInfo } from "./AssetInfo";
  * Designates a virtual or physical computer and references
  * hardware information as well as device specific
  * master data
+ * 
+ * Currently also includes OS and software information
  */
 export class DeviceAsset extends AssetInfo {
     /** Physical or virtual? */
@@ -12,8 +14,24 @@ export class DeviceAsset extends AssetInfo {
     ProductName?: string;
     /** Reference to the manufacturer if applicable */
     ManufacturerId?: string;
-    /** CPU, possibly multiple */
+    /** CPU, possibly multiple, basic info and asset reference */
     CPU: Array<CPUBaseInfo>;
+    /** RAM / main memory, only information */
+    RAM: Array<MainMemoryInfo>;
+    /** Data drives */
+    DataDrives: Array<DataDriveBaseInfo>;
+    /** Network interface cards, asset reference and basic info */
+    NetworkAdapters: Array<NetworkAdapterBaseInfo>;
+    /** Reference / Id to mainboard asset if existing */
+    MainboardId?: string;
+    /** Installed OS if any; move to computer submodel? */
+    OS?: OSInfo;
+    /** Environment variables set for each profile; move to computer submodel? */
+    SystemEnvironmentVariables?: {[envvar: string]: string};
+    /** Configured profiles; move to computer submodel? */
+    Profiles: ComputerProfileInformation[];
+    /** Installed drivers; move to computer submodel? */
+    Drivers?: any; // ? incomplete
 }
 
 /**
@@ -22,6 +40,20 @@ export class DeviceAsset extends AssetInfo {
 export enum DeviceKind {
     Physical = "Physical",
     Virtual = "Virtual"
+}
+
+/** Installed OS */
+export interface OSInfo {
+    /** OS label e.g. Windows 10 Home, Ubuntu 20.04 */
+    Name?: string;
+    /** Identifier for the type of OS e.g. Windows, Linux */
+    Type: string;
+    /** Official version identifier */
+    Version: string;
+    /** Edition like home / enterprise or release type e.g. desktop / server */
+    Variant?: string;
+    /** CPU architecture */
+    Architecture: string;
 }
 
 /**
@@ -113,6 +145,16 @@ export class NetworkAdapterAsset extends AssetInfo {
     Interface: string;
     /** Data rate in bit per second bit/s */
     DataRate: number;
+    /** 48-bit MAC address written in hexadecimal */
+    MAC: string;
+}
+
+/** Reference and basic info about NIC */
+export class NetworkAdapterBaseInfo {
+    /** Reference to asset if existing */
+    Id?: string;
+    /** Ethernet 802.3, Wireless etc. */
+    AdapterType: string;
     /** 48-bit MAC address written in hexadecimal */
     MAC: string;
 }
@@ -211,12 +253,33 @@ export class DataDrive extends AssetInfo {
     };
     /** e.g. 2.5 inch */
     FormFactor: string;
-    /** internal / external */
-    FormType: string;
+    /** internal /or external drive */
+    FormType: "internal" | "external";
     /** read velocity in byte/s */
     DataReadRate: number;
     /** write velocity in byte/s */
     DataWriteRate: number;
     /** Total number of bytes that can be written */
     TotalWriteCapacity?: number;
+}
+
+/** Reference to a data drive and basic info */
+export interface DataDriveBaseInfo {
+    /** Reference to asset if existing */
+    Id?: string;
+    /** Storage capacity in bytes */
+    Capacity: number;
+    /** SSD, HDD etc. */
+    StorageDriverType: string;
+    /** e.g. SATA or PCIe 4.0 x4 NVMe */
+    InterfaceType: string;
+}
+
+/** Information about a configured profile on a computer */
+export interface ComputerProfileInformation {
+    User?: string;
+    Groups?: string[];
+    HomeFolder?: string;
+    EnvironmentVariables: {[envvar: string]: string};
+    // what else?
 }

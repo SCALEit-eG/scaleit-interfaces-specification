@@ -466,7 +466,7 @@
         {
             "Id": "urn:scale-it.org:platform:sdm4fzi:deployments:abcdef123456",
             "App": "urn:scale-it.org:apps:sensors:sensor-app-template:2.0.0",
-            "Platform": "urn:scale-it.org:platform:sdm4fzi",
+            "Capability": "urn:scale-it.org:platform:sdm4fzi",
             "Config": {
                 "Components": [
                     {
