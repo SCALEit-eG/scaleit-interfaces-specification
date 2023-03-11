@@ -22,13 +22,13 @@ An Id should be a proper URI, either URN or URL, that consists of an arbitrary n
 Recommendations for the construction of the URI parts:
 ```
 general: <org> {<unit>}* aas (assets | shells | sms) (types | instances | templates) <path_segment> {<path_segment>}*
-    [<instance_name> | <type_name> | <template_name>]
+    [{<submodel_name>} <instance_name> | <type_name> | <template_name>]
 asset types: urn:<org>:{<unit>:}*:aas:assets:types:<path_segment>:{<path_segment>:}*:<type_name>
 asset instances: urn:<org>:{<unit>:}*:aas:assets:instances:<path_segment>:{<path_segment>:}*:<instance_name>
 shells for asset types: urn:<org>:{<unit>:}*:aas:shells:types:<path_segment>:{<path_segment>:}*:<type_name>
 shells for asset instances: urn:<org>:{<unit>:}*:aas:shells:instances:<path_segment>:{<path_segment>:}*:<instance_name>
 submodel templates: urn:<org>:{<unit>:}*:aas:sms:templates:<path_segment>:{<path_segment>:}*:<template_name>
-submodel instances: urn:<org>:{<unit>:}*:aas:sms:instances:<path_segment>:{<path_segment>:}*:<instance_name>
+submodel instances: urn:<org>:{<unit>:}*:aas:sms:instances:<path_segment>:{<path_segment>:}*:<submodel_name>:<instance_name>
 ```
 
 The unit and path segment parts of the URI provide mechanisms to arbitrarily nest the IDs in order to assign the entities to namespaces.
