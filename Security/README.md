@@ -146,7 +146,10 @@ Request headers:
 - Content-Type: application/zip
 
 Request body:
-- ZIP archive with license file and certificate
+- ZIP archive with license file and certificates
+    - {name}.lic
+    - {name}.crt
+    - {name}.pfx
 
 Response codes:
 - 200 OK: license uploaded
@@ -198,6 +201,22 @@ Response codes:
 
 Response body:
 - LicenseDetails
+
+### PUT /transfer/licensing/ca
+Configures the CA used to validate the license certificates. It represents the trusted license issuer.
+
+Request headers:
+- Content-Type: application/zip
+
+Request body:
+- ZIP archive with certificate files
+    - ca.crt
+    - ca.pfx
+
+Response codes:
+- 200 OK: CA successfully configured
+- 400 Bad Request: invalid ZIP archive or required entry missing
+- 409 Conflict: CA is already configured
 
 ## Licensing - System Information
 
