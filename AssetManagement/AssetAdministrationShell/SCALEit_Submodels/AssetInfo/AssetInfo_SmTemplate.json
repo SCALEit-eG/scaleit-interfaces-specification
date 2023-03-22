@@ -1,0 +1,127 @@
+{
+    "identification": {
+        "idType": "IRI",
+        "id": "urn:scale-it.org:sdm4fzi:aas:sms:templates:orchestration:asset-info"
+    },
+    "semanticId": {
+        "keys": [
+            {
+                "type": "ConceptDescription",
+                "local": false,
+                "value": "urn:scale-it.org:sdm4fzi:aas:sms:templates:orchestration:asset-info",
+                "idType": "IRI"
+            }
+        ]
+    },
+    "idShort": "AssetInfo",
+    "modelType": {
+        "name": "Submodel"
+    },
+    "kind": "Template",
+    "submodelElements": [
+        {
+            "idShort": "Id",
+            "modelType": {
+                "name": "Property"
+            },
+            "kind": "Template",
+            "valueType": "string"
+        },
+        {
+            "idShort": "AltIds",
+            "modelType": {
+                "name": "SubmodelElementCollection"
+            },
+            "kind": "Template",
+            "ordered": false,
+            "allowDuplicates": false,
+            "value": [
+                {
+                    "idShort": "elem[?]",
+                    "modelType": {
+                        "name": "Property"
+                    },
+                    "kind": "Template",
+                    "valueType": "string"
+                }
+            ]
+        },
+        {
+            "idShort": "LocalId",
+            "modelType": {
+                "name": "Property"
+            },
+            "kind": "Template",
+            "valueType": "string"
+        },
+        {
+            "idShort": "Label",
+            "modelType": {
+                "name": "Property"
+            },
+            "kind": "Template",
+            "valueType": "string"
+        },
+        {
+            "idShort": "Description",
+            "modelType": {
+                "name": "SubmodelElementCollection"
+            },
+            "kind": "Template",
+            "ordered": false,
+            "allowDuplicates": false,
+            "value": [
+                {
+                    "idShort": "Text",
+                    "modelType": {
+                        "name": "Property"
+                    },
+                    "kind": "Template",
+                    "valueType": "string"
+                },
+                {
+                    "idShort": "MIMEType",
+                    "modelType": {
+                        "name": "Property"
+                    },
+                    "kind": "Template",
+                    "valueType": "string"
+                },
+                {
+                    "idShort": "Encoding",
+                    "modelType": {
+                        "name": "Property"
+                    },
+                    "kind": "Template",
+                    "valueType": "string"
+                }
+            ]
+        },
+        {
+            "idShort": "BelongsTo",
+            "modelType": {
+                "name": "ReferenceElement"
+            },
+            "kind": "Template"
+        },
+        {
+            "idShort": "Tags",
+            "modelType": {
+                "name": "SubmodelElementCollection"
+            },
+            "kind": "Template",
+            "ordered": false,
+            "allowDuplicates": false,
+            "value": [
+                {
+                    "idShort": "elem[?]",
+                    "modelType": {
+                        "name": "Property"
+                    },
+                    "kind": "Template",
+                    "valueType": "string"
+                }
+            ]
+        }
+    ]
+}

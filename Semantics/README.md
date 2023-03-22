@@ -150,6 +150,8 @@ MQTT Topic ::= \<PreTopic\>/\<ElementId\>/\<PostTopic\> \
 \<PreTopic\> ::= enterprise/workCenter/station/controlDevice/fieldDevice \
 <PostTopic\> ::= \<dataCategory\>/\<dataSubCategory\>
 
+**Note**: The parts in "enterprise/workCenter/station/controlDevice/fieldDevice" should be replaced with the concrete entities.
+
 ### Further
 
 - Completely different aspects are considered in 1.0.0 e.g. topology between assets for asset hierarchies or bill of material, nameplate etc.
