@@ -1,7 +1,7 @@
 /**
  * As defined by https://www.rfc-editor.org/rfc/rfc7807
  */
-export interface ProblemDetails{
+export interface ProblemDetails {
     /** url to the problem type */
     type?: string;
     /** short generic human readable message */
@@ -25,7 +25,7 @@ export interface ProblemDetails{
  * details if a specified error occurred.
  * @template T type of the success result 
  */
-export interface SuccessOrFailure<T>{
+export interface SuccessOrFailure<T> {
     /** set to result on success */
     success?: T;
     /** only set if success is not set */

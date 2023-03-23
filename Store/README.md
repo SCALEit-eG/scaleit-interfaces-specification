@@ -3,7 +3,29 @@
 - The SCALE it Marktplatz serves as commercial component to purchase products including software with configured terms
 - The App Store serves as technical component that stores the required software artefacts, manages the devices, generates the licenses and keeps track of them
 
-## App Store
+## App Store - Security
+
+### POST /login
+Allows programmatic login with a client certificate and returns an access token on success. This access token can be used to gain access to restricted resources.
+
+Request headers:
+- Content-Type: application/x-pem-file
+
+Request body:
+- x509 Certificate file in PEM format i.e. base64 encoded certificate
+
+Response codes:
+- 200 OK: login successful, access token returned
+- 400 Bad Request: no certificate supplied or wrong format
+- 403 Forbidden: certificate is not valid
+
+Response body:
+- Access token in JWT format
+
+Response headers:
+- text/plain
+
+## App Store - Licensing
 
 ### GET /licenses
 Get the list of all available licenses.
@@ -163,25 +185,7 @@ Response codes:
 - 200 OK: CA deleted
 - 404 Not Found: no CA currently available
 
-### POST /login
-Allows programmatic login with a client certificate and returns an access token on success. This access token can be used to gain access to restricted resources.
-
-Request headers:
-- Content-Type: application/x-pem-file
-
-Request body:
-- x509 Certificate file in PEM format i.e. base64 encoded certificate
-
-Response codes:
-- 200 OK: login successful, access token returned
-- 400 Bad Request: no certificate supplied or wrong format
-- 403 Forbidden: certificate is not valid
-
-Response body:
-- Access token in JWT format
-
-Response headers:
-- text/plain
+## App Store - Orders
 
 ### GET /orders?{query}
 Retrieve the list of all stored orders.
@@ -292,6 +296,8 @@ Response codes:
 - 400 Bad Request: id invalid
 - 404 Not Found: order for id not found
 
+## App Store - Devices
+
 ### GET /devices
 Get all devices that are recorded in the store.
 
@@ -354,6 +360,8 @@ Response codes:
 - 200 OK: device found and removed
 - 400 Bad Request: invalid type given
 - 404 Not Found: device not found
+
+## App Store - Shops
 
 ### GET /shops?{query}
 Get the list of currently registered shops.
@@ -433,50 +441,146 @@ Response codes:
 - 400 Bad Request: id not given
 - 404 Not Found: shop for id not found
 
+## App Store - Apps
+
 ### GET /apps?{query}
 Get the list of available apps.
 
 Query Parameters:
 - shop: string, optional
     - Shop Id
+- manufacturer: string, optional
+    - Manufacturer Id
 
 Response codes:
 - 200 OK: apps available
 - 204 No Content: no apps available for the request
-- 404 Not Found: shop Id not found if it was given
+- 404 Not Found: Id of a query parameter not found if it was given
 
 Response body:
-- AppBinding[]
+- AppAsset[]
 
 Response headers:
 - Content-Type: application/json
 
 ### POST /apps
-Add a new app to the store.
+Add a new app to the store. Both initial metadata and app files need to be uploaded.
 
-### GET /apps/{id}?{query}
-Get information about a particular app given its product number and also the shop Id. The shop Id is required because the product number is only guaranteed to be unique per shop.
+Request headers:
+- Content-Type: multipart/form-data
+
+Request body:
+- form data with the following parts:
+    - Metadata
+        - key: metadata
+        - Content-Type: application/json
+    - Files
+        - key: files
+        - Content-Type: application/zip
+
+Response codes:
+- 201 Created: New app asset successfully created
+- 400 Bad Request
+    - Metadata or given files are incomplete
+    - Metadata given in JSON or the metadata files are conflicting
+    - Metadata or contents of files contain errors
+- 409 Conflict: App with same identification already exists
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- Success: AppAsset
+- Error: ProblemDetails
+
+### GET /apps/{id}
+Get information about a particular app given its unique Id.
 
 Route parameters:
 - id: string
-    - Product number of the app
-
-Query Parameters:
-- shop: string, required
-    - Shop Id
+    - Id of the App
 
 Response codes:
 - 200 OK: app found
 - 404 Not Found: app or shop not found
 
 Response body:
-- AppBinding
+- AppAsset
 
 Response headers:
 - Content-Type: application/json
 
-### PUT /apps/{id}?{query}
-Change the configuration or the artefacts of an app.
+### GET /apps/{id}/export
+Download an app archive.
+
+Route parameters:
+- id: string
+    - Id of the App
+
+Response codes:
+- 200 OK: app found
+- 404 Not Found: app or shop not found
+
+Response body:
+- ZIP archive
+
+Response headers:
+- Content-Type: application/zip
+
+### PUT /apps/{id}
+Change the configuration or the files of an app. The given information will be integrated into the existing data.
+
+Route parameters:
+- id: string
+    - Id of the App
+
+Request headers:
+- Content-Type: multipart/form-data
+
+Request body:
+- form data with the following parts:
+    - Metadata
+        - key: metadata
+        - Content-Type: application/json
+    - Files
+        - key: files
+        - Content-Type: application/zip
+
+Response codes:
+- 200 OK: Data successfully changed
+- 400 Bad Request
+    - Metadata or given files are incomplete
+    - Metadata given in JSON or the metadata files are conflicting
+    - Metadata or contents of files contain errors
+- 404 Not Found: App for given Id not found
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- Success: AppAsset
+- Error: ProblemDetails
 
 ### DELETE /apps/{id}?{query}
 Delete an app from the store.
+
+Route parameters:
+- id: string
+    - Id of the App
+
+Query parameters:
+- remove_artefacts: boolean, optional, default=false
+    - Remove the referenced artefacts of the app
+
+Response codes:
+- 200 OK: App successfully deleted
+- 400 Bad Request
+    - Unable to remove artefacts when it was requested because artefacts are referenced by other apps
+- 404 Not Found: App for given Id not found
+
+Response headers:
+- Content-Type: application/json, text/plain
+
+Response body:
+- Success: status text
+- Error: ProblemDetails
