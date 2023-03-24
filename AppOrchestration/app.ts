@@ -34,6 +34,7 @@ export interface AppConfig {
     Name: string;
     Description?: string;
     Version: string;
+    ManufacturerId:  string;
     ProductNumber: string;
     Imported?: Date;
     Frontends?: ConnectionPoint[];

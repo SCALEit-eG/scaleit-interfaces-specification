@@ -530,8 +530,15 @@ An app instance is represented as a ZIP archive with the following structure:
     - {name}.{png|jpg}?
 - licenses/?
     - {name}.lic + {name}.crt + {name}.pfx
+- aas/?
+    - *.json
 
 Through the docker-compose.yml it is possible to orchestrate the app. Docker images need to be available when the app starts and may be retrievable on the server the Docker runs and thus they are optional. It must not contain a **build context**.
+
+Uniqueness of an app is given by the following information:
+- Manufacturer Id
+- Product number
+- Version
 
 ## App Template
 
