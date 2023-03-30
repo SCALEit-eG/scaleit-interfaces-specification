@@ -490,7 +490,7 @@ Response headers:
 - Content-Type: application/json
 
 Response body:
-- Success: AppAsset
+- Success: link to new asset
 - Error: ProblemDetails
 
 ### GET /apps/{id}
