@@ -298,7 +298,7 @@ Response codes:
 
 ## App Store - Devices
 
-### GET /devices
+### GET /devices?{query}
 Get all devices that are recorded in the store.
 
 Response codes:
@@ -306,7 +306,7 @@ Response codes:
 - 204 No Content: no device available
 
 Response body:
-- DeviceBinding[]
+- DeviceAsset[]
 
 Response headers:
 - Content-Type: application/json
@@ -318,47 +318,67 @@ Request headers:
 - Content-Type: application/json
 
 Request body:
-- DeviceBinding[]
+- DeviceAsset
 
 Response codes:
 - 201 Created: device successfully created
 - 400 Bad Request: invalid data given
-    - Note: exactly one binding must be given, several are not allowed at once,
-    for that separate devices must be recorded
 - 409 Conflict: device with same binding already exists
 
 Response headers:
 - Location: url to the newly recorded device
     - Only on success
 
-### GET /devices/{id}?{query}
+Response body:
+- Success: status text
+- Error: ProblemDetails
+
+### GET /devices/{id}
 Get the information about a specific device. The Id of a device is the identifying part of the type of binding used.
 
 Route parameters:
 - id: string
-    - Identifier for the binding, depending on the type
-
-Query Parameters:
-- type: string, required
-    - Identifies the type of binding
-    - Currently supported: nic, tpm
+    - Device asset Id
 
 Response codes:
 - 200 OK: device found
-- 400 Bad Request: invalid type given
 - 404 Not Found: device not found
 
 Response body:
-- DeviceBinding
+- DeviceAsset
 
-### DELETE /devices/{id}?{query}
+### PUT /devices/{id}
+Change the information of a device by integrating the given asset data with the data available.
+
+Route parameters:
+- id: string
+    - Device asset Id
+
+Request headers:
+- Content-Type: application/json
+
+Request body:
+- DeviceAsset
+
+Response codes:
+- 200 OK: device found
+- 400 Bad Request
+    - Invalid data
+- 404 Not Found: device not found
+- 409 Conflict
+    - Illegal attempt to change Id fields
+
+Response body:
+- Success: DeviceAsset
+- Error: ProblemDetails
+
+### DELETE /devices/{id}
 Remove a recorded device from the store.
 
-For route and query parameters see [GET /devices](#get-devicesidquery).
+For route and query parameters see [GET /devices](#get-devicesid).
 
 Response codes:
 - 200 OK: device found and removed
-- 400 Bad Request: invalid type given
 - 404 Not Found: device not found
 
 ## App Store - Shops

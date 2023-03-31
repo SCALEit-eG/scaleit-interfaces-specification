@@ -13,7 +13,11 @@ export class DeviceAsset extends AssetInfo {
     /** Optional label of the product if applicable */
     ProductName?: string;
     /** Reference to the manufacturer if applicable */
-    ManufacturerId?: string;
+    ManufacturerId: string;
+    /** Official article number or also called product number */
+    ArticleNumber: string;
+    /** Serial number of the product instance */
+    SerialNumber: string;
     /** CPU, possibly multiple, basic info and asset reference */
     CPU: Array<CPUBaseInfo>;
     /** RAM / main memory, only information */
