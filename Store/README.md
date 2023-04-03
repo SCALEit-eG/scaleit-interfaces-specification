@@ -304,6 +304,7 @@ Get all devices that are recorded in the store.
 Response codes:
 - 200 OK: devices available
 - 204 No Content: no device available
+- 400 Bad Request: invalid query parameter
 
 Response body:
 - DeviceAsset[]
@@ -475,6 +476,7 @@ Query Parameters:
 Response codes:
 - 200 OK: apps available
 - 204 No Content: no apps available for the request
+- 400 Bad Request: invalid query parameter
 - 404 Not Found: Id of a query parameter not found if it was given
 
 Response body:
