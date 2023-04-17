@@ -1,7 +1,7 @@
 # App Orchestration
 Interfaces for services that can deploy and orchestrate apps.
 
-## Table of Contents
+# Table of Contents
 
 1. [Transfer Technology](#transfer-technology)
 2. [Transfer Technology - Files API](#transfer-technology---files-api)
@@ -12,8 +12,13 @@ Interfaces for services that can deploy and orchestrate apps.
 7. [App Config](#app-config)
 8. [Transfer Technology - Container System Module](#transfer-technology---container-system-module)
 9. [Transfer App v2.2.2-inst-dev](#transfer-app-v222-inst-dev)
+10. [App Pool](#app-pool)
+11. [App Pool - Store Side](#app-pool---store-side)
+12. [App Pool - Transfer Side](#app-pool---transfer-side)
 
-## Transfer Technology
+# Transfer Technology
+
+## Main Transfer API
 These endpoints are specific to the transfer app that is build around Docker-Compose.
 
 ### POST /transfer/import
@@ -1149,3 +1154,40 @@ Receive: {"StepType":"PROCESS_PROGRESS","Success":true,"Required":false,"Process
 
 ### Websockets /events/system/loadimage
 Allows to incrementally upload individual Docker images that are then uploaded to the configured Docker daemon. Works just like **Websockets /events/import** but with much fewer reported steps at the end. The docker image should be in the TAR format that **docker save** put out.
+
+# App Pool
+
+## App Pool - Store Side
+
+### GET /pool/apps
+List all apps along with their versions that are installed in the app pool and also
+those that are globally available and not installed.
+
+### PUT /pool/apps/{id}
+Install specific app version on the pool.
+
+### DELETE /pool/apps/{id}
+Uninstall, i.e. remove, an app version from the pool.
+
+### PUT /pool/refresh
+Refresh metadata of all globally available apps.
+
+### PUT /pool/clear
+Completely clear all data available in the app pool.
+
+## App Pool - Transfer Side
+
+### GET /servers
+
+### POST /servers
+
+### DELETE /servers/{id}
+
+### GET /deployments
+
+### POST /deployments
+
+### DELETE /deployments/{id}
+
+## App Pool Configuration
+Reuses the /configure endpoints from [General Interfaces](../GeneralInterfaces).
