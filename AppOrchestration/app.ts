@@ -31,6 +31,7 @@ export enum AppStatus {
  * Basic metadata of an app instance
  */
 export interface AppConfig {
+    Id: string;
     Name: string;
     Description?: string;
     Version: string;

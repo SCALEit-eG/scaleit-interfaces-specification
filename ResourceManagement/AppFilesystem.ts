@@ -1,7 +1,7 @@
 /**
  * Represents a file system entry in an app filesystem
  */
-export interface AppFilesystemEntry{
+export interface AppFilesystemEntry {
     /**
      * name of the entry, usually the file
      * or directory name
@@ -20,7 +20,7 @@ export interface AppFilesystemEntry{
 /**
  * Represents a file entry that exposes actual data
  */
-export interface AppFilesystemFileEntry extends AppFilesystemEntry{
+export interface AppFilesystemFileEntry extends AppFilesystemEntry {
     /**
      * Whether this file can be changed
      */
@@ -35,7 +35,7 @@ export interface AppFilesystemFileEntry extends AppFilesystemEntry{
 /**
  * Represents a directory that may contain files and subdirectories
  */
-export interface AppFilesystemDirectoryEntry extends AppFilesystemEntry{
+export interface AppFilesystemDirectoryEntry extends AppFilesystemEntry {
     /**
      * Child filesystem entries, may be empty or null
      */
@@ -56,7 +56,7 @@ export interface AppFilesystemDirectoryEntry extends AppFilesystemEntry{
  * Metadata for an app filesystem entry for both
  * files and directories
  */
-export interface AppFilesystemEntryMetadata{
+export interface AppFilesystemEntryMetadata {
     /** Name of the entry */
     Name: string;
     /** Absolute path */
@@ -70,7 +70,7 @@ export interface AppFilesystemEntryMetadata{
 /**
  * Metadata specific to an app filesytem file entry
  */
-export interface FileMetadata extends AppFilesystemEntryMetadata{
+export interface FileMetadata extends AppFilesystemEntryMetadata {
     /** size in bytes */
     Size: number;
 }
@@ -78,7 +78,7 @@ export interface FileMetadata extends AppFilesystemEntryMetadata{
 /**
  * Metadata specific to an app filesystem directory entry
  */
-export interface DirectoryMetadata extends AppFilesystemEntryMetadata{
+export interface DirectoryMetadata extends AppFilesystemEntryMetadata {
     /** number of direct child entries */
     EntryCount: number;
 }

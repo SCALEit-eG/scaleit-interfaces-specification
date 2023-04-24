@@ -1163,8 +1163,15 @@ Allows to incrementally upload individual Docker images that are then uploaded t
 List all apps along with their versions that are installed in the app pool and also
 those that are globally available and not installed.
 
+Response body:
+- PoolApp[]
+
+Response codes:
+- 200 OK: some apps available
+- 204 No Content: no apps available
+
 ### PUT /pool/apps/{id}
-Install specific app version on the pool.
+Install A specific app version on the pool.
 
 ### DELETE /pool/apps/{id}
 Uninstall, i.e. remove, an app version from the pool.
@@ -1178,16 +1185,39 @@ Completely clear all data available in the app pool.
 ## App Pool - Transfer Side
 
 ### GET /servers
+Get all registered servers of the pool.
+
+Response body:
+- PoolServer[]
+
+Response codes:
+- 200 OK: servers available
+- 204 No Content: no server available
 
 ### POST /servers
+Register a new server on the pool.
 
 ### DELETE /servers/{id}
+Delete a server from the pool.
 
 ### GET /deployments
+Query all available deployments.
+
+Response body:
+- 200 OK: deployments available
+- 204 No Content: no deployments available
 
 ### POST /deployments
+Deploy a specific app version to a server.
 
 ### DELETE /deployments/{id}
+Uninstall an app deployment from a server and if necessary stop it before.
+
+### PUT /deployments/{id}/start
+Start a deployed app.
+
+### PUT /deployments/{id}/stop
+Stop a deployed app.
 
 ## App Pool Configuration
 Reuses the /configure endpoints from [General Interfaces](../GeneralInterfaces).

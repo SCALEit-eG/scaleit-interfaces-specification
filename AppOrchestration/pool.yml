@@ -1,0 +1,5 @@
+store:
+  address: https://store.scale-it.org
+servers:
+  - "http://10.198.153.109:54169"
+  - "http://192.168.153.90:54169"
