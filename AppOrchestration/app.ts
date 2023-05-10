@@ -2,11 +2,14 @@ import { AssetInfo } from "../AssetManagement/AssetInfo";
 
 /**
  * Represents an app instance
- * at runtime
  */
 export interface AppInstance {
-    /** App Metadata */
+    /** Id to use at the API */
+    Id: string;
+    /** App Metadata defining the app type */
     App: AppConfig;
+    /** Locally unique label or number given to the instance */
+    InstanceNumber: string;
     /** Whether an operation is currently being executed on the app */
     Busy: boolean;
     /** Execution Status */
@@ -15,6 +18,8 @@ export interface AppInstance {
     Images: Array<ContainerImage>;
     /** Available containers of the app */
     Containers: Array<Container>;
+    /** Last deployment date */
+    LastModified?: Date;
 }
 
 /**
@@ -28,19 +33,27 @@ export enum AppStatus {
 }
 
 /**
- * Basic metadata of an app instance
+ * Basic metadata of an app type
  */
 export interface AppConfig {
-    Id: string;
-    Name: string;
-    Description?: string;
-    Version: string;
-    ManufacturerId:  string;
+    /** Id of the manufacturer */
+    ManufacturerId: string;
+    /** Unique product number given by the manufacturer */
     ProductNumber: string;
-    Imported?: Date;
+    /** Version identifier */
+    Version: string;
+    /** Optional name of the app */
+    Name?: string;
+    /** Optional description */
+    Description?: string;
+    /** Defined frontends for view access */
     Frontends?: ConnectionPoint[];
+    /** Defined middlelayers for automatic access */
     Middlelayers?: ConnectionPoint[];
+    /** Categories / tags of the software */
     Categories?: string[];
+    /** Import date of the app type */
+    Installed?: Date;
 }
 
 /**
