@@ -524,7 +524,7 @@ TODO
 
 An app instance is represented as a ZIP archive with the following structure:
 - config.yml
-- docker-compose.yml
+- compose.yaml
 - icon.{svg|png|jpg}?
 - README.md?
 - docker/?
