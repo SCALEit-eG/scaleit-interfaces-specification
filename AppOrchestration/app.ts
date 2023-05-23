@@ -7,7 +7,7 @@ export interface AppInstance {
     /** Id to use at the API */
     Id: string;
     /** App Metadata defining the app type */
-    App: AppConfig;
+    AppType: AppType;
     /** Locally unique label or number given to the instance */
     InstanceNumber: string;
     /** Whether an operation is currently being executed on the app */
@@ -35,7 +35,9 @@ export enum AppStatus {
 /**
  * Basic metadata of an app type
  */
-export interface AppConfig {
+export interface AppType {
+    /** ID string to use at the API */
+    Id: string;
     /** Id of the manufacturer */
     ManufacturerId: string;
     /** Unique product number given by the manufacturer */
@@ -71,7 +73,7 @@ export interface ConnectionPoint {
  * @param app app instance config
  * @returns id as string
  */
-export function makeAppId(app: AppConfig): string {
+export function makeAppId(app: AppType): string {
     return `${app.Name}:${app.Version}`;
 }
 

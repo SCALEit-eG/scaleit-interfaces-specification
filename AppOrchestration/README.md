@@ -22,7 +22,7 @@ Interfaces for services that can deploy and orchestrate apps.
 These endpoints are specific to the transfer app that is build around Docker-Compose.
 
 ### POST /transfer/import
-Import an app instance or template as ZIP archive. The Websocket endpoint **/events/transfer/import** should be preferred as it provides incremental feedback for this import process that may take a while.
+Import an app type as ZIP archive. The Websocket endpoint **/events/transfer/import** should be preferred as it provides incremental feedback for this import process that may take a while.
 
 Request headers:
 - Content-Type: multipart/form-data
@@ -47,7 +47,7 @@ Content-Disposition: form-data; name="app"; filename="BashMessagePrinter.zip"
 ```
 
 ### GET /transfer/export/{id}?{query}
-Export a specific app instance or template as ZIP archive.
+Export a specific app type as ZIP archive.
 
 Route parameters:
 - id: app id
@@ -73,7 +73,7 @@ GET /api/1/transfer/export/ScaleIT%20node-red%3A2.2.2?with_images=true
 ```
 
 ### GET /transfer/apps
-Retrieve the list of currently available app instances on the server.
+Retrieve the list of currently available app types on the server.
 
 Response codes:
 - 200 OK: apps are available
@@ -83,18 +83,48 @@ Response headers:
 - Content-Type: application/json
 
 Response body:
-- AppInstance[]
+- AppType[]
 
 Example:
 ```
 GET /api/1/transfer/apps
+
+[
+    {
+        "Id": "c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM",
+        "ManufacturerId": "scale-it.org",
+        "ProductNumber: "11300783512",
+        "Version": "1.5.3",
+        "Name": "SCALE it DTwin App",
+        "Description": "Generic digital twin app",
+        "Frontends": [
+            {
+                "Port": 54110,
+                "Path": null,
+                "Protocol": "http"
+            }
+        ],
+        "Middlelayers": [
+            {
+                "Port": 54109,
+                "Path": null,
+                "Protocol": "http"
+            }
+        ],
+        "Categories": [
+            "IoT",
+            "Sensors"
+        ],
+        "Installed": "2021-07-05T15:44:32.453Z"
+    }
+]
 ```
 
 ### GET /transfer/apps/{id}
-Get the information details of a single app instance.
+Get the information details of a single app type.
 
 Route parameters:
-- id: app instance id
+- id: app type id
 
 Response codes:
 - 200 OK: app instance found
@@ -105,18 +135,18 @@ Response headers:
 - Content-Type: application/json
 
 Response body:
-- AppInstance
+- AppType
 
 Example:
 ```
-GET /api/1/transfer/apps/simple%20webserver%3A1.0.0-dbg
+GET /api/1/transfer/apps/c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM
 ```
 
 ### GET /transfer/apps/{id}/icon
 Download the app's icon if available.
 
 Route parameters:
-- id: app instance id
+- id: app type id
 
 Response codes:
 - 200 OK: app and icon found
@@ -134,14 +164,14 @@ Response body:
 
 Example:
 ```
-GET /api/1/transfer/apps/simple%20webserver%3A1.0.0-dbg/icon
+GET /api/1/transfer/apps/c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM/icon
 ```
 
 ### GET /transfer/apps/{id}/readme
 Download the app's readme if available.
 
 Route parameters:
-- id: app instance id
+- id: app type id
 
 Response codes:
 - 200 OK: app and readme found
@@ -162,35 +192,45 @@ Response body:
 
 Example:
 ```
-GET /api/1/transfer/apps/simple%20webserver%3A1.0.0-dbg/readme
+GET /api/1/transfer/apps/c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM/readme
 ```
 
 ### DELETE /transfer/apps/{id}?{query}
-Delete an app instance and if forced and necessary stop it before.
+Delete an app type and if forced and necessary stop all instances and delete them as well.
 
 Route parameters:
-- id: app instance id
+- id: app type id
 
 Query parameters:
 - force: boolean, optional, default: false
-    - If app runs then it is stopped so the removal succeeds
+    - If deployments exist then they are stopped and removed so the removal succeeds
 - remove_images: boolean, optional, default: true
-    - Remove referenced docker images if not referenced by other apps
+    - Remove referenced container images if not referenced by other apps
 - remove_volumes: boolean, optional, default: false
-    - Remove used docker volumes
+    - Remove used docker volumes of instances
 
 Response codes:
-- 200 OK: app instance successfully removed
+- 200 OK: app type successfully removed
 - 400 Bad Request: app id invalid, app is busy
-- 404 Not Found: app instance not found
+- 404 Not Found: app type not found
 - 409 Conflict
-    - app instance still runs and force=false
+    - instance of the app still exists and force=false
     - image still needed if remove_images=true
+
+Response body:
+- AppInstance[]
+    - The deleted instances if any
 
 Example:
 ```
-DELETE /api/1/transfer/apps/simple%20webserver%3A1.0.0-dbg?force=true&remove_images=false
+DELETE /api/1/transfer/apps/c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM?force=true&remove_images=false
 ```
+
+### POST /transfer/apps/{id}/deploy
+
+### GET /transfer/instances
+
+### GET /transfer/instances/{id}
 
 ### PUT /transfer/apps/{id}/start
 Start an app instance. As this process may take some time, it is recommended to use the Websocket **/events/transfer/apps/{id}/start** endpoint instead.
@@ -214,7 +254,7 @@ Response body:
 
 Example:
 ```
-PUT /api/1/transfer/apps/simple%20webserver%3A1.0.0-dbg/start
+PUT /api/1/transfer/apps/c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM/start
 ```
 
 ### PUT /transfer/apps/{id}/stop?{query}
@@ -493,38 +533,12 @@ Content-Type: video/mp4
 <tutorial.mp4>
 ```
 
-## Transfer Technology - Templates
-These endpoints are specific to the templates version of the transfer app.
+## Apps
+There is a distinction between app types and app instances. Instances derive from app types. Software applications are imported as an app type from which multiple instances can be created.
 
-### GET /transfer/templates
-TODO
-
-### GET /transfer/templates/{id}
-TODO
-
-### DELETE /transfer/templates/{id}
-TODO
-
-### POST /transfer/templates/{id}/instantiate
-Start the app instantiation process.
-
-TODO
-
-### SSE /transfer/templates/{id}/build
-Execute the build process and finish it on success. Provides incremental feedback.
-
-SSE channels:
-- status
-- progress
-- failure
-
-TODO
-
-## App Instance
-
-An app instance is represented as a ZIP archive with the following structure:
+An app is represented as a ZIP archive with the following structure:
 - config.yml
-- compose.yaml
+- compose-tpl.yaml
 - icon.{svg|png|jpg}?
 - README.md?
 - docker/?
@@ -538,37 +552,40 @@ An app instance is represented as a ZIP archive with the following structure:
 - aas/?
     - *.json
 
-Through the docker-compose.yml it is possible to orchestrate the app. Docker images need to be available when the app starts and may be retrievable on the server the Docker runs and thus they are optional. It must not contain a **build context**.
+Apps come with a **compose-tpl.yaml** that serves as a template possibly containing variables in order create a **compose.yaml** when deploying the app. Through the **compose.yaml** it is possible to orchestrate the app. Docker images need to be available when the app starts and may be retrievable on the server the Docker runs and thus they are optional. It must not contain a **build context**.
 
 Uniqueness of an app is given by the following information:
 - Manufacturer Id
 - Product number
 - Version
 
-## App Template
-
-The structure from *App Instance* is inherited with the following additions:
-- docker-compose-build.yml
-
-It should contain a build context so that **docker-compose build** can be run on the template in order to create an App Instance. The files required in the build context must be provided as well.
-
 ## App ID
 
-For an instance of the Transfer App the uniqueness of an App Instance is guaranteed by the combination of **Name** and **Version**.
+For the Transfer App the uniqueness of an App Type is guaranteed by the combination of **ManufacturerId**, **ProductNumber** and **Version**. Each instance of an app type gets an **InstanceNumber** to uniquely identify the instance. By definition, each instance is associated with exactly one app type.
 
-ID := {Name}:{Version}
+App Types and App Instances both express these aforementioned fields combined in an ID string. This string must be placed in specific URL segments at the API. Thus the ID string must be an encoded value, preferably Base64URL encoding. For clients and frontends of the Transfer App the ID will just be a string and how the Transfer App handles the identifying components is an implementation detail clients don't need to know.
 
-For storage purposes the "{Name}:{Version}" string should be URL-encoded.
-
-To also provide uniqueness for App Templates, the version identifier should be differ accordingly. This is up to the creators of the apps, e.g.:
+Example for illustration:
 ```
-simple webserver:1.0.0
-simple webserver:1.0.0-tpl
+ManufacturerId: scale-it.org
+ProductNumber: 11300783512
+Version: 1.5.3
+InstanceNumber: 1
+
+Base64URL encoded and combined with '.':
+App Type ID: c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM
+App Instance ID: c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM.MQ
 ```
+
+Instead of Base64-URL also other encodings could be used and the parts could be combined with a different separation symbol. The client only needs to use the ID string as is and should not make assumptions about its precise implementation.
+
+*Note* that **URL-encoding** is discouraged for the ID since many software libraries and frameworks automatically decode it when encountering it at a REST endpoint thus easily leading to confusion and bugs. It is also problematic because it is more difficult to choose a suitable separation symbol for the ID parts. Internally in the Transfer App the URL-encoding may serve for file storage. Externally the URL encoded version may be used for export file names.
+
+In order to also allow URL encoding for specific purposes the ID parts **must not contain a space character** so that the space character can be used as separator without the need to keep this space character as is in a file system path.
 
 ## App Config
 
-Consists of Name, Version and Description. Frontend and Middlelayer entries may be added to access the frontend or server components of the app.
+Consists of identifying information and metadata. Frontend and Middlelayer entries may be added to access the frontend or server components of the app.
 
 Example for app components:
 ```
@@ -587,7 +604,7 @@ Middlelayer:
 Access:
 http://<server_url>:54180
 http://<server_url>:54280/cgi/ui
-https://<server_url>:54179
+https://<server_url>:54179/api
 ```
 
 ## Transfer Technology - Container System Module

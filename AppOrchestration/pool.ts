@@ -1,15 +1,15 @@
 import { Status } from "../StatusAndNotifications/Status";
-import { AppConfig } from "./app";
+import { AppType } from "./app";
 
 export interface PoolApp {
-    App: AppConfig;
+    App: AppType;
     Installed: boolean;
 }
 
 export interface Deployment {
     Id: string;
     Server: string;
-    App: AppConfig;
+    App: AppType;
 }
 
 export interface PoolServer {
