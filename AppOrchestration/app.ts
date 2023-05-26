@@ -227,3 +227,20 @@ export abstract class DeploymentCapabilityType extends AssetInfo {
     /** Designation of the type */
     Type: string;
 }
+
+/**
+ * Configuration for a deployment
+ */
+export interface DeploymentConfiguration {
+    /** Variable replacements */
+    [Variable: string]: string | number | boolean;
+}
+
+/**
+ * Configuration variable encountered in a template
+ */
+export interface DeploymentVariable {
+    Name: string;
+    ValueType: "string" | "number" | "boolean";
+    DefaultValue?: string | number | boolean;
+}

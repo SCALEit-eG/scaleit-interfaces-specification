@@ -6,15 +6,14 @@ Interfaces for services that can deploy and orchestrate apps.
 1. [Transfer Technology](#transfer-technology)
 2. [Transfer Technology - Files API](#transfer-technology---files-api)
 3. [Transfer Technology - Templates](#transfer-technology---templates)
-4. [App Instance](#app-instance)
-5. [App Template](#app-template)
-6. [App ID](#app-id)
-7. [App Config](#app-config)
-8. [Transfer Technology - Container System Module](#transfer-technology---container-system-module)
-9. [Transfer App v2.2.2-inst-dev](#transfer-app-v222-inst-dev)
-10. [App Pool](#app-pool)
-11. [App Pool - Store Side](#app-pool---store-side)
-12. [App Pool - Transfer Side](#app-pool---transfer-side)
+4. [Apps](#apps)
+5. [App ID](#app-id)
+6. [App Config](#app-config)
+7. [Transfer Technology - Container System Module](#transfer-technology---container-system-module)
+8. [Transfer App v2.2.2-inst-dev](#transfer-app-v222-inst-dev)
+9. [App Pool](#app-pool)
+10. [App Pool - Store Side](#app-pool---store-side)
+11. [App Pool - Transfer Side](#app-pool---transfer-side)
 
 # Transfer Technology
 
@@ -127,9 +126,9 @@ Route parameters:
 - id: app type id
 
 Response codes:
-- 200 OK: app instance found
+- 200 OK: app type found
 - 400 Bad Request: app id not given
-- 404 Not Found: app instance not found
+- 404 Not Found: app type not found
 
 Response headers:
 - Content-Type: application/json
@@ -141,6 +140,20 @@ Example:
 ```
 GET /api/1/transfer/apps/c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM
 ```
+
+### GET /transfer/apps/{id}/instances
+Retrieve the list of deployed instances of the given app type.
+
+Response codes:
+- 200 OK: instances are available
+- 204 No Content: there is currently no deployed instance for the app type
+- 404 Not Found: app type not found
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- AppInstance[]
 
 ### GET /transfer/apps/{id}/icon
 Download the app's icon if available.
@@ -227,13 +240,74 @@ DELETE /api/1/transfer/apps/c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM?force=true&
 ```
 
 ### POST /transfer/apps/{id}/deploy
+Deploys a new instance for an available app type.
+
+Route parameters:
+- id: app type id
+
+Request body:
+- DeploymentConfiguration
+
+Response codes:
+- 200 OK: new instance deployed
+- 400 Bad Request: invalid deployment configuration
+- 404 Not Found: app type not found
+- 409 Conflict
+    - incompatible deployment configuration detected
+
+Response body:
+- ProblemDetails on error
+
+Response headers:
+- Location, if successfully deployed
+    - URL to new instance
+
+### GET /transfer/apps/{id}/templatevariables
+Retrieves the list of template variables defined for the app type.
+
+Route parameters:
+- id: app type id
+
+Response codes:
+- 200 OK: template variables available
+- 204 No Content: no variables defined in template
+- 404 Not Found: app type not found
+
+Response body:
+- DeploymentVariable[]
 
 ### GET /transfer/instances
+Retrieve the list of currently available app instances on the server.
+
+Response codes:
+- 200 OK: apps are available
+- 204 No Content: there is currently no deployed instance
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- AppInstance[]
 
 ### GET /transfer/instances/{id}
+Get the information details of a single app instance.
 
-### PUT /transfer/apps/{id}/start
-Start an app instance. As this process may take some time, it is recommended to use the Websocket **/events/transfer/apps/{id}/start** endpoint instead.
+Route parameters:
+- id: app instance id
+
+Response codes:
+- 200 OK: app instance found
+- 400 Bad Request: app id not given
+- 404 Not Found: app instance not found
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- AppInstance
+
+### PUT /transfer/instances/{id}/start
+Start an app instance. As this process may take some time, it is recommended to use the Websocket **/events/transfer/instances/{id}/start** endpoint instead.
 
 Route parameters:
 - id: app instance id
@@ -242,7 +316,7 @@ Response codes:
 - 200 OK: App instance found
 - 400 Bad Request:
     - app id not given
-    - app is busy
+    - instance is busy
     - no valid license
 - 404 Not Found: app instance not found
 
@@ -254,10 +328,10 @@ Response body:
 
 Example:
 ```
-PUT /api/1/transfer/apps/c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM/start
+PUT /api/1/transfer/instances/c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM/start
 ```
 
-### PUT /transfer/apps/{id}/stop?{query}
+### PUT /transfer/instances/{id}/stop?{query}
 Stop an app instance and if requested remove volumes.
 
 Route parameters:
@@ -273,7 +347,7 @@ Response codes:
 - 200 OK: app instance found
 - 400 Bad Request
     - app id not given
-    - app is busy
+    - instance is busy
 - 404 Not Found: app instance not found
 - 409 Conflict:
     - app image still needed if remove_images=true
@@ -286,10 +360,10 @@ Response body:
 
 Example:
 ```
-PUT /api/1/transfer/apps/ScaleIT%20node-red%3A2.2.2/stop?remove_volumes=true
+PUT /api/1/transfer/instances/ScaleIT%20node-red%3A2.2.2/stop?remove_volumes=true
 ```
 
-### GET /transfer/apps/{id}/logs?{query}
+### GET /transfer/instances/{id}/logs?{query}
 Retrieve the logs of a running app.
 
 Route parameters:
@@ -313,11 +387,31 @@ Response body:
 
 Example:
 ```
-GET /api/1/transfer/apps/simple%20webserver%3A1.0.0-dbg/logs?lines=30
+GET /api/1/transfer/instances/simple%20webserver%3A1.0.0-dbg/logs?lines=30
 ```
 
-### PUT /transfer/refresh/apps
-Refreshes the status information of all apps, whereby the status updates are sent asynchronously via SSE and the operation is only done if there is no refresh scheduled already.
+### PUT /transfer/instances/{id}/update?{query}
+Update an app instance. As this process may take some time, it is recommended to use the Websocket **/events/transfer/instances/{id}/update** endpoint instead.
+
+Route parameters:
+- id: app instance id
+
+Response codes:
+- 200 OK: App instance found
+- 400 Bad Request:
+    - app id not given
+    - instance is busy
+    - no valid license
+- 404 Not Found: app instance not found
+
+Response headers:
+- Content-Type: application/json
+
+Response body:
+- TransferProgress[]
+
+### PUT /transfer/refresh/instances
+Refreshes the status information of all instances, whereby the status updates are sent asynchronously via SSE and the operation is only done if there is no refresh scheduled already.
 
 Response codes:
 - 202 Accepted: refresh will be performed
@@ -325,11 +419,11 @@ Response codes:
 
 Example:
 ```
-PUT /api/1/transfer/refresh/apps
+PUT /api/1/transfer/refresh/instances
 ```
 
-### GET /transfer/refresh/apps
-Returns if the transfer app is currently busy refreshing the status of all apps or not.
+### GET /transfer/refresh/instances
+Returns if the transfer app is currently busy refreshing the status of all instances or not.
 
 Response codes:
 - 200 OK: always
@@ -342,10 +436,10 @@ Response body:
 
 Example:
 ```
-GET /api/1/transfer/refresh/apps
+GET /api/1/transfer/refresh/instances
 ```
 
-### PUT /transfer/apps/{id}/refresh
+### PUT /transfer/instances/{id}/refresh
 Refreshes an existing app, if it is not already scheduled.
 
 Route parameters:
@@ -364,10 +458,10 @@ Response body:
 
 Example:
 ```
-PUT /api/1/transfer/apps/simple%20webserver%3A1.0.0-dbg/refresh
+PUT /api/1/transfer/instances/simple%20webserver%3A1.0.0-dbg/refresh
 ```
 
-### GET /transfer/recognize/apps
+### GET /transfer/recognize/projects
 Recognize all containerized projects that run on the system.
 
 Response codes:
@@ -400,7 +494,7 @@ Message protocol:
         - Potentially announces a series of steps that follow immediately
         - The group is active until another "ANNOUNCEMENT" step occurs
 
-### Websockets /events/transfer/apps/{id}/start
+### Websockets /events/transfer/instances/{id}/start
 Starts an available app and provides incremental feedback.
 
 Route parameters:
@@ -412,6 +506,20 @@ Message protocol:
     - Value: "{some_id}"
 2. Receive step wise progress information
     - Each message has type TransferProgress
+
+### Websockets /events/transfer/instances/{id}/update?{query}
+Updates the specified instance to the requested version and provides incremental feedback.
+
+Route parameters:
+- id: app instance id
+
+Query parameters:
+- version: string
+    - Version to which to update to
+    - Specified version must be available
+
+Message protocol:
+- Same as **/events/transfer/instances/{id}/start**
 
 
 ### SSE /api/events

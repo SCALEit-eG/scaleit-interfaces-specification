@@ -1,0 +1,29 @@
+services:
+  ui:
+    image: nginx:1.21
+    ports:
+      - "${FE_PORT=8080}:80"
+  app:
+    image: api-server:1.0.0
+    ports:
+      - "54000:54000"
+    environment:
+      - Mode=${MODE=Basic}
+      - Eventing=true
+      - Database_Host=dbserver
+      - Database_Port=7120
+    volumes:
+      - config-data:/app/config
+  db:
+    image: dbserver:7.4
+    ports:
+      - "54010:7120"
+    environment:
+      - DB_PORT=7120
+      - DB_USER=root
+      - DB_PW=${DBPW=123456}
+    volumes:
+      - db-data:/var/db
+volumes:
+  - config-data: {}
+  - db-data: {}
