@@ -20,7 +20,7 @@ Interfaces for services that can deploy and orchestrate apps.
 ## Main Transfer API
 These endpoints are specific to the transfer app that is build around Docker-Compose.
 
-### POST /transfer/import
+### POST /api/{api-version}/transfer/import
 Import an app type as ZIP archive. The Websocket endpoint **/events/transfer/import** should be preferred as it provides incremental feedback for this import process that may take a while.
 
 Request headers:
@@ -45,7 +45,7 @@ Content-Disposition: form-data; name="app"; filename="BashMessagePrinter.zip"
 ----------------------------854348040641744448699751--
 ```
 
-### GET /transfer/export/{id}?{query}
+### GET /api/{api-version}/transfer/export/{id}?{query}
 Export a specific app type as ZIP archive.
 
 Route parameters:
@@ -71,7 +71,7 @@ Example:
 GET /api/1/transfer/export/ScaleIT%20node-red%3A2.2.2?with_images=true
 ```
 
-### GET /transfer/apps
+### GET /api/{api-version}/transfer/apps
 Retrieve the list of currently available app types on the server.
 
 Response codes:
@@ -119,7 +119,7 @@ GET /api/1/transfer/apps
 ]
 ```
 
-### GET /transfer/apps/{id}
+### GET /api/{api-version}/transfer/apps/{id}
 Get the information details of a single app type.
 
 Route parameters:
@@ -141,7 +141,7 @@ Example:
 GET /api/1/transfer/apps/c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM
 ```
 
-### GET /transfer/apps/{id}/instances
+### GET /api/{api-version}/transfer/apps/{id}/instances
 Retrieve the list of deployed instances of the given app type.
 
 Response codes:
@@ -155,7 +155,7 @@ Response headers:
 Response body:
 - AppInstance[]
 
-### GET /transfer/apps/{id}/icon
+### GET /api/{api-version}/transfer/apps/{id}/icon
 Download the app's icon if available.
 
 Route parameters:
@@ -180,7 +180,7 @@ Example:
 GET /api/1/transfer/apps/c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM/icon
 ```
 
-### GET /transfer/apps/{id}/readme
+### GET /api/{api-version}/transfer/apps/{id}/readme
 Download the app's readme if available.
 
 Route parameters:
@@ -208,7 +208,7 @@ Example:
 GET /api/1/transfer/apps/c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM/readme
 ```
 
-### DELETE /transfer/apps/{id}?{query}
+### DELETE /api/{api-version}/transfer/apps/{id}?{query}
 Delete an app type and if forced and necessary stop all instances and delete them as well.
 
 Route parameters:
@@ -239,7 +239,7 @@ Example:
 DELETE /api/1/transfer/apps/c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM?force=true&remove_images=false
 ```
 
-### POST /transfer/apps/{id}/deploy
+### POST /api/{api-version}/transfer/apps/{id}/deploy
 Deploys a new instance for an available app type.
 
 Route parameters:
@@ -262,7 +262,7 @@ Response headers:
 - Location, if successfully deployed
     - URL to new instance
 
-### GET /transfer/apps/{id}/templatevariables
+### GET /api/{api-version}/transfer/apps/{id}/templatevariables
 Retrieves the list of template variables defined for the app type.
 
 Route parameters:
@@ -276,7 +276,7 @@ Response codes:
 Response body:
 - DeploymentVariable[]
 
-### GET /transfer/instances
+### GET /api/{api-version}/transfer/instances
 Retrieve the list of currently available app instances on the server.
 
 Response codes:
@@ -289,7 +289,7 @@ Response headers:
 Response body:
 - AppInstance[]
 
-### GET /transfer/instances/{id}
+### GET /api/{api-version}/transfer/instances/{id}
 Get the information details of a single app instance.
 
 Route parameters:
@@ -306,7 +306,7 @@ Response headers:
 Response body:
 - AppInstance
 
-### PUT /transfer/instances/{id}/start
+### PUT /api/{api-version}/transfer/instances/{id}/start
 Start an app instance. As this process may take some time, it is recommended to use the Websocket **/events/transfer/instances/{id}/start** endpoint instead.
 
 Route parameters:
@@ -331,7 +331,7 @@ Example:
 PUT /api/1/transfer/instances/c2NhbGUtaXQub3Jn.MTEzMDA3ODM1MTI.MS41LjM/start
 ```
 
-### PUT /transfer/instances/{id}/stop?{query}
+### PUT /api/{api-version}/transfer/instances/{id}/stop?{query}
 Stop an app instance and if requested remove volumes.
 
 Route parameters:
@@ -363,7 +363,7 @@ Example:
 PUT /api/1/transfer/instances/ScaleIT%20node-red%3A2.2.2/stop?remove_volumes=true
 ```
 
-### GET /transfer/instances/{id}/logs?{query}
+### GET /api/{api-version}/transfer/instances/{id}/logs?{query}
 Retrieve the logs of a running app.
 
 Route parameters:
@@ -390,7 +390,7 @@ Example:
 GET /api/1/transfer/instances/simple%20webserver%3A1.0.0-dbg/logs?lines=30
 ```
 
-### PUT /transfer/instances/{id}/update?{query}
+### PUT /api/{api-version}/transfer/instances/{id}/update?{query}
 Update an app instance. As this process may take some time, it is recommended to use the Websocket **/events/transfer/instances/{id}/update** endpoint instead.
 
 Route parameters:
@@ -410,7 +410,7 @@ Response headers:
 Response body:
 - TransferProgress[]
 
-### PUT /transfer/refresh/instances
+### PUT /api/{api-version}/transfer/refresh/instances
 Refreshes the status information of all instances, whereby the status updates are sent asynchronously via SSE and the operation is only done if there is no refresh scheduled already.
 
 Response codes:
@@ -422,7 +422,7 @@ Example:
 PUT /api/1/transfer/refresh/instances
 ```
 
-### GET /transfer/refresh/instances
+### GET /api/{api-version}/transfer/refresh/instances
 Returns if the transfer app is currently busy refreshing the status of all instances or not.
 
 Response codes:
@@ -439,7 +439,7 @@ Example:
 GET /api/1/transfer/refresh/instances
 ```
 
-### PUT /transfer/instances/{id}/refresh
+### PUT /api/{api-version}/transfer/instances/{id}/refresh
 Refreshes an existing app, if it is not already scheduled.
 
 Route parameters:
@@ -461,7 +461,7 @@ Example:
 PUT /api/1/transfer/instances/simple%20webserver%3A1.0.0-dbg/refresh
 ```
 
-### GET /transfer/recognize/projects
+### GET /api/{api-version}/transfer/recognize/projects
 Recognize all containerized projects that run on the system.
 
 Response codes:
@@ -507,7 +507,7 @@ Message protocol:
 2. Receive step wise progress information
     - Each message has type TransferProgress
 
-### Websockets /events/transfer/instances/{id}/update?{query}
+### Websockets /api/{api-version}/events/transfer/instances/{id}/update?{query}
 Updates the specified instance to the requested version and provides incremental feedback.
 
 Route parameters:
@@ -519,10 +519,10 @@ Query parameters:
     - Specified version must be available
 
 Message protocol:
-- Same as **/events/transfer/instances/{id}/start**
+- Same as **/api/{api-version}/events/transfer/instances/{id}/start**
 
 
-### SSE /api/events
+### SSE /api/{api-version}/events
 Uses this general interface and extends it with the following event channels:
 - App
     - data: AppInstance
@@ -539,7 +539,7 @@ Uses this general interface and extends it with the following event channels:
 
 Note: Older versions may use **/events**.
 
-### PUT /api/cancel/{id}
+### PUT /api/{api-version}/cancel/{id}
 Cancel the task identified by the given ID. Applies to all operations that return a cancel id.
 
 Route parameters:
@@ -554,7 +554,7 @@ Response codes:
 ## Transfer Technology - Files API
 Some specifics about the implementation of the files api is described below. For more information see the Resource-Management category.
 
-### GET /files?{}
+### GET /api/{api-version}/files?{}
 
 Query parameters:
 - category
@@ -583,7 +583,7 @@ GET /api/1/files?category=instances
 ]
 ```
 
-### GET /files/{id}?{}
+### GET /api/{api-version}/files/{id}?{}
 
 If ID refers to an instance or template id then the file system of the ZIP file will be served.
 
@@ -718,7 +718,7 @@ https://<server_url>:54179/api
 ## Transfer Technology - Container System Module
 The subsequent endpoints define the system module of the transfer app that serves administrative purposes around Docker and Docker Compose. Data models returned will mostly reflect those from the Docker API.
 
-### GET /system/images
+### GET /api/{api-version}/system/images
 Retrieve the list of available container images.
 
 Response headers:
@@ -728,7 +728,7 @@ Response codes:
 - 200 OK: at least one image found
 - 204 No Content: no images available
 
-### GET /system/images/{id}
+### GET /api/{api-version}/system/images/{id}
 Get detailed information about a container image.
 
 Route parameters:
@@ -742,7 +742,7 @@ Response codes:
 - 200 OK: image found
 - 404 Not Found: image not found
 
-### POST /system/images
+### POST /api/{api-version}/system/images
 Upload a container image to the server to load it into the system.
 
 Request headers:
@@ -758,7 +758,7 @@ Response codes:
 - 201 Created: image successfully uploaded
 - 400 Bad Request: given data invalid
 
-### GET /system/images/{id}/export
+### GET /api/{api-version}/system/images/{id}/export
 Download the serialized container image.
 
 Route parameters:
@@ -772,7 +772,7 @@ Response codes:
 - 200 OK: image found
 - 404 Not Found: image not found
 
-### DELETE /system/images/{id}?{query}
+### DELETE /api/{api-version}/system/images/{id}?{query}
 Delete a container image from the system.
 
 Route parameters:
@@ -788,7 +788,7 @@ Response codes:
 - 400 Bad Request: image could not be deleted probably because it is still in use
 - 404 Not Found: image not found
 
-### DELETE /system/prune/images?{query}
+### DELETE /api/{api-version}/system/prune/images?{query}
 Delete all unused images and return their IDs.
 
 Query parameters:
@@ -805,7 +805,7 @@ Response codes:
 - 200 OK: at least one image removed
 - 304 Not Modified: no image removed
 
-### GET /system/containers
+### GET /api/{api-version}/system/containers
 Retrieve the list of all containers in the system.
 
 Response headers:
@@ -815,7 +815,7 @@ Response codes:
 - 200 OK: some containers available
 - 204 No Content: no container available
 
-### GET /system/containers/{id}
+### GET /api/{api-version}/system/containers/{id}
 Get detailed information about a specific container.
 
 Route parameters:
@@ -829,7 +829,7 @@ Response codes:
 - 200 OK: container found
 - 404 Not Found: container not found
 
-### PUT /system/containers/{id}/start
+### PUT /api/{api-version}/system/containers/{id}/start
 Start a particular container.
 
 Route parameters:
@@ -841,7 +841,7 @@ Response codes:
 - 304 Not Modified: no effect
 - 404 Not Found: container not found
 
-### PUT /system/containers/{id}/stop
+### PUT /api/{api-version}/system/containers/{id}/stop
 Stop a particular container.
 
 Route parameters:
@@ -853,7 +853,7 @@ Response codes:
 - 304 Not Modified: no effect
 - 404 Not Found: container not found
 
-### PUT /system/containers/{id}/restart
+### PUT /api/{api-version}/system/containers/{id}/restart
 Restart a particular container.
 
 Route parameters:
@@ -865,7 +865,7 @@ Response codes:
 - 304 Not Modified: no effect
 - 404 Not Found: container not found
 
-### DELETE /system/containers/{id}?{query}
+### DELETE /api/{api-version}/system/containers/{id}?{query}
 Remove a container from the system.
 
 Route parameters:
@@ -882,7 +882,7 @@ Response codes:
 - 200 OK: container found and removed
 - 404 Not Found: container not found
 
-### DELETE /system/prune/containers?{query}
+### DELETE /api/{api-version}/system/prune/containers?{query}
 Remove all stopped containers and return their IDs.
 
 Query parameters:
@@ -899,7 +899,7 @@ Response codes:
 - 200 OK: some containers removed
 - 304 Not Modified: no container removed
 
-### GET /system/volumes
+### GET /api/{api-version}/system/volumes
 List all container volumes in the system.
 
 Response headers:
@@ -909,7 +909,7 @@ Response codes:
 - 200 OK: some volumes available
 - 204 No Content: no volumes available
 
-### GET /system/volumes/{name}
+### GET /api/{api-version}/system/volumes/{name}
 Get detailed information about a particular volume.
 
 Route parameters:
@@ -923,7 +923,7 @@ Response codes:
 - 200 OK: volume found
 - 404 Not Found: volume not found
 
-### DELETE /system/volumes/{name}?{query}
+### DELETE /api/{api-version}/system/volumes/{name}?{query}
 Delete a particular volume from the system.
 
 Route parameters:
@@ -939,7 +939,7 @@ Response codes:
 - 400 Bad Request: Volume could not be removed
 - 404 Not Found: Volume not found
 
-### DELETE /system/prune/volumes
+### DELETE /api/{api-version}/system/prune/volumes
 Remove all unused volumes and return their IDs.
 
 Response headers:
@@ -952,13 +952,13 @@ Response codes:
 - 200 OK: some volumes removed
 - 304 Not Modified: no volume removed
 
-### Websockets /events/system/loadimage
-Allows to incrementally upload individual Docker images that are then uploaded to the configured Docker daemon. Works just like **Websockets /events/transfer/import** but with much fewer reported steps at the end. The docker image should be in the TAR format that **docker save** put out.
+### Websockets /api/{api-version}/events/system/loadimage
+Allows to incrementally upload individual Docker images that are then uploaded to the configured Docker daemon. Works just like **Websockets /api/{api-version}/events/transfer/import** but with much fewer reported steps at the end. The docker image should be in the TAR format that **docker save** put out.
 
 ## Transfer App v3.1
 Some version specific interfaces that are removed for 4.x.
 
-### GET /devicename
+### GET /api/{api-version}/devicename
 Returns the current device name if set.
 
 Response codes:
@@ -978,7 +978,7 @@ GET /api/1/devicename
 "IoT Gateway Server 10:5-dev"
 ```
 
-### PUT /devicename?{query}
+### PUT /api/{api-version}/devicename?{query}
 Sets the device name of the server.
 
 Query parameters:
@@ -994,7 +994,7 @@ Example:
 PUT /api/1/devicename?name=IoT%20Gateway%20Server%2010%3A5-dev
 ```
 
-### GET /transfer/recognize/apps
+### GET /api/{api-version}/transfer/recognize/apps
 Investigates the Docker containers of the server and recognizes apps according to naming conventions.
 
 Response codes:
@@ -1015,8 +1015,8 @@ GET /api/1/transfer/recognize
 ## Transfer App v2.2.2-inst-dev
 Important interfaces of this version documented to interact with the older API that was in use. For information about further interfaces the app itself must be investigated or the Swagger documentation opened.
 
-### POST /api/transfer/import
-Uploads / imports an app instance as ZIP archive without incremental feedback. Prefer the websocket endpoint **/events/import** instead.
+### POST /api/{api-version}/transfer/import
+Uploads / imports an app instance as ZIP archive without incremental feedback. Prefer the websocket endpoint **/api/{api-version}/events/import** instead.
 
 Request headers:
 - Content-Type: multipart/form-data
@@ -1030,7 +1030,7 @@ Response codes:
 
 Example:
 ```
-POST /api/transfer/import
+POST /api/1.0.0/transfer/import
 Content-Type: multipart/form-data; boundary=--------------------------854348040641744448699751
 Content-Length: 25828282
  
@@ -1040,7 +1040,7 @@ Content-Disposition: form-data; name="app"; filename="BashMessagePrinter.zip"
 ----------------------------854348040641744448699751--
 ```
 
-### GET /api/transfer/apps
+### GET /api/{api-version}/transfer/apps
 Retrieves the list of all currently available apps.
 
 Response codes:
@@ -1055,7 +1055,7 @@ Response body:
 
 Example:
 ```
-GET /api/transfer/apps
+GET /api/1.0.0/transfer/apps
 
 [
     {
@@ -1081,7 +1081,7 @@ GET /api/transfer/apps
 ]
 ```
 
-### PUT /api/compose/start?{query}
+### PUT /api/{api-version}/compose/start?{query}
 Starts an app that is available. May take a while that is why the corresponding websocket endpoint should be prefered **/events/start**.
 
 Query parameters:
@@ -1103,7 +1103,7 @@ Response body:
 
 Example:
 ```
-PUT /api/compose/start?name=Simple%20Webserver&version=1.0.0
+PUT /api/1.0.0/compose/start?name=Simple%20Webserver&version=1.0.0
 
 {
     "RunningContainers": [
@@ -1138,7 +1138,7 @@ PUT /api/compose/start?name=Simple%20Webserver&version=1.0.0
 }
 ```
 
-### PUT /api/compose/stop?{query}
+### PUT /api/{api-version}/compose/stop?{query}
 Stops an available app.
 
 Query parameters:
@@ -1160,7 +1160,7 @@ Response body:
 
 Example:
 ```
-PUT /api/compose/stop?name=Simple%20Webserver&version=1.0.0
+PUT /api/1.0.0/compose/stop?name=Simple%20Webserver&version=1.0.0
 
 {
     "ExitCode": 0,
@@ -1203,7 +1203,7 @@ PUT /api/compose/stop?name=Simple%20Webserver&version=1.0.0
 }
 ```
 
-### Websockets /events/import
+### Websockets /api/{api-version}/events/import
 Imports an app as ZIP archive and provides incremental feedback.
 
 Message protocol:
@@ -1222,7 +1222,7 @@ Message protocol:
 
 Example:
 ```
-ws://<server_address>/events/import
+ws://<server_address>/api/1.0.0/events/import
 
 Receive: {"Name":"CancelID","Value":"c3818cd7-888c-4923-8bfc-61efe7e6eca1"}
 Send: {"Name":"Length","Value":51893840}
@@ -1249,7 +1249,7 @@ Receive: {"StepType":"STORE_INSTANCE","Success":true,"Required":true,"Subject":"
 Receive: {"StepType":"ANNOUNCEMENT","Success":true,"Required":false,"Subject":"Import","Message":"Successfully imported App Instance Simple Webserver:1.0.0","Details":"Simple Webserver:1.0.0"}
 ```
 
-### Websockets /events/start?{query}
+### Websockets /api/{api-version}/events/start?{query}
 Starts an available app and provides incremental feedback.
 
 Query parameters:
@@ -1267,7 +1267,7 @@ Message protocol:
 
 Example:
 ```
-ws://<server_address>/events/start?name=Simple+Webserver&version=1.0.0
+ws://<server_address>/api/1.0.0/events/start?name=Simple+Webserver&version=1.0.0
 
 Receive: {"Name":"CancelID","Value":"ce80f2af-dbae-47f0-920b-7bca9725809b"}
 Receive: {"StepType":"ANNOUNCEMENT","Success":true,"Required":true,"Message":"Starting App instance Simple Webserver:1.0.0"}
@@ -1277,14 +1277,14 @@ Receive: {"StepType":"ANNOUNCEMENT","Success":true,"Required":false,"Message":"S
 Receive: {"StepType":"PROCESS_PROGRESS","Success":true,"Required":false,"ProcessResult":<DockerComposeUpResult>,"Message":"Process result of docker-compose up"}
 ```
 
-### Websockets /events/system/loadimage
-Allows to incrementally upload individual Docker images that are then uploaded to the configured Docker daemon. Works just like **Websockets /events/import** but with much fewer reported steps at the end. The docker image should be in the TAR format that **docker save** put out.
+### Websockets /api/{api-version}/events/system/loadimage
+Allows to incrementally upload individual Docker images that are then uploaded to the configured Docker daemon. Works just like **Websockets /api/{api-version}/events/import** but with much fewer reported steps at the end. The docker image should be in the TAR format that **docker save** put out.
 
 # App Pool
 
 ## App Pool - Store Side
 
-### GET /pool/apps
+### GET /api/{api-version}/pool/apps
 List all apps along with their versions that are installed in the app pool and also
 those that are globally available and not installed.
 
@@ -1295,21 +1295,21 @@ Response codes:
 - 200 OK: some apps available
 - 204 No Content: no apps available
 
-### PUT /pool/apps/{id}
+### PUT /api/{api-version}/pool/apps/{id}
 Install A specific app version on the pool.
 
-### DELETE /pool/apps/{id}
+### DELETE /api/{api-version}/pool/apps/{id}
 Uninstall, i.e. remove, an app version from the pool.
 
-### PUT /pool/refresh
+### PUT /api/{api-version}/pool/refresh
 Refresh metadata of all globally available apps.
 
-### PUT /pool/clear
+### PUT /api/{api-version}/pool/clear
 Completely clear all data available in the app pool.
 
 ## App Pool - Transfer Side
 
-### GET /servers
+### GET /api/{api-version}/servers
 Get all registered servers of the pool.
 
 Response body:
@@ -1319,29 +1319,29 @@ Response codes:
 - 200 OK: servers available
 - 204 No Content: no server available
 
-### POST /servers
+### POST /api/{api-version}/servers
 Register a new server on the pool.
 
-### DELETE /servers/{id}
+### DELETE /api/{api-version}/servers/{id}
 Delete a server from the pool.
 
-### GET /deployments
+### GET /api/{api-version}/deployments
 Query all available deployments.
 
 Response body:
 - 200 OK: deployments available
 - 204 No Content: no deployments available
 
-### POST /deployments
+### POST /api/{api-version}/deployments
 Deploy a specific app version to a server.
 
-### DELETE /deployments/{id}
+### DELETE /api/{api-version}/deployments/{id}
 Uninstall an app deployment from a server and if necessary stop it before.
 
-### PUT /deployments/{id}/start
+### PUT /api/{api-version}/deployments/{id}/start
 Start a deployed app.
 
-### PUT /deployments/{id}/stop
+### PUT /api/{api-version}/deployments/{id}/stop
 Stop a deployed app.
 
 ## App Pool Configuration

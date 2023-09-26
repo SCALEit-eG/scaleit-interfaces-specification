@@ -158,7 +158,7 @@ GET /apidoc/1.2/swagger.json
 
 ## Events
 
-### SSE /events
+### SSE /api/{api-version}/events
 Server-sent events endpoint that allows asynchronous communication from the server to the client. Refer to the following references for details:
 - https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events
 - https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
@@ -197,7 +197,7 @@ Response headers:
 - Connection: keep-alive
 - Cache-Control: no-cache
 
-### Websockets /events
+### Websockets /api/{api-version}/events
 Websocket endpoint that does the same as the corresponding SSE endpoint, namely sending messages for different types of events.
 
 Protocol:
@@ -211,7 +211,7 @@ Protocol:
 
 A process hereby refers to an identifiable procedure or task that takes place in an app.
 
-### PUT /cancel/{id}
+### PUT /api/{api-version}/cancel/{id}
 Cancel the task identified by the given ID.
 
 Route parameters:
@@ -224,7 +224,7 @@ Response codes:
 
 Example:
 ```
-PUT /api/cancel/c80c63d8-764d-4e37-94bc-7f3baffeed8d
+PUT /api/1.0.0/cancel/c80c63d8-764d-4e37-94bc-7f3baffeed8d
 ```
 
 ## Configuration
@@ -233,7 +233,7 @@ Interfaces for settings and configuration
 
 - Settings are a simple key value mechanism for configuration
 
-### GET /settings
+### GET /api/{api-version}/settings
 Retrieves the currently active settings.
 
 Response headers:
@@ -246,7 +246,7 @@ Response codes:
 Response body:
 - object with strings as keys and any possible types as values
 
-### PUT /settings
+### PUT /api/{api-version}/settings
 Changes the settings or configuration respectively.
 
 Request headers:

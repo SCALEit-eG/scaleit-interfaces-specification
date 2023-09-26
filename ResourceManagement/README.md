@@ -23,7 +23,7 @@ The ID should be the URL encoded path to the entry. For the root entry the leadi
         - Actual folder structure may change or should not be known
         - Files may be automatically generated e.g. configuration stored in database is served as JSON file, HTML template is generated or docker image is exported via docker save
 
-### GET /files?{}
+### GET /api/{api-version}/files?{}
 Retrieves the filesystem of the app with filter possibilities.
 
 Query parameters:
@@ -56,7 +56,7 @@ GET /api/1.0.0/files?category=licenses
 returns a list with all license files
 ```
 
-### GET /filecategories
+### GET /api/{api-version}/filecategories
 Returns a list of available file categories.
 
 Response codes:
@@ -74,7 +74,7 @@ Examples:
 GET /api/1.0.0/filecategories
 ```
 
-### GET /files/{id}?{}
+### GET /api/{api-version}/files/{id}?{}
 Download a specific file or folder structure
 
 Route parameters:
@@ -110,7 +110,7 @@ GET /api/1.0.0/files/path%2Fto%2Ffolder?compress=zip
 returns a ZIP archive for "/path/to/folder" directory
 ```
 
-### GET /files/{id}/info
+### GET /api/{api-version}/files/{id}/info
 Get the metadata for the filesystem entry including the root directory represented by "/" which resolves to "%2F".
 
 Route parameters:
@@ -134,7 +134,7 @@ GET /api/1.0.0/files/%2F/info
 gives metadata about the root directory
 ```
 
-### POST /files/{id}?{}
+### POST /api/{api-version}/files/{id}?{}
 Upload a file to a specific folder or create a folder
 
 Route parameters:
@@ -186,7 +186,7 @@ POST /api/1.0.0/files/graphics?mkdir=icons
 Creates the folder icons/ in the folder graphics/
 ```
 
-### PUT /files/{id}?{}
+### PUT /api/{api-version}/files/{id}?{}
 Replace a file, rename a file or directory or move an entry.
 
 Route parameters:
@@ -233,7 +233,7 @@ Content-Type: text/plain
 replaces (changes) backend.json with new content
 ```
 
-### DELETE /files/{id}
+### DELETE /api/{api-version}/files/{id}
 Delete a file system entry.
 
 Route parameters:
@@ -279,7 +279,7 @@ Y29uZmlnLyVjdXN0b20lIGNvbmZpZz8uanNvbg==
 
 - Information about an OS, software stack and hardware information
 
-### GET /systeminfo
+### GET /api/{api-version}/systeminfo
 Retrieve basic hardware and software information about the device / system of interest.
 
 Response codes:
@@ -292,7 +292,7 @@ Response body:
 - SysInfo
 
 
-### GET /systeminfo/processes
+### GET /api/{api-version}/systeminfo/processes
 Retrieve information about running processes in the system.
 
 Response codes:

@@ -8,7 +8,7 @@ Each app needs to be uniquely identified. The combination of name and version is
 
 ## REST Endpoints
 
-### GET /apps
+### GET /api/{api-version}/apps
 Retrieve the list of all available apps.
 
 Response codes:
@@ -26,7 +26,7 @@ Example:
 GET /api/1.0.0/apps
 ```
 
-### POST /apps
+### POST /api/{api-version}/apps
 Register an app.
 
 Request headers:
@@ -58,7 +58,7 @@ POST /api/1.0.0/apps
 }
 ```
 
-### GET /apps/{id}
+### GET /api/{api-version}/apps/{id}
 Retrieve information about an existing app.
 
 Route parameters:
@@ -79,7 +79,7 @@ Example:
 GET /api/1.0.0/apps/abcdef123456
 ```
 
-### PUT /apps/{id}
+### PUT /api/{api-version}/apps/{id}
 Add or update information about an app. All null values will reset the specific attributes. But only optional attributes may be reset.
 
 Route parameters:
@@ -115,7 +115,7 @@ PUT /api/1.0.0/apps/abcdef123456
 }
 ```
 
-### DELETE /apps/{id}
+### DELETE /api/{api-version}/apps/{id}
 Deregister an existing app, deleting it from the services management.
 
 Route parameters:
@@ -130,7 +130,7 @@ Example:
 DELETE /api/1.0.0/apps/abcdef123456
 ```
 
-### PUT /apps/{id}/icon
+### PUT /api/{api-version}/apps/{id}/icon
 Set an icon for the app that will take priority over the supplied URL. Usually this is used if no icon is available otherwise.
 
 Route parameters:
@@ -148,7 +148,7 @@ Response codes:
 - 400 Bad Request: unsupported image format
 - 404 Not Found: App ID not found
 
-### DELETE /apps/{id}/icon
+### DELETE /api/{api-version}/apps/{id}/icon
 Delete the uploaded icon.
 
 Note: *Unnecessary* because the icon URL may be reset in the update operation.

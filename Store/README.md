@@ -5,7 +5,7 @@
 
 ## App Store - Security
 
-### POST /login
+### POST /api/{api-version}/login
 Allows programmatic login with a client certificate and returns an access token on success. This access token can be used to gain access to restricted resources.
 
 Request headers:
@@ -27,7 +27,7 @@ Response headers:
 
 ## App Store - Licensing
 
-### GET /licenses
+### GET /api/{api-version}/licenses
 Get the list of all available licenses.
 
 Response codes:
@@ -40,7 +40,7 @@ Response headers:
 Response body:
 - LicenseSimpleInfo[]
 
-### GET /licenses/{id}
+### GET /api/{api-version}/licenses/{id}
 Get information about a specific license.
 
 Route parameters:
@@ -58,7 +58,7 @@ Response headers:
 Response body:
 - LicenseDto
 
-### GET /licenses/{id}/export
+### GET /api/{api-version}/licenses/{id}/export
 Download a specific license as a ZIP archive.
 
 Route parameters:
@@ -82,7 +82,7 @@ Response body:
 Response headers:
 - Content-Type: application/zip
 
-### POST /licenses
+### POST /api/{api-version}/licenses
 Create a new license issued by the current CA. The provided data must uniquely identify the order item through order number, shop Id and product number.
 
 Request body:
@@ -100,7 +100,7 @@ Response codes:
 Response headers:
 - Location: path to the newly created license
 
-### PUT /licenses
+### PUT /api/{api-version}/licenses
 Validate a license against the current CA.
 
 Request body:
@@ -121,7 +121,7 @@ Response body:
 Response headers:
 - Content-Type: application/json
 
-### DELETE /licenses/{id}
+### DELETE /api/{api-version}/licenses/{id}
 Delete a specific license.
 
 Response codes:
@@ -129,7 +129,7 @@ Response codes:
 - 400 Bad Request: invalid id
 - 404 Not Found: license not found
 
-### GET /ca
+### GET /api/{api-version}/ca
 Get information about the CA.
 
 Response codes:
@@ -142,7 +142,7 @@ Response body:
 Response headers:
 - Content-Type: application/json
 
-### GET /ca/export?{query}
+### GET /api/{api-version}/ca/export?{query}
 Download the CA certificate in a particular format or export it entirely.
 
 Query parameters:
@@ -163,7 +163,7 @@ Response headers:
     - application/octet-stream: if "crt" or "pfx"
     - application/zip: if "all"
 
-### POST /ca?{query}
+### POST /api/{api-version}/ca?{query}
 Create the CA of the store, i.e. the certificate authority to sign the licenses with.
 
 Query parameters:
@@ -178,7 +178,7 @@ Response codes:
 - 400 Bad Request: invalid data given or "days" parameter missing
 - 409 Conflict: there is an active CA already
 
-### DELETE /ca
+### DELETE /api/{api-version}/ca
 Delete the currently active CA.
 
 Response codes:
@@ -187,7 +187,7 @@ Response codes:
 
 ## App Store - Orders
 
-### GET /orders?{query}
+### GET /api/{api-version}/orders?{query}
 Retrieve the list of all stored orders.
 
 Query Parameters:
@@ -213,7 +213,7 @@ Response body:
 Response headers:
 - Content-Type: application/json
 
-### POST /orders
+### POST /api/{api-version}/orders
 Send a new order to the app store providing order information for one or more apps with chosen license terms.
 
 Request headers:
@@ -234,7 +234,7 @@ Response codes:
 Response headers:
 - Location: URL for created order
 
-### GET /orders/{id}
+### GET /api/{api-version}/orders/{id}
 Get information about a specific order.
 
 Route parameters:
@@ -257,7 +257,7 @@ Response body:
 Response headers:
 - Content-Type: application/json
 
-### PUT /orders/{orderno}
+### PUT /api/{api-version}/orders/{orderno}
 Update the status of an order. Typical use case is to update the payment status. The shop's identity is inferred from the provided credentials or authorization token respectively, in order to find the correct order entity.
 
 Route parameters:
@@ -284,7 +284,7 @@ Response body:
 Response headers:
 - Content-Type: application/json
 
-### DELETE /orders/{id}
+### DELETE /api/{api-version}/orders/{id}
 Remove an order from the app store.
 
 Route parameters:
@@ -298,7 +298,7 @@ Response codes:
 
 ## App Store - Devices
 
-### GET /devices?{query}
+### GET /api/{api-version}/devices?{query}
 Get all devices that are recorded in the store.
 
 Response codes:
@@ -312,7 +312,7 @@ Response body:
 Response headers:
 - Content-Type: application/json
 
-### POST /devices
+### POST /api/{api-version}/devices
 Record a new device in the store.
 
 Request headers:
@@ -334,7 +334,7 @@ Response body:
 - Success: status text
 - Error: ProblemDetails
 
-### GET /devices/{id}
+### GET /api/{api-version}/devices/{id}
 Get the information about a specific device. The Id of a device is the identifying part of the type of binding used.
 
 Route parameters:
@@ -348,7 +348,7 @@ Response codes:
 Response body:
 - DeviceAsset
 
-### PUT /devices/{id}
+### PUT /api/{api-version}/devices/{id}
 Change the information of a device by integrating the given asset data with the data available.
 
 Route parameters:
@@ -373,7 +373,7 @@ Response body:
 - Success: DeviceAsset
 - Error: ProblemDetails
 
-### DELETE /devices/{id}
+### DELETE /api/{api-version}/devices/{id}
 Remove a recorded device from the store.
 
 For route and query parameters see [GET /devices](#get-devicesid).
@@ -384,7 +384,7 @@ Response codes:
 
 ## App Store - Shops
 
-### GET /shops?{query}
+### GET /api/{api-version}/shops?{query}
 Get the list of currently registered shops.
 
 Query parameters:
@@ -401,7 +401,7 @@ Response body:
 Response headers:
 - Content-Type: application/json
 
-### POST /shops
+### POST /api/{api-version}/shops
 Register a new shop.
 
 Request body:
@@ -415,7 +415,7 @@ Response codes:
 Response headers:
 - Location: url of newly registered shop
 
-### GET /shops/{id}
+### GET /api/{api-version}/shops/{id}
 Get information about a specific shop.
 
 Route parameters:
@@ -430,7 +430,7 @@ Response codes:
 Response body:
 - Shop
 
-### PUT /shops
+### PUT /api/{api-version}/shops
 Change information about a registered shop. There is no id as route parameter necessary as the id is already contained in the entity and an id change is not possible here.
 The id change is not possible here because id changes should be done in a centralized manner updating all references of the entity accordingly.
 
@@ -450,7 +450,7 @@ Response codes:
 Response body:
 - Shop
 
-### DELETE /shops/{id}
+### DELETE /api/{api-version}/shops/{id}
 Deregister a particular shop from the store.
 
 Route parameters:
@@ -464,7 +464,7 @@ Response codes:
 
 ## App Store - Apps
 
-### GET /apps?{query}
+### GET /api/{api-version}/apps?{query}
 Get the list of available apps.
 
 Query Parameters:
@@ -485,7 +485,7 @@ Response body:
 Response headers:
 - Content-Type: application/json
 
-### POST /apps
+### POST /api/{api-version}/apps
 Add a new app to the store. Both initial metadata and app files need to be uploaded.
 
 Request headers:
@@ -515,7 +515,7 @@ Response body:
 - Success: link to new asset
 - Error: ProblemDetails
 
-### GET /apps/{id}
+### GET /api/{api-version}/apps/{id}
 Get information about a particular app given its unique Id.
 
 Route parameters:
@@ -532,7 +532,7 @@ Response body:
 Response headers:
 - Content-Type: application/json
 
-### GET /apps/{id}/export
+### GET /api/{api-version}/apps/{id}/export
 Download an app archive.
 
 Route parameters:
@@ -549,7 +549,7 @@ Response body:
 Response headers:
 - Content-Type: application/zip
 
-### PUT /apps/{id}
+### PUT /api/{api-version}/apps/{id}
 Change the configuration or the files of an app. The given information will be integrated into the existing data.
 
 Route parameters:
@@ -583,7 +583,7 @@ Response body:
 - Success: AppAsset
 - Error: ProblemDetails
 
-### DELETE /apps/{id}?{query}
+### DELETE /api/{api-version}/apps/{id}?{query}
 Delete an app from the store.
 
 Route parameters:

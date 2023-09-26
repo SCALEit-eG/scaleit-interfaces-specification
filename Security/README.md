@@ -22,7 +22,7 @@
 
 - Support needed for person and non-person identities
 
-### GET /identity
+### GET /api/{api-version}/identity
 Retrieves information about the active identity of the request or session depending on the whether sessions are used.
 
 ## Licensing
@@ -75,7 +75,7 @@ License information must be provided to bind the license to a specific context. 
 - When a start of an app is requested the Transfer App has to verify its license
 - If a license expires and there is no further valid license then the Transfer App automatically stops the app
 
-### GET /transfer/apps/{aid}/licenses
+### GET /api/{api-version}/transfer/apps/{aid}/licenses
 Retrieve license information of the active license or all licenses of an app.
 
 Route parameters:
@@ -109,7 +109,7 @@ Response body:
 - License[]
     - LicenseDetails[] if authorized
 
-### GET /transfer/apps/{aid}/licenses/{lid}
+### GET /api/{api-version}/transfer/apps/{aid}/licenses/{lid}
 Retrieve the license files of a specific license.
 
 Route parameters:
@@ -135,7 +135,7 @@ Response headers:
 Response body:
 - ZIP archive with license file and certificate
 
-### POST /transfer/apps/{aid}/licenses
+### POST /api/{api-version}/transfer/apps/{aid}/licenses
 Add a license to an app.
 
 Route parameters:
@@ -157,7 +157,7 @@ Response codes:
 - 404 Not found: app not found
 - 409 Conflict: license with the same name already existing
 
-### DELETE /transfer/apps/{aid}/licenses/{lid}
+### DELETE /api/{api-version}/transfer/apps/{aid}/licenses/{lid}
 Remove a license of an app.
 
 Route parameters:
@@ -171,7 +171,7 @@ Response codes:
 - 400 Bad Request: app is busy
 - 404 Not found: no license for license ID or app not found
 
-### PUT /transfer/apps/{aid}/licensekey
+### PUT /api/{api-version}/transfer/apps/{aid}/licensekey
 Request to send the license key to the specified app.
 
 Route parameters:
@@ -187,7 +187,7 @@ Response codes:
     - no connection endpoint reachable 
 - 404 Not found: app not found
 
-### GET /transfer/licenses/{lickey}
+### GET /api/{api-version}/transfer/licenses/{lickey}
 Retrieve the license details of a license given the license key.
 
 Route parameters:
@@ -202,7 +202,7 @@ Response codes:
 Response body:
 - LicenseDetails
 
-### PUT /transfer/licensing/ca
+### PUT /api/{api-version}/transfer/licensing/ca
 Configures the CA used to validate the license certificates. It represents the trusted license issuer.
 
 Request headers:
@@ -224,7 +224,7 @@ Response codes:
 
 ## Licensing - App Interfaces
 
-### POST /license/key
+### POST /api/{api-version}/license/key
 The Transfer App will post the authorization key together with the app identifier to the app in question.
 
 Request headers:

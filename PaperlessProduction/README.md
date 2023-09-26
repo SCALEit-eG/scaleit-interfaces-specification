@@ -2,7 +2,7 @@
 
 ## eLabel REST
 
-### GET /api/data/{id}
+### GET /api/{api-version}/data/{id}
 Depending on the type of input mask. The already labeled electronic labels will be displayed in the eLabel list. The data is pushed from the LabelList.json.
 
 Cutout of json file:
@@ -27,10 +27,10 @@ Cutout of json file:
 ]
 ```
 
-### DELETE /api/data/{type}/{barcode}
+### DELETE /api/{api-version}/data/{type}/{barcode}
 Depending on the type of input mask. An entry on the eLabel list will be deleted. The entry will also be deleted from the LabelList.json.
 
-### GET|POST /api/config/pattern
+### GET|POST /api/{api-version}/config/pattern
 Configuration of the frontend input mask pattern. Depending on the choose of the input mask (Kanban, Kistenbeschriftung, Herstellerauftrag) 
 
 Cutout of json file:
@@ -44,7 +44,7 @@ Cutout of json file:
 }
 ```
 
-### POST /api/config/input
+### POST /api/{api-version}/config/input
 Edit the description of the input mask
 
 Cutout of json file:
@@ -64,60 +64,60 @@ Cutout of json file:
 ]
 ```
 
-### GET /api/config/input/{tabNumber}
+### GET /api/{api-version}/config/input/{tabNumber}
 Retrieve the description of the input mask for the given tab number
 
-### POST /api/data/upload
+### POST /api/{api-version}/data/upload
 Upload of the electronic labels
 
-### GET /api/data/download/{type}
+### GET /api/{api-version}/data/download/{type}
 Download of the type specific elabels from LabelList.json.
 
-### POST /api/elabel
+### POST /api/{api-version}/elabel
 Sending the information of the input mask to label the electronic labels. Sends the received message with mqtt.
 
-### GET|POST /api/connectivity/mqtt
+### GET|POST /api/{api-version}/connectivity/mqtt
 Configuration of mqtt attributes.
 
-### GET /api/description
+### GET /api/{api-version}/description
 Returns the Description.
 
 ## Pick-By-Light REST
 
-### GET|POST /api/connectivity/mqtt
+### GET|POST /api/{api-version}/connectivity/mqtt
 Configuration of mqtt attributes.
 
-### GET /api/versions
+### GET /api/{api-version}/versions
 Get the current app version
 
-### GET /api/status
+### GET /api/{api-version}/status
 Get the current app status
 
-### GET /api/app/icon
+### GET /api/{api-version}/app/icon
 Returns the icon from the app
 
-### GET /api/description
+### GET /api/{api-version}/description
 Returns the Description.
 
-### GET /api/appdcdescription
+### GET /api/{api-version}/appdcdescription
 Returns the Description of the home tab.
 
-### POST /auftragsnummer
+### POST /api/{api-version}/auftragsnummer
 Sends a mqtt message which includes the order number to turn all electronic labels leds on.
 
-### POST /sapauftragsnummer
+### POST /api/{api-version}/sapauftragsnummer
 Sends a mqtt message to the DBProxy (communication with SAP).The DBProxy Returns Materialnr. + Stückz. to the mqtt Broker.
 
-### POST /blink
+### POST /api/{api-version}/blink
 Turns on the electronic labels leds of the eLabel list.
 
-### POST /kanban/blink
+### POST /api/{api-version}/kanban/blink
 Turns on the electronic labels of an order.
 
-### GET|POST /api/data
+### GET|POST /api/{api-version}/data
 Endpoints are not in use (can be removed). 
 
-### POST /api/data/upload
+### POST /api/{api-version}/data/upload
 Uploads an Auftraege.json file which contains all orders with the article numbers.
 
 Cutout of json file:
@@ -144,5 +144,5 @@ Cutout of json file:
 ]
 ```
 
-### GET /api/data/download
+### GET /api/{api-version}/data/download
 Downloading the Auftraege.json file.

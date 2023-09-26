@@ -4,7 +4,7 @@
 
 Overall status of the application or asset.
 
-### GET /status
+### GET /api/{api-version}/status
 Gives the current status message of the application.
 
 Response codes:
@@ -25,8 +25,8 @@ GET /api/1.2/status
 
 Possible states of an application or asset.
 
-### GET /states
+### GET /api/{api-version}/states
 list of available states
 
-### GET /states/{id}
+### GET /api/{api-version}/states/{id}
 information about a specific state

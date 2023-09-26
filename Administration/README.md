@@ -3,7 +3,7 @@
 ## Server Maintenance
 - Administration of a service
 
-### PUT /adm/operations/{operation}
+### PUT /api/{api-version}/adm/operations/{operation}
 
 Router parameters:
 - operation: string, required
@@ -26,7 +26,7 @@ Response codes:
 ## Logging
 - Server logs
 
-### GET /adm/logs?{query}
+### GET /api/{api-version}/adm/logs?{query}
 Retrieve logs from the server.
 
 Query parameters:
@@ -45,7 +45,7 @@ Response codes:
 - 400 Bad Request: from or to date string invalid
 - 404 Not Found: unknown log level given
 
-### DELETE /adm/logs?{query}
+### DELETE /api/{api-version}/adm/logs?{query}
 Clear logs from the server.
 
 Query parameters:
@@ -63,10 +63,10 @@ Services hold data and this data potentially has a schema or data definition. Th
     - Useful for backups, deployment changes, data exporting
 - Data migrations
 
-### GET /adm/data/export
+### GET /api/{api-version}/adm/data/export
 Export the data of the system. This data is also referred to as data dump.
 
-### PUT /adm/data/import
+### PUT /api/{api-version}/adm/data/import
 Import a data dump into the system.
 
 Query parameters:

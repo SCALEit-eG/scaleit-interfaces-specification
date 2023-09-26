@@ -98,7 +98,7 @@ Types of Assets:
     - Facility
         - Hospital
 
-### GET /assets?{filterquery}
+### GET /api/{api-version}/assets?{filterquery}
 Get all available assets or a filtered subset in a hierarchy or graph.
 
 Query parameters:
@@ -141,11 +141,11 @@ Response type:
 
 Examples:
 ```
-GET /assets?limit=100
-GET /assets?type=App&network=true&from=urn%3Ascaleit%3Adev%3Aassets%3A1%3A1%3Asensor-app-template1
+GET /api/{api-version}/assets?limit=100
+GET /api/{api-version}/assets?type=App&network=true&from=urn%3Ascaleit%3Adev%3Aassets%3A1%3A1%3Asensor-app-template1
 ```
 
-### POST /assets?{query}
+### POST /api/{api-version}/assets?{query}
 Add a new asset on the root level or beneath a specific existing asset.
 
 Query parameters:
@@ -169,7 +169,7 @@ Response headers:
 Response body:
 - status message as plain text string
 
-### GET /assets/{id}
+### GET /api/{api-version}/assets/{id}
 Get information about a specific asset.
 
 Route parameters:
@@ -183,7 +183,7 @@ Response codes:
 Response body:
 - Asset
 
-### PUT /assets/{id}
+### PUT /api/{api-version}/assets/{id}
 Change metainformation of an asset. Not all metainformation is allowed to change. Fields that are left empty or null are assumed to not change. Typical use cases include:
 - Change ownership or assign authorized identities
 - Change the ID, alternative IDs or namespaces
@@ -203,7 +203,7 @@ Response codes:
 - 401 / 403: unauthenticated or unauthorized to make changes to asset
 - 404 Not Found: asset not found
 
-### (PUT /assets/{id}/move?{query})
+### (PUT /api/{api-version}/assets/{id}/move?{query})
 Note: This operation is not necessary and should not be used because asset hierarchies are formed through a special relationship type. Furthermore, IDs are only restricted through reserved namespaces and otherwise free to use.
 
 Move the asset in the hierarchy and thereby also change the ID and propagate the ID changes.
@@ -225,7 +225,7 @@ Response codes:
 - 404 Not Found: asset or target asset not found
 - 409 Conflict: at the target there is already a child asset with the same resulting ID
 
-### DELETE /assets/{id}?{query}
+### DELETE /api/{api-version}/assets/{id}?{query}
 Delete an asset and optionally its hierarchy.
 
 Route parameters:
@@ -242,7 +242,7 @@ Response codes:
 
 ## Asset Types
 
-### GET /assettypes?{query}
+### GET /api/{api-version}/assettypes?{query}
 Retrieves a list of all or a filtered subset of registered asset types.
 
 Query parameters:
@@ -262,7 +262,7 @@ Response codes:
 Response body:
 - AssetType[]
 
-### POST /assettypes
+### POST /api/{api-version}/assettypes
 Registers a new asset type.
 
 Request body:
@@ -277,7 +277,7 @@ Response codes:
 Response headers:
 - Location: URI of new asset type if created
 
-### GET /assettypes/{type}
+### GET /api/{api-version}/assettypes/{type}
 Get the metainformation about a specific asset type.
 
 Route parameters:
@@ -291,7 +291,7 @@ Response codes:
 Response body:
 - AssetType
 
-### PUT /assettypes/{type}?{query}
+### PUT /api/{api-version}/assettypes/{type}?{query}
 Change the metainformation of an asset type. Typically the allowed data types are configured or the display label is changed.
 
 Route parameters:
@@ -313,7 +313,7 @@ Response codes:
 - 401 / 403: unauthenticated or unauthorized
 - 404 Not Found: asset type not found
 
-### DELETE /assettypes/{type}?{query}
+### DELETE /api/{api-version}/assettypes/{type}?{query}
 Delete an asset type and all derived assets.
 
 Route parameters:
@@ -332,7 +332,7 @@ Response codes:
 
 Binary data can be put in the system and be given an asset relative file URL. Default data is however JSON.
 
-### GET /assets/{id}/data?{filter}
+### GET /api/{api-version}/assets/{id}/data?{filter}
 Query an asset for data.
 
 Route parameters:
@@ -385,7 +385,7 @@ Response codes:
 Response body:
 - AssetData[]
 
-### POST /assets/{id}/data
+### POST /api/{api-version}/assets/{id}/data
 Post a new data element to an asset. It can be JSON or binary data.
 
 Route parameters:
@@ -408,7 +408,7 @@ Response codes:
 - 401 / 403
 - 404 Not Found: asset not found
 
-### GET /assets/{id}/data/{element}
+### GET /api/{api-version}/assets/{id}/data/{element}
 Get a specific data element.
 
 Route parameters:
@@ -424,7 +424,7 @@ Response codes:
 Response body:
 - AssetData
 
-### PUT /assets/{id}/data/{element}
+### PUT /api/{api-version}/assets/{id}/data/{element}
 Change a data element.
 
 Route parameters:
@@ -442,7 +442,7 @@ Response codes:
 - 401 / 403
 - 404 Not Found: asset not found or element not found
 
-### DELETE /assets/{id}/data/{element}
+### DELETE /api/{api-version}/assets/{id}/data/{element}
 Delete a data element.
 
 Route parameters:
@@ -457,7 +457,7 @@ Response codes:
 ## Data Types
 Data types have a version and a schema to restrict the kind of data that can be posted to specific assets. As schema JSON schema is used.
 
-### GET /datatypes?{query}
+### GET /api/{api-version}/datatypes?{query}
 List or search all available data types.
 
 Query parameters:
@@ -477,7 +477,7 @@ Response codes:
 - 200 OK: some data types found
 - 204 No Content: no data types found
 
-### POST /datatypes
+### POST /api/{api-version}/datatypes
 Register a new datatype with specific version and optionally make it default.
 
 Request body:
@@ -489,7 +489,7 @@ Response codes:
 - 404 Not Found: asset not found for the ID
 - 409 Conflict: data type with the same ID already exists
 
-### GET /datatypes/{dtype}
+### GET /api/{api-version}/datatypes/{dtype}
 Retrieve metainformation about a datatype.
 
 Route parameters:
@@ -502,7 +502,7 @@ Response codes:
 - 200 OK: data type found
 - 404 Not Found: data type not found
 
-### PUT /datatypes/{dtype}
+### PUT /api/{api-version}/datatypes/{dtype}
 Change a datatype whereby all null values for existing fields are ignored.
 
 Route parameters:
@@ -519,7 +519,7 @@ Response codes:
 - 400 Bad Request: given data invalid
 - 404 Not Found: data type not found
 
-### DELETE /datatypes/{dtype}?{query}
+### DELETE /api/{api-version}/datatypes/{dtype}?{query}
 Delete a datatype and all of its versions.
 
 Route parameters:
@@ -534,7 +534,7 @@ Response codes:
 - 400 Bad Request: not allowed because there is data of the data type and removal was not forced
 - 404 Not Found: data type not found
 
-### POST /datatypes/{dtype}/versions
+### POST /api/{api-version}/datatypes/{dtype}/versions
 Add a version to a datatype.
 
 Route parameters:
@@ -549,7 +549,7 @@ Response codes:
 - 404 Not Found: data type not found
 - 409 Conflict: version with the same ID already exists
 
-### GET /datatypes/{dtype}/versions/{version}
+### GET /api/{api-version}/datatypes/{dtype}/versions/{version}
 Get a specific data type version.
 
 Route parameters:
@@ -563,7 +563,7 @@ Response codes:
 - 200 OK: version found for given data type
 - 404 Not Found: version or data type not found
 
-### PUT /datatypes/{dtype}/versions/{version}
+### PUT /api/{api-version}/datatypes/{dtype}/versions/{version}
 Change a specific version.
 
 Route parameters:
@@ -582,7 +582,7 @@ Response codes:
 - 404 Not Found: data type or version not found
 - 409 Conflict: if version identifier changed and it is already in use
 
-### DELETE /datatypes/{dtype}/versions/{version}?{query}
+### DELETE /api/{api-version}/datatypes/{dtype}/versions/{version}?{query}
 Delete a specific version.
 
 Route parameters:
@@ -631,7 +631,7 @@ Types of asset relationships:
 - extends: assets may extend each other to directly derive an extended asset from an existing instance
     - Example: ?
 
-### GET /assets/{id}/rel?{query}
+### GET /api/{api-version}/assets/{id}/rel?{query}
 Retrieve all relationships of a particular asset.
 
 Route parameters:
@@ -651,7 +651,7 @@ Response codes:
 - 400 Bad Request: query parameter violation
 - 404 Not Found: asset not found
 
-### POST /assets/{id}/rel
+### POST /api/{api-version}/assets/{id}/rel
 Add a relationship to an asset. The asset for which the relationship is added is considered to be the "from" or first asset and the other as the second or "to" asset.
 
 Route parameters:
@@ -666,7 +666,7 @@ Response codes:
 - 404 Not Found: first or second asset not found or relationship type not found
 - 409 Conflict: relationship of the same type for the referenced assets already exists
 
-### DELETE /assets/{id}/rel/{id2}?{query}
+### DELETE /api/{api-version}/assets/{id}/rel/{id2}?{query}
 Delete the relationships between two assets.
 
 Route parameters:
@@ -684,7 +684,7 @@ Response codes:
 - 304 Not Modified: if type not given and no relationships available
 - 404 Not Found: one of the assets not found or relationship not existing if type was given
 
-### GET /reltypes?{query}
+### GET /api/{api-version}/reltypes?{query}
 List available relationships.
 
 Query parameters:
@@ -700,7 +700,7 @@ Response codes:
 - 200 OK: relationship types available
 - 204 No Content: no relationship types available
 
-### POST /reltypes
+### POST /api/{api-version}/reltypes
 Add a relationship type.
 
 Request body:
@@ -712,7 +712,7 @@ Response codes:
 - 404 Not Found: asset not found for the given ID
 - 409 Conflict: relationship with the same ID already exists
 
-### GET /reltypes/{reltype}
+### GET /api/{api-version}/reltypes/{reltype}
 Get a specific relationship type.
 
 Route parameters:
@@ -726,7 +726,7 @@ Response codes:
 - 200 OK: relationship type found
 - 404 Not Found: relationship type not found
 
-### PUT /reltypes/{reltype}
+### PUT /api/{api-version}/reltypes/{reltype}
 Change the relationship type asset.
 
 Route parameters:
@@ -745,7 +745,7 @@ Response codes:
 - 400 Bad Request: invalid data
 - 404 Not Found: relationship type not found
 
-### DELETE /reltypes/{reltype}?{query}
+### DELETE /api/{api-version}/reltypes/{reltype}?{query}
 Remove a relationship type and possibly all concrete relationships of its type.
 
 Route parameters:
@@ -764,7 +764,7 @@ Response code:
 ## Eventing
 Eventing refers to the predefined events and event types that the system supports to inform about changes.
 
-### SSE /events
+### SSE /api/{api-version}/events
 The base endpoint for eventing is extended with the following event types.
 
 - AssetAdded
@@ -779,7 +779,7 @@ The base endpoint for eventing is extended with the following event types.
 
 For all events the ID of the asset is transmitted.
 
-### SSE /events/assets/{id}
+### SSE /api/{api-version}/events/assets/{id}
 Further events are transmitted for particular assets.
 
 - DataAdded
@@ -813,25 +813,25 @@ For the functionality there are several options:
 1. Consider predefined and custom event types and let extensions decide how an event is raised
 2. Instead of extensions HTTP POST calls could raise an event and for that use the predefined events from the eventing
 
-### GET /assettypes/{type}/events
+### GET /api/{api-version}/assettypes/{type}/events
 List the event types that an asset supports.
 
-### POST /assettypes/{type}/events
+### POST /api/{api-version}/assettypes/{type}/events
 Register an event for an asset.
 
-### GET /assettypes/{type}/events/{eventtype}
+### GET /api/{api-version}/assettypes/{type}/events/{eventtype}
 Get detailed information about the event type.
 
-### PUT /assettypes/{type}/events/{eventtype}
+### PUT /api/{api-version}/assettypes/{type}/events/{eventtype}
 Change the configuration of an event.
 
-### DELETE /assettypes/{type}/events/{eventtype}
+### DELETE /api/{api-version}/assettypes/{type}/events/{eventtype}
 Remove an event.
 
-### POST /assettypes/{type}/events/{eventtype}
+### POST /api/{api-version}/assettypes/{type}/events/{eventtype}
 Raise an event.
 
-### POST /assettypes/{type}/events/{eventtype}/register
+### POST /api/{api-version}/assettypes/{type}/events/{eventtype}/register
 Register a webhook for an event.
 
 ## Asset Operations
@@ -839,17 +839,17 @@ Note: Operations are currently out of scope and not considered.
 
 Operations are directly executed on the assets. It shall be implemented through simple webhooks without parameter as the necessary data may be retrieved by the asset itself from the configured data.
 
-### GET /assets/{id}/ops
+### GET /api/{api-version}/assets/{id}/ops
 Get a list of all operations of the requested asset.
 
-### POST /assets/{id}/ops
+### POST /api/{api-version}/assets/{id}/ops
 Register a new operation on the asset.
 
-### PUT /assets/{id}/ops/{opid}
+### PUT /api/{api-version}/assets/{id}/ops/{opid}
 Change an operation on an asset.
 
-### DELETE /assets/{id}/ops/{opid}
+### DELETE /api/{api-version}/assets/{id}/ops/{opid}
 Delete an operation.
 
-### PUT /assets/{id}/ops/{opid}/call
+### PUT /api/{api-version}/assets/{id}/ops/{opid}/call
 Call a specific operation of an asset.
